@@ -33,35 +33,51 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
 .wrap{padding:24px;}
 
 /* KPIs */
-.top-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px;}
+.top-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px;align-items:start;}
 .top-card{background:var(--card);border-radius:12px;padding:20px 24px;border:1.5px solid var(--border-c);}
+.top-card-title{font-size:12px;font-weight:600;color:var(--txt3);text-transform:uppercase;letter-spacing:0.7px;margin-bottom:14px;}
 /* Caja izquierda — resumen de áreas */
 .areas-list{display:flex;flex-direction:column;gap:10px;}
 .area-row{display:flex;align-items:center;gap:10px;}
 .area-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
 .area-name{font-size:14px;color:var(--txt);font-weight:500;}
 .area-count{font-size:13px;color:var(--txt3);margin-left:auto;}
-.top-card-title{font-size:12px;font-weight:600;color:var(--txt3);text-transform:uppercase;letter-spacing:0.7px;margin-bottom:14px;}
-/* Caja derecha — agregar tarea rápida */
+/* Caja derecha — agregar tarea colapsable */
 .quick-add{display:flex;flex-direction:column;gap:10px;}
+.qa-main{display:flex;flex-direction:column;gap:8px;}
 .qa-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.qa-extra{display:none;flex-direction:column;gap:8px;margin-top:2px;}
+.qa-extra.open{display:flex;}
+.qa-toggle{background:none;border:none;font-size:12px;color:var(--txt3);cursor:pointer;text-align:left;padding:2px 0;font-family:inherit;display:flex;align-items:center;gap:4px;transition:color 0.15s;}
+.qa-toggle:hover{color:var(--bosque);}
+.qa-toggle i{font-size:13px;transition:transform 0.2s;}
+.qa-toggle.open i{transform:rotate(180deg);}
 .qa-input{border:1.5px solid var(--border-c);border-radius:8px;padding:9px 12px;font-size:13px;color:var(--txt);font-family:inherit;background:var(--bg);outline:none;transition:border-color 0.15s;width:100%;}
 .qa-input:focus{border-color:var(--bosque);}
 .qa-textarea{border:1.5px solid var(--border-c);border-radius:8px;padding:9px 12px;font-size:13px;color:var(--txt);font-family:inherit;background:var(--bg);outline:none;resize:none;line-height:1.5;width:100%;transition:border-color 0.15s;}
 .qa-textarea:focus{border-color:var(--bosque);}
-.qa-btn{align-self:flex-end;padding:9px 20px;background:var(--bosque);color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:background 0.15s;}
+.qa-footer{display:flex;align-items:center;justify-content:space-between;}
+.qa-btn{padding:9px 20px;background:var(--bosque);color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:background 0.15s;}
 .qa-btn:hover{background:#2e4a40;}
 .qa-error{font-size:12px;color:var(--burg);display:none;}
 .qa-error.show{display:block;}
 
 /* FILTERS */
-.filters{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:24px;}
+.filters-bar{display:flex;align-items:flex-start;gap:10px;margin-bottom:24px;}
+.filters{display:flex;gap:7px;flex-wrap:wrap;flex:1;}
+.layout-btn{flex-shrink:0;width:38px;height:38px;border-radius:8px;border:1.5px solid var(--border-c);background:var(--card);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--txt2);font-size:18px;transition:all 0.15s;}
+.layout-btn:hover{border-color:var(--bosque);color:var(--bosque);}
+/* Layout vertical */
+.layout-vertical .grid-wrap{padding:0;}
+.layout-vertical .grid-scroll{flex-direction:column;overflow-x:visible;overflow-y:visible;}
+.layout-vertical .task-card{width:100%;min-width:unset;}
+.layout-vertical .scroll-btn{display:none;}
 .f{padding:7px 16px;border-radius:20px;font-size:13px;border:1.5px solid var(--border-c);color:var(--txt2);cursor:pointer;background:var(--card);transition:all 0.15s;font-family:inherit;}
 .f:hover{border-color:var(--bosque);color:var(--bosque);}
 .f.on{background:var(--bosque);color:#fff;border-color:var(--bosque);}
 
 /* SECTION LABELS — más grandes y con color */
-.sec-label{font-size:15px;font-weight:400;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center;padding:0 2px;}
+.sec-label{font-size:15px;font-weight:500;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center;padding:0 2px;}
 .sec-label .cnt{font-size:12px;font-weight:500;color:var(--txt3);}
 .sec-label.lbl-urg{color:var(--burg);}
 .sec-label.lbl-sem{color:var(--trigo);}
@@ -70,13 +86,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
 
 /* GRID HORIZONTAL con scroll */
 .grid-wrap{position:relative;margin-bottom:28px;padding:0 44px;}
-.grid-scroll{display:flex;gap:14px;overflow-x:auto;padding:4px 4px 12px;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;align-items:flex-start;}
+.grid-scroll{display:flex;gap:14px;overflow-x:auto;padding:4px 4px 12px;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;align-items:stretch;}
 .grid-scroll::-webkit-scrollbar{height:4px;}
 .grid-scroll::-webkit-scrollbar-track{background:transparent;}
 .grid-scroll::-webkit-scrollbar-thumb{background:var(--border-c);border-radius:4px;}
 
 /* TASK CARD — fondo por área */
-.task-card{border:1.5px solid transparent;border-radius:14px;width:280px;min-width:280px;flex-shrink:0;transition:all 0.2s;overflow:hidden;box-shadow:0 1px 4px rgba(44,40,32,0.06);position:relative;}
+.task-card{border:1.5px solid transparent;border-radius:14px;width:280px;min-width:280px;flex-shrink:0;transition:all 0.2s;overflow:hidden;box-shadow:0 1px 4px rgba(44,40,32,0.06);position:relative;display:flex;flex-direction:column;}
 .task-card:hover{box-shadow:0 4px 14px rgba(44,40,32,0.12);transform:translateY(-1px);}
 .task-card.started{box-shadow:0 0 0 2px var(--trigo);}
 .task-card.done{opacity:0.7;}
@@ -99,7 +115,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
 .task-card[data-area="SEO"] .card-header-bar{background:#4A6A9E;}
 .task-card[data-area="Comunidad"] .card-header-bar{background:#9E8A3A;}
 
-.card-top{padding:16px 18px 14px;cursor:pointer;}
+.card-top{padding:16px 18px 14px;cursor:pointer;display:flex;flex-direction:column;}
 .card-dot-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
 .dot{display:none;}
 .card-status{font-size:11px;color:var(--txt3);}
@@ -110,7 +126,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
 .task-card[data-area="SEO"] .card-area-label{color:#2E4A8B;}
 .task-card[data-area="Comunidad"] .card-area-label{color:#7A6A1A;}
 
-.card-name{font-size:15px;font-weight:500;color:var(--txt);line-height:1.4;margin-bottom:14px;min-height:44px;padding-right:20px;}
+.card-name{font-size:15px;font-weight:500;color:var(--txt);line-height:1.4;margin-bottom:14px;flex:1;padding-right:20px;}
 
 .card-badges{display:flex;gap:6px;flex-wrap:wrap;}
 .badge{font-size:11px;padding:4px 10px;border-radius:20px;font-weight:600;white-space:nowrap;}
@@ -226,31 +242,43 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
     <div class="top-card">
       <div class="top-card-title">Agregar tarea</div>
       <div class="quick-add">
-        <input class="qa-input" id="qa-titulo" type="text" placeholder="Título de la tarea *">
-        <div class="qa-row">
-          <select class="qa-input" id="qa-area">
-            <option value="">Área *</option>
-            <option>Producto</option>
-            <option>Marketing</option>
-            <option>SEO</option>
-            <option>Comunidad</option>
-          </select>
-          <select class="qa-input" id="qa-urg">
-            <option value="">Urgencia *</option>
-            <option>Urgente</option>
-            <option>Esta semana</option>
-            <option>Este mes</option>
-            <option>A futuro</option>
-          </select>
+        <div class="qa-main">
+          <input class="qa-input" id="qa-titulo" type="text" placeholder="Título de la tarea *">
+          <div class="qa-row">
+            <select class="qa-input" id="qa-area">
+              <option value="">Área *</option>
+              <option>Producto</option>
+              <option>Marketing</option>
+              <option>SEO</option>
+              <option>Comunidad</option>
+            </select>
+            <select class="qa-input" id="qa-urg">
+              <option value="">Urgencia *</option>
+              <option>Urgente</option>
+              <option>Esta semana</option>
+              <option>Este mes</option>
+              <option>A futuro</option>
+            </select>
+          </div>
         </div>
-        <textarea class="qa-textarea" id="qa-desc" rows="2" placeholder="Descripción (opcional)"></textarea>
-        <textarea class="qa-textarea" id="qa-nota" rows="2" placeholder="Nota inicial (opcional)"></textarea>
-        <div class="qa-error" id="qa-error">Completá el título, área y urgencia.</div>
-        <button class="qa-btn" onclick="quickAdd()">+ Agregar tarea</button>
+        <div class="qa-extra" id="qa-extra">
+          <textarea class="qa-textarea" id="qa-desc" rows="2" placeholder="Descripción (opcional)"></textarea>
+          <textarea class="qa-textarea" id="qa-nota" rows="2" placeholder="Nota inicial (opcional)"></textarea>
+        </div>
+        <div class="qa-footer">
+          <button class="qa-toggle" id="qa-toggle-btn" onclick="toggleQaExtra()">
+            <i class="ti ti-chevron-down" id="qa-toggle-icon"></i> Más detalles
+          </button>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <div class="qa-error" id="qa-error">Completá título, área y urgencia.</div>
+            <button class="qa-btn" onclick="quickAdd()">+ Agregar</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
+  <div class="filters-bar">
   <div class="filters">
     <button class="f on" onclick="setFiltro('todo',this)">Todas</button>
     <button class="f" onclick="setFiltro('Urgente',this)">Urgente</button>
@@ -261,6 +289,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
     <button class="f" onclick="setArea('Marketing',this)">Marketing</button>
     <button class="f" onclick="setArea('SEO',this)">SEO</button>
     <button class="f" onclick="setArea('Comunidad',this)">Comunidad</button>
+  </div>
+  <button class="layout-btn" id="layout-btn" onclick="toggleLayout()" title="Cambiar vista"><i class="ti ti-layout-rows" id="layout-icon"></i></button>
   </div>
 
   <!-- URGENTES -->
@@ -860,6 +890,23 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
 </div>
 
 <script>
+let filtroUrg=null,filtroArea=null,isVertical=false;
+
+function toggleLayout(){
+  isVertical=!isVertical;
+  document.querySelector('.wrap').classList.toggle('layout-vertical',isVertical);
+  document.getElementById('layout-icon').className=isVertical?'ti ti-layout-list':'ti ti-layout-rows';
+}
+
+function toggleQaExtra(){
+  const extra=document.getElementById('qa-extra');
+  const btn=document.getElementById('qa-toggle-btn');
+  const icon=document.getElementById('qa-toggle-icon');
+  extra.classList.toggle('open');
+  btn.classList.toggle('open');
+  icon.className=extra.classList.contains('open')?'ti ti-chevron-up':'ti ti-chevron-down';
+}
+
 let filtroUrg=null,filtroArea=null;
 const estados={};
 
