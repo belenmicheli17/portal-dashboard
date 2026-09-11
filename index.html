@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>El Portal — Panel de Fundadora</title>
+<title>El Portal — Panel de Admin</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
@@ -19,62 +19,58 @@
   --salvia:#6B8C7A;
   --trigo:#B8924A;
 }
-html,body{min-height:100vh;width:100%;}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);padding:32px 40px;}
+html,body{min-height:100vh;width:100%;background:var(--bg);}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
 
-.db{max-width:1100px;margin:0 auto;}
+/* NAVBAR */
+.nav{background:var(--bosque);padding:20px 40px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+.nav .logo{color:#fff;font-size:20px;font-weight:500;letter-spacing:-0.3px;}
+.nav .logo em{color:#A8C9BC;font-style:normal;}
+.nav .center{color:rgba(255,255,255,0.6);font-size:15px;}
+.nav .right{display:flex;align-items:center;gap:12px;}
+.fase-chip{background:rgba(168,201,188,0.18);border:1px solid rgba(168,201,188,0.35);color:#A8C9BC;font-size:13px;padding:6px 16px;border-radius:20px;}
 
-/* HEADER */
-.hdr{background:var(--bosque);padding:24px 36px;border-radius:14px 14px 0 0;display:flex;align-items:center;justify-content:space-between;}
-.hdr .logo{color:#fff;font-size:22px;font-weight:500;letter-spacing:-0.3px;}
-.hdr .logo em{color:#A8C9BC;font-style:normal;}
-.hdr .right{display:flex;align-items:center;gap:20px;}
-.hdr .title{color:rgba(255,255,255,0.55);font-size:15px;}
-.fase-chip{background:rgba(168,201,188,0.2);border:1px solid rgba(168,201,188,0.35);color:#A8C9BC;font-size:13px;padding:6px 16px;border-radius:20px;}
+.wrap{padding:32px 40px;}
 
 /* KPIs */
-.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;padding:24px 0 20px;}
-.kpi{background:var(--card);border-radius:12px;padding:22px 24px;border:1.5px solid var(--border-c);border-top-width:4px;}
-.kpi .lbl{font-size:12px;color:var(--txt2);text-transform:uppercase;letter-spacing:0.7px;margin-bottom:12px;font-weight:600;}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:32px;}
+.kpi{background:var(--card);border-radius:12px;padding:22px 24px;border:1.5px solid var(--border-c);border-top:4px solid;}
+.kpi .lbl{font-size:12px;color:var(--txt2);text-transform:uppercase;letter-spacing:0.7px;margin-bottom:10px;font-weight:600;}
 .kpi .val{font-size:44px;font-weight:500;line-height:1;margin-bottom:6px;}
 .kpi .sub{font-size:13px;color:var(--txt3);}
 
 /* FILTERS */
-.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px;}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px;}
 .f{padding:8px 18px;border-radius:20px;font-size:13px;border:1.5px solid var(--border-c);color:var(--txt2);cursor:pointer;background:var(--card);transition:all 0.15s;font-family:inherit;}
 .f:hover{border-color:var(--bosque);color:var(--bosque);}
 .f.on{background:var(--bosque);color:#fff;border-color:var(--bosque);}
 
-/* SECTION LABEL */
-.sec-label{font-size:12px;font-weight:600;color:var(--txt3);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;display:flex;justify-content:space-between;padding:0 4px;}
+/* SECTION */
+.sec-label{font-size:12px;font-weight:600;color:var(--txt3);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;padding:0 2px;}
 
-/* TASKS */
-.tasks{display:flex;flex-direction:column;gap:6px;margin-bottom:24px;}
+/* GRID HORIZONTAL con scroll */
+.grid-wrap{position:relative;margin-bottom:32px;}
+.grid-scroll{display:flex;gap:14px;overflow-x:auto;padding-bottom:8px;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;}
+.grid-scroll::-webkit-scrollbar{height:4px;}
+.grid-scroll::-webkit-scrollbar-track{background:transparent;}
+.grid-scroll::-webkit-scrollbar-thumb{background:var(--border-c);border-radius:4px;}
 
-.task{background:var(--card);border:1.5px solid var(--border-c);border-radius:12px;overflow:hidden;cursor:pointer;transition:border-color 0.2s;}
-.task:hover{border-color:#9AAFA6;}
-.task.open{border-color:var(--bosque);}
+/* TASK CARD */
+.task-card{background:var(--card);border:1.5px solid var(--border-c);border-radius:14px;width:260px;min-width:260px;flex-shrink:0;transition:border-color 0.2s;overflow:hidden;}
+.task-card:hover{border-color:#9AAFA6;}
+.task-card.started{border-color:var(--trigo);}
+.task-card.done{border-color:var(--salvia);opacity:0.75;}
 
-.task-head{display:flex;align-items:center;gap:12px;padding:16px 20px;}
+.card-top{padding:18px 18px 14px;cursor:pointer;}
+.card-dot-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
 .dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
-.tname{font-size:15px;color:var(--txt);flex:1;line-height:1.4;}
-.badges{display:flex;gap:6px;align-items:center;flex-wrap:wrap;}
-.chev{color:var(--txt3);font-size:18px;transition:transform 0.2s;margin-left:4px;flex-shrink:0;}
-.task.open .chev{transform:rotate(180deg);}
+.card-status{display:flex;align-items:center;gap:6px;}
+.status-label{font-size:11px;color:var(--txt3);}
 
-.task-body{display:none;padding:16px 20px 20px;border-top:1.5px solid var(--border-c);background:#F5F2EC;}
-.task.open .task-body{display:block;}
-.tdesc{font-size:14px;color:var(--txt2);line-height:1.7;margin-bottom:14px;}
-.notes-lbl{font-size:11px;font-weight:600;color:var(--txt3);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:8px;}
-.note{background:#fff;border-left:3px solid var(--trigo);border-radius:0 8px 8px 0;padding:10px 14px;margin-bottom:6px;}
-.note .nmeta{font-size:11px;color:var(--txt3);margin-bottom:4px;}
-.note .ntxt{font-size:14px;color:var(--txt2);line-height:1.6;}
+.card-name{font-size:15px;font-weight:500;color:var(--txt);line-height:1.4;margin-bottom:14px;min-height:42px;}
 
-.empty{text-align:center;padding:60px;font-size:15px;color:var(--txt3);display:none;}
-.footer{text-align:center;padding:20px;font-size:12px;color:var(--txt3);}
-
-/* BADGES */
-.badge{font-size:12px;padding:4px 10px;border-radius:20px;font-weight:600;white-space:nowrap;}
+.card-badges{display:flex;gap:6px;flex-wrap:wrap;}
+.badge{font-size:11px;padding:4px 10px;border-radius:20px;font-weight:600;white-space:nowrap;}
 .b-urg{background:#F5E8E8;color:#7A2A2A;}
 .b-sem{background:#F5F0E6;color:#7A5A1A;}
 .b-mes{background:#E8F0EC;color:#2E5042;}
@@ -83,38 +79,83 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .b-mkt{background:#F0EAE0;color:#6B4F2A;}
 .b-prod{background:#E8F0EC;color:#2E5042;}
 .b-seo{background:#EEF2F0;color:#3D5A4F;}
+
+/* EXPAND TOGGLE */
+.card-expand-btn{width:100%;padding:10px 18px;background:none;border:none;border-top:1.5px solid var(--border-c);cursor:pointer;font-size:12px;color:var(--txt3);display:flex;align-items:center;justify-content:center;gap:6px;font-family:inherit;transition:background 0.15s;}
+.card-expand-btn:hover{background:#F0EDE6;}
+.card-expand-btn i{transition:transform 0.2s;font-size:14px;}
+.task-card.open .card-expand-btn i{transform:rotate(180deg);}
+
+/* EXPANDED BODY */
+.card-body{display:none;border-top:1.5px solid var(--border-c);background:#F5F2EC;}
+.task-card.open .card-body{display:block;}
+
+.card-body-inner{padding:16px 18px;}
+
+.cb-label{font-size:11px;font-weight:600;color:var(--txt3);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:8px;}
+.cb-desc{font-size:13px;color:var(--txt2);line-height:1.65;margin-bottom:14px;}
+
+/* CHECK DE ESTADO */
+.estado-row{display:flex;gap:8px;margin-bottom:14px;}
+.estado-btn{flex:1;padding:7px 10px;border-radius:8px;border:1.5px solid var(--border-c);background:var(--card);font-size:12px;font-weight:600;color:var(--txt2);cursor:pointer;font-family:inherit;transition:all 0.15s;text-align:center;}
+.estado-btn:hover{border-color:var(--bosque);}
+.estado-btn.sel-pend{background:#EDEBE6;border-color:#BFBAB3;color:#7A6E60;}
+.estado-btn.sel-start{background:#FEF3E0;border-color:var(--trigo);color:#7A5A1A;}
+.estado-btn.sel-done{background:#E8F0EC;border-color:var(--salvia);color:#2E5042;}
+
+/* NOTES */
+.notes-list{display:flex;flex-direction:column;gap:6px;margin-bottom:10px;}
+.note-item{background:#fff;border-left:3px solid var(--trigo);border-radius:0 8px 8px 0;padding:10px 12px;}
+.note-meta{font-size:11px;color:var(--txt3);margin-bottom:3px;}
+.note-txt{font-size:13px;color:var(--txt2);line-height:1.55;}
+
+.add-note-area{display:flex;flex-direction:column;gap:6px;}
+.add-note-area textarea{width:100%;border:1.5px solid var(--border-c);border-radius:8px;padding:10px 12px;font-size:13px;color:var(--txt);font-family:inherit;background:var(--card);resize:none;outline:none;line-height:1.5;}
+.add-note-area textarea:focus{border-color:var(--bosque);}
+.add-note-btn{align-self:flex-end;padding:7px 16px;background:var(--bosque);color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;}
+.add-note-btn:hover{background:#2e4a40;}
+
+/* SCROLL ARROWS */
+.scroll-btn{position:absolute;top:50%;transform:translateY(-50%);width:36px;height:36px;border-radius:50%;background:var(--card);border:1.5px solid var(--border-c);display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:10;box-shadow:0 2px 8px rgba(44,40,32,0.1);color:var(--txt2);font-size:18px;transition:all 0.15s;}
+.scroll-btn:hover{border-color:var(--bosque);color:var(--bosque);}
+.scroll-left{left:-18px;}
+.scroll-right{right:-18px;}
+
+.empty{text-align:center;padding:40px;font-size:15px;color:var(--txt3);display:none;}
+.footer{text-align:center;padding:20px 0 8px;font-size:12px;color:var(--txt3);}
 </style>
 </head>
 <body>
-<div class="db">
 
-  <div class="hdr">
-    <div class="logo">Portal<em>.</em>Veterinario</div>
-    <div class="right">
-      <span class="title">Panel de fundadora</span>
-      <span class="fase-chip">Fase 0 — Cimientos</span>
-    </div>
+<nav class="nav">
+  <div class="logo">Portal<em>.</em>Veterinario</div>
+  <div class="center">Panel de admin</div>
+  <div class="right">
+    <span class="fase-chip">Fase 0 — Cimientos</span>
   </div>
+</nav>
+
+<div class="wrap">
 
   <div class="kpis">
     <div class="kpi" style="border-top-color:#8B3A3A;">
       <div class="lbl">Urgentes</div>
-      <div class="val" style="color:#8B3A3A;">4</div>
+      <div class="val" style="color:#8B3A3A;" id="n-urg">4</div>
       <div class="sub">atención inmediata</div>
     </div>
     <div class="kpi" style="border-top-color:#3D5A4F;">
       <div class="lbl">Total tareas</div>
-      <div class="val" style="color:#3D5A4F;">24</div>
+      <div class="val" style="color:#3D5A4F;" id="n-total">17</div>
       <div class="sub">en el tablero</div>
     </div>
     <div class="kpi" style="border-top-color:#B8924A;">
       <div class="lbl">En progreso</div>
-      <div class="val" style="color:#B8924A;">0</div>
+      <div class="val" style="color:#B8924A;" id="n-prog">0</div>
       <div class="sub">en curso</div>
     </div>
     <div class="kpi" style="border-top-color:#6B8C7A;">
       <div class="lbl">Completadas</div>
-      <div class="val" style="color:#6B8C7A;">0</div>
+      <div class="val" style="color:#6B8C7A;" id="n-done">0</div>
       <div class="sub">listas</div>
     </div>
   </div>
@@ -131,248 +172,544 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <button class="f" onclick="setArea('Comunidad',this)">Comunidad</button>
   </div>
 
-  <div id="sec-urg-wrap">
+  <!-- URGENTES -->
+  <div id="wrap-urg">
     <div class="sec-label"><span>Urgentes</span><span id="cnt-urg">4 tareas</span></div>
-    <div class="tasks" id="sec-urg">
-      <div class="task" data-urg="Urgente" data-area="Comunidad" onclick="toggle(this)">
-        <div class="task-head">
-          <div class="dot" style="background:#8B3A3A;"></div>
-          <div class="tname">Contactar usuarios beta para completar perfil (WhatsApp o Zoom grupal)</div>
-          <div class="badges"><span class="badge b-com">Comunidad</span><span class="badge b-urg">Urgente</span></div>
-          <i class="ti ti-chevron-down chev" aria-hidden="true"></i>
+    <div class="grid-wrap">
+      <div class="scroll-btn scroll-left" onclick="scrollSec('urg',-1)"><i class="ti ti-chevron-left"></i></div>
+      <div class="grid-scroll" id="sec-urg">
+
+        <div class="task-card" data-urg="Urgente" data-area="Comunidad" data-id="t1">
+          <div class="card-top" onclick="toggleCard(this.closest('.task-card'))">
+            <div class="card-dot-row">
+              <div class="dot" style="background:#8B3A3A;"></div>
+              <div class="card-status"><span class="status-label" id="lbl-t1">Pendiente</span></div>
+            </div>
+            <div class="card-name">Contactar usuarios beta para completar perfil</div>
+            <div class="card-badges"><span class="badge b-com">Comunidad</span><span class="badge b-urg">Urgente</span></div>
+          </div>
+          <button class="card-expand-btn" onclick="toggleCard(this.closest('.task-card'))">
+            <span>Ver detalle</span><i class="ti ti-chevron-down"></i>
+          </button>
+          <div class="card-body">
+            <div class="card-body-inner">
+              <div class="cb-label">Descripción</div>
+              <div class="cb-desc">Lograr 4–5 perfiles completos antes de activar Meta Ads. WhatsApp individual o Zoom grupal corto.</div>
+              <div class="cb-label">Estado</div>
+              <div class="estado-row">
+                <button class="estado-btn sel-pend" onclick="setEstado('t1','Pendiente',this)">⏳ Pendiente</button>
+                <button class="estado-btn" onclick="setEstado('t1','En curso',this)">🔄 En curso</button>
+                <button class="estado-btn" onclick="setEstado('t1','Lista',this)">✅ Lista</button>
+              </div>
+              <div class="cb-label">Notas</div>
+              <div class="notes-list" id="notes-t1">
+                <div class="note-item"><div class="note-meta">Sep 2026</div><div class="note-txt">9 usuarios registrados, solo 1 con perfil completo. Prioridad #1 antes de cualquier marketing.</div></div>
+              </div>
+              <div class="add-note-area">
+                <textarea id="ta-t1" rows="2" placeholder="Agregar nota, chat donde trabajamos esto..."></textarea>
+                <button class="add-note-btn" onclick="addNote('t1')">+ Agregar nota</button>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="task-body">
-          <div class="tdesc">Meta principal: lograr que 4–5 veterinarios tengan su perfil completo antes de activar Meta Ads. Canal sugerido: WhatsApp individual o Zoom grupal corto.</div>
-          <div class="notes-lbl">Notas</div>
-          <div class="note"><div class="nmeta">Sep 2026</div><div class="ntxt">Hay 9 usuarios registrados pero solo 1 tiene perfil completo. Es la prioridad número 1 antes de cualquier acción de marketing.</div></div>
+
+        <div class="task-card" data-urg="Urgente" data-area="Marketing" data-id="t2">
+          <div class="card-top" onclick="toggleCard(this.closest('.task-card'))">
+            <div class="card-dot-row">
+              <div class="dot" style="background:#8B3A3A;"></div>
+              <div class="card-status"><span class="status-label" id="lbl-t2">Pendiente</span></div>
+            </div>
+            <div class="card-name">Revisar y mejorar logo para Instagram (Canva)</div>
+            <div class="card-badges"><span class="badge b-mkt">Marketing</span><span class="badge b-urg">Urgente</span></div>
+          </div>
+          <button class="card-expand-btn" onclick="toggleCard(this.closest('.task-card'))">
+            <span>Ver detalle</span><i class="ti ti-chevron-down"></i>
+          </button>
+          <div class="card-body">
+            <div class="card-body-inner">
+              <div class="cb-label">Descripción</div>
+              <div class="cb-desc">Logo actual no convence. Revisar en Canva. Bloqueo: sin logo definitivo no se abre Instagram.</div>
+              <div class="cb-label">Estado</div>
+              <div class="estado-row">
+                <button class="estado-btn sel-pend" onclick="setEstado('t2','Pendiente',this)">⏳ Pendiente</button>
+                <button class="estado-btn" onclick="setEstado('t2','En curso',this)">🔄 En curso</button>
+                <button class="estado-btn" onclick="setEstado('t2','Lista',this)">✅ Lista</button>
+              </div>
+              <div class="cb-label">Notas</div>
+              <div class="notes-list" id="notes-t2">
+                <div class="note-item"><div class="note-meta">Sep 2026</div><div class="note-txt">Prioridad 2. De esto depende arrancar la identidad visual de redes.</div></div>
+              </div>
+              <div class="add-note-area">
+                <textarea id="ta-t2" rows="2" placeholder="Agregar nota..."></textarea>
+                <button class="add-note-btn" onclick="addNote('t2')">+ Agregar nota</button>
+              </div>
+            </div>
+          </div>
         </div>
+
+        <div class="task-card" data-urg="Urgente" data-area="Marketing" data-id="t3">
+          <div class="card-top" onclick="toggleCard(this.closest('.task-card'))">
+            <div class="card-dot-row">
+              <div class="dot" style="background:#8B3A3A;"></div>
+              <div class="card-status"><span class="status-label" id="lbl-t3">Pendiente</span></div>
+            </div>
+            <div class="card-name">Preparar 9 posts antes de lanzar Instagram</div>
+            <div class="card-badges"><span class="badge b-mkt">Marketing</span><span class="badge b-urg">Urgente</span></div>
+          </div>
+          <button class="card-expand-btn" onclick="toggleCard(this.closest('.task-card'))">
+            <span>Ver detalle</span><i class="ti ti-chevron-down"></i>
+          </button>
+          <div class="card-body">
+            <div class="card-body-inner">
+              <div class="cb-label">Descripción</div>
+              <div class="cb-desc">Nunca lanzar cuenta vacía. Contenido listo antes de la primera publicación pública.</div>
+              <div class="cb-label">Estado</div>
+              <div class="estado-row">
+                <button class="estado-btn sel-pend" onclick="setEstado('t3','Pendiente',this)">⏳ Pendiente</button>
+                <button class="estado-btn" onclick="setEstado('t3','En curso',this)">🔄 En curso</button>
+                <button class="estado-btn" onclick="setEstado('t3','Lista',this)">✅ Lista</button>
+              </div>
+              <div class="cb-label">Notas</div>
+              <div class="notes-list" id="notes-t3">
+                <div class="note-item"><div class="note-meta">Sep 2026</div><div class="note-txt">Prioridad 3. Depende del logo resuelto. Hay doc de estrategia con ideas de contenido.</div></div>
+              </div>
+              <div class="add-note-area">
+                <textarea id="ta-t3" rows="2" placeholder="Agregar nota..."></textarea>
+                <button class="add-note-btn" onclick="addNote('t3')">+ Agregar nota</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="task-card" data-urg="Urgente" data-area="Producto" data-id="t4">
+          <div class="card-top" onclick="toggleCard(this.closest('.task-card'))">
+            <div class="card-dot-row">
+              <div class="dot" style="background:#8B3A3A;"></div>
+              <div class="card-status"><span class="status-label" id="lbl-t4">Pendiente</span></div>
+            </div>
+            <div class="card-name">Autenticar dominio portalveterinario.ar en Brevo (DNS)</div>
+            <div class="card-badges"><span class="badge b-prod">Producto</span><span class="badge b-urg">Urgente</span></div>
+          </div>
+          <button class="card-expand-btn" onclick="toggleCard(this.closest('.task-card'))">
+            <span>Ver detalle</span><i class="ti ti-chevron-down"></i>
+          </button>
+          <div class="card-body">
+            <div class="card-body-inner">
+              <div class="cb-label">Descripción</div>
+              <div class="cb-desc">Para enviar emails desde portalveterinario.ar con buena reputación. DNS en Vercel o NIC.ar — confirmar cuál.</div>
+              <div class="cb-label">Estado</div>
+              <div class="estado-row">
+                <button class="estado-btn sel-pend" onclick="setEstado('t4','Pendiente',this)">⏳ Pendiente</button>
+                <button class="estado-btn" onclick="setEstado('t4','En curso',this)">🔄 En curso</button>
+                <button class="estado-btn" onclick="setEstado('t4','Lista',this)">✅ Lista</button>
+              </div>
+              <div class="cb-label">Notas</div>
+              <div class="notes-list" id="notes-t4">
+                <div class="note-item"><div class="note-meta">Sep 2026</div><div class="note-txt">Template del email casi listo: Montserrat, header petróleo, badge naranja beta, tarjeta Socio Vitalicio dorada.</div></div>
+              </div>
+              <div class="add-note-area">
+                <textarea id="ta-t4" rows="2" placeholder="Agregar nota..."></textarea>
+                <button class="add-note-btn" onclick="addNote('t4')">+ Agregar nota</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
-      <div class="task" data-urg="Urgente" data-area="Marketing" onclick="toggle(this)">
-        <div class="task-head">
-          <div class="dot" style="background:#8B3A3A;"></div>
-          <div class="tname">Revisar y mejorar logo para Instagram (Canva)</div>
-          <div class="badges"><span class="badge b-mkt">Marketing</span><span class="badge b-urg">Urgente</span></div>
-          <i class="ti ti-chevron-down chev" aria-hidden="true"></i>
-        </div>
-        <div class="task-body">
-          <div class="tdesc">El logo actual existe pero no convence. Hay que revisarlo en Canva antes de publicar nada. Bloqueo hard: sin logo definitivo no se abre Instagram.</div>
-          <div class="notes-lbl">Notas</div>
-          <div class="note"><div class="nmeta">Sep 2026</div><div class="ntxt">Prioridad 2. Depende de esta decisión para arrancar toda la identidad visual de redes. No lanzar Instagram hasta resolver esto.</div></div>
-        </div>
-      </div>
-      <div class="task" data-urg="Urgente" data-area="Marketing" onclick="toggle(this)">
-        <div class="task-head">
-          <div class="dot" style="background:#8B3A3A;"></div>
-          <div class="tname">Preparar 9 posts antes de lanzar Instagram</div>
-          <div class="badges"><span class="badge b-mkt">Marketing</span><span class="badge b-urg">Urgente</span></div>
-          <i class="ti ti-chevron-down chev" aria-hidden="true"></i>
-        </div>
-        <div class="task-body">
-          <div class="tdesc">Nunca lanzar una cuenta vacía. Tener el feed con contenido listo antes de la primera publicación. Contenido enfocado en veterinarios profesionales.</div>
-          <div class="notes-lbl">Notas</div>
-          <div class="note"><div class="nmeta">Sep 2026</div><div class="ntxt">Prioridad 3. Depende del logo resuelto. Ya existe un documento de estrategia con fases e ideas de contenido.</div></div>
-        </div>
-      </div>
-      <div class="task" data-urg="Urgente" data-area="Producto" onclick="toggle(this)">
-        <div class="task-head">
-          <div class="dot" style="background:#8B3A3A;"></div>
-          <div class="tname">Autenticar dominio portalveterinario.ar en Brevo (DNS)</div>
-          <div class="badges"><span class="badge b-prod">Producto</span><span class="badge b-urg">Urgente</span></div>
-          <i class="ti ti-chevron-down chev" aria-hidden="true"></i>
-        </div>
-        <div class="task-body">
-          <div class="tdesc">Necesario para enviar el email de bienvenida desde portalveterinario.ar con buena reputación. DNS en Vercel o NIC.ar — confirmar cuál.</div>
-          <div class="notes-lbl">Notas</div>
-          <div class="note"><div class="nmeta">Sep 2026</div><div class="ntxt">El template HTML del email está casi listo: Montserrat, header petróleo, badge naranja beta, tarjeta Socio Vitalicio dorada. Solo falta la autenticación DNS.</div></div>
-        </div>
-      </div>
+      <div class="scroll-btn scroll-right" onclick="scrollSec('urg',1)"><i class="ti ti-chevron-right"></i></div>
     </div>
   </div>
 
-  <div id="sec-sem-wrap">
+  <!-- ESTA SEMANA -->
+  <div id="wrap-sem">
     <div class="sec-label"><span>Esta semana</span><span id="cnt-sem">4 tareas</span></div>
-    <div class="tasks" id="sec-sem">
-      <div class="task" data-urg="Esta semana" data-area="SEO" onclick="toggle(this)">
-        <div class="task-head">
-          <div class="dot" style="background:#B8924A;"></div>
-          <div class="tname">Configurar Google Search Console</div>
-          <div class="badges"><span class="badge b-seo">SEO</span><span class="badge b-sem">Esta semana</span></div>
-          <i class="ti ti-chevron-down chev" aria-hidden="true"></i>
+    <div class="grid-wrap">
+      <div class="scroll-btn scroll-left" onclick="scrollSec('sem',-1)"><i class="ti ti-chevron-left"></i></div>
+      <div class="grid-scroll" id="sec-sem">
+
+        <div class="task-card" data-urg="Esta semana" data-area="SEO" data-id="t5">
+          <div class="card-top" onclick="toggleCard(this.closest('.task-card'))">
+            <div class="card-dot-row">
+              <div class="dot" style="background:#B8924A;"></div>
+              <div class="card-status"><span class="status-label" id="lbl-t5">Pendiente</span></div>
+            </div>
+            <div class="card-name">Configurar Google Search Console</div>
+            <div class="card-badges"><span class="badge b-seo">SEO</span><span class="badge b-sem">Esta semana</span></div>
+          </div>
+          <button class="card-expand-btn" onclick="toggleCard(this.closest('.task-card'))">
+            <span>Ver detalle</span><i class="ti ti-chevron-down"></i>
+          </button>
+          <div class="card-body">
+            <div class="card-body-inner">
+              <div class="cb-label">Descripción</div>
+              <div class="cb-desc">Indexar portalveterinario.ar para medir visibilidad orgánica desde el día 1 del lanzamiento.</div>
+              <div class="cb-label">Estado</div>
+              <div class="estado-row">
+                <button class="estado-btn sel-pend" onclick="setEstado('t5','Pendiente',this)">⏳ Pendiente</button>
+                <button class="estado-btn" onclick="setEstado('t5','En curso',this)">🔄 En curso</button>
+                <button class="estado-btn" onclick="setEstado('t5','Lista',this)">✅ Lista</button>
+              </div>
+              <div class="cb-label">Notas</div>
+              <div class="notes-list" id="notes-t5">
+                <div class="note-item"><div class="note-meta">Sep 2026</div><div class="note-txt">Prioridad 4. Se puede hacer en paralelo con logo y posts.</div></div>
+              </div>
+              <div class="add-note-area">
+                <textarea id="ta-t5" rows="2" placeholder="Agregar nota..."></textarea>
+                <button class="add-note-btn" onclick="addNote('t5')">+ Agregar nota</button>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="task-body">
-          <div class="tdesc">Indexar portalveterinario.ar en Google Search Console para medir visibilidad orgánica desde el día 1 del lanzamiento.</div>
-          <div class="notes-lbl">Notas</div>
-          <div class="note"><div class="nmeta">Sep 2026</div><div class="ntxt">Prioridad 4. Se puede hacer en paralelo mientras se trabaja el logo y los posts.</div></div>
+
+        <div class="task-card" data-urg="Esta semana" data-area="Producto" data-id="t6">
+          <div class="card-top" onclick="toggleCard(this.closest('.task-card'))">
+            <div class="card-dot-row">
+              <div class="dot" style="background:#B8924A;"></div>
+              <div class="card-status"><span class="status-label" id="lbl-t6">Pendiente</span></div>
+            </div>
+            <div class="card-name">Integrar email de bienvenida con Brevo API</div>
+            <div class="card-badges"><span class="badge b-prod">Producto</span><span class="badge b-sem">Esta semana</span></div>
+          </div>
+          <button class="card-expand-btn" onclick="toggleCard(this.closest('.task-card'))">
+            <span>Ver detalle</span><i class="ti ti-chevron-down"></i>
+          </button>
+          <div class="card-body">
+            <div class="card-body-inner">
+              <div class="cb-label">Descripción</div>
+              <div class="cb-desc">Conectar envío automático desde handleRegistroDrawer. Depende de que el DNS esté autenticado.</div>
+              <div class="cb-label">Estado</div>
+              <div class="estado-row">
+                <button class="estado-btn sel-pend" onclick="setEstado('t6','Pendiente',this)">⏳ Pendiente</button>
+                <button class="estado-btn" onclick="setEstado('t6','En curso',this)">🔄 En curso</button>
+                <button class="estado-btn" onclick="setEstado('t6','Lista',this)">✅ Lista</button>
+              </div>
+              <div class="cb-label">Notas</div>
+              <div class="notes-list" id="notes-t6">
+                <div class="note-item"><div class="note-meta">Sep 2026</div><div class="note-txt">Template casi listo. Va después de la autenticación DNS.</div></div>
+              </div>
+              <div class="add-note-area">
+                <textarea id="ta-t6" rows="2" placeholder="Agregar nota..."></textarea>
+                <button class="add-note-btn" onclick="addNote('t6')">+ Agregar nota</button>
+              </div>
+            </div>
+          </div>
         </div>
+
+        <div class="task-card" data-urg="Esta semana" data-area="Producto" data-id="t7">
+          <div class="card-top" onclick="toggleCard(this.closest('.task-card'))">
+            <div class="card-dot-row">
+              <div class="dot" style="background:#B8924A;"></div>
+              <div class="card-status"><span class="status-label" id="lbl-t7">Pendiente</span></div>
+            </div>
+            <div class="card-name">Implementar reglas de seguridad Firestore</div>
+            <div class="card-badges"><span class="badge b-prod">Producto</span><span class="badge b-sem">Esta semana</span></div>
+          </div>
+          <button class="card-expand-btn" onclick="toggleCard(this.closest('.task-card'))">
+            <span>Ver detalle</span><i class="ti ti-chevron-down"></i>
+          </button>
+          <div class="card-body">
+            <div class="card-body-inner">
+              <div class="cb-label">Descripción</div>
+              <div class="cb-desc">Definir y aplicar reglas de seguridad en Firestore antes del lanzamiento público.</div>
+              <div class="cb-label">Estado</div>
+              <div class="estado-row">
+                <button class="estado-btn sel-pend" onclick="setEstado('t7','Pendiente',this)">⏳ Pendiente</button>
+                <button class="estado-btn" onclick="setEstado('t7','En curso',this)">🔄 En curso</button>
+                <button class="estado-btn" onclick="setEstado('t7','Lista',this)">✅ Lista</button>
+              </div>
+              <div class="cb-label">Notas</div>
+              <div class="notes-list" id="notes-t7">
+                <div class="note-item"><div class="note-meta">Sep 2026</div><div class="note-txt">Crítico. No puede quedar para después del lanzamiento.</div></div>
+              </div>
+              <div class="add-note-area">
+                <textarea id="ta-t7" rows="2" placeholder="Agregar nota..."></textarea>
+                <button class="add-note-btn" onclick="addNote('t7')">+ Agregar nota</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="task-card" data-urg="Esta semana" data-area="Marketing" data-id="t8">
+          <div class="card-top" onclick="toggleCard(this.closest('.task-card'))">
+            <div class="card-dot-row">
+              <div class="dot" style="background:#B8924A;"></div>
+              <div class="card-status"><span class="status-label" id="lbl-t8">Pendiente</span></div>
+            </div>
+            <div class="card-name">Configurar Meta Ads (cuando haya 4–5 perfiles completos)</div>
+            <div class="card-badges"><span class="badge b-mkt">Marketing</span><span class="badge b-sem">Esta semana</span></div>
+          </div>
+          <button class="card-expand-btn" onclick="toggleCard(this.closest('.task-card'))">
+            <span>Ver detalle</span><i class="ti ti-chevron-down"></i>
+          </button>
+          <div class="card-body">
+            <div class="card-body-inner">
+              <div class="cb-label">Descripción</div>
+              <div class="cb-desc">Activar campañas pagas en Meta una vez que haya suficiente contenido para justificar la inversión.</div>
+              <div class="cb-label">Estado</div>
+              <div class="estado-row">
+                <button class="estado-btn sel-pend" onclick="setEstado('t8','Pendiente',this)">⏳ Pendiente</button>
+                <button class="estado-btn" onclick="setEstado('t8','En curso',this)">🔄 En curso</button>
+                <button class="estado-btn" onclick="setEstado('t8','Lista',this)">✅ Lista</button>
+              </div>
+              <div class="cb-label">Notas</div>
+              <div class="notes-list" id="notes-t8">
+                <div class="note-item"><div class="note-meta">Sep 2026</div><div class="note-txt">Prioridad 5, último paso. Depende de tener 4–5 perfiles completos.</div></div>
+              </div>
+              <div class="add-note-area">
+                <textarea id="ta-t8" rows="2" placeholder="Agregar nota..."></textarea>
+                <button class="add-note-btn" onclick="addNote('t8')">+ Agregar nota</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
-      <div class="task" data-urg="Esta semana" data-area="Producto" onclick="toggle(this)">
-        <div class="task-head">
-          <div class="dot" style="background:#B8924A;"></div>
-          <div class="tname">Integrar email de bienvenida con Brevo API</div>
-          <div class="badges"><span class="badge b-prod">Producto</span><span class="badge b-sem">Esta semana</span></div>
-          <i class="ti ti-chevron-down chev" aria-hidden="true"></i>
-        </div>
-        <div class="task-body">
-          <div class="tdesc">Conectar el envío automático desde handleRegistroDrawer usando la API de Brevo. Depende de que el DNS esté autenticado primero.</div>
-          <div class="notes-lbl">Notas</div>
-          <div class="note"><div class="nmeta">Sep 2026</div><div class="ntxt">El template está casi listo. Este paso va después de la autenticación DNS.</div></div>
-        </div>
-      </div>
-      <div class="task" data-urg="Esta semana" data-area="Producto" onclick="toggle(this)">
-        <div class="task-head">
-          <div class="dot" style="background:#B8924A;"></div>
-          <div class="tname">Implementar reglas de seguridad Firestore</div>
-          <div class="badges"><span class="badge b-prod">Producto</span><span class="badge b-sem">Esta semana</span></div>
-          <i class="ti ti-chevron-down chev" aria-hidden="true"></i>
-        </div>
-        <div class="task-body">
-          <div class="tdesc">Definir y aplicar reglas de seguridad en Firestore antes del lanzamiento público para proteger los datos de los usuarios.</div>
-          <div class="notes-lbl">Notas</div>
-          <div class="note"><div class="nmeta">Sep 2026</div><div class="ntxt">Pendiente técnico crítico. No puede quedar para después del lanzamiento.</div></div>
-        </div>
-      </div>
-      <div class="task" data-urg="Esta semana" data-area="Marketing" onclick="toggle(this)">
-        <div class="task-head">
-          <div class="dot" style="background:#B8924A;"></div>
-          <div class="tname">Configurar Meta Ads (cuando haya 4–5 perfiles completos)</div>
-          <div class="badges"><span class="badge b-mkt">Marketing</span><span class="badge b-sem">Esta semana</span></div>
-          <i class="ti ti-chevron-down chev" aria-hidden="true"></i>
-        </div>
-        <div class="task-body">
-          <div class="tdesc">Activar campañas pagas en Meta una vez que haya suficiente contenido en la plataforma para justificar la inversión.</div>
-          <div class="notes-lbl">Notas</div>
-          <div class="note"><div class="nmeta">Sep 2026</div><div class="ntxt">Prioridad 5, el último paso del orden acordado. Depende de tener 4–5 perfiles completos.</div></div>
-        </div>
-      </div>
+      <div class="scroll-btn scroll-right" onclick="scrollSec('sem',1)"><i class="ti ti-chevron-right"></i></div>
     </div>
   </div>
 
-  <div id="sec-mes-wrap">
+  <!-- ESTE MES -->
+  <div id="wrap-mes">
     <div class="sec-label"><span>Este mes</span><span id="cnt-mes">4 tareas</span></div>
-    <div class="tasks" id="sec-mes">
-      <div class="task" data-urg="Este mes" data-area="Producto" onclick="toggle(this)">
-        <div class="task-head">
-          <div class="dot" style="background:#6B8C7A;"></div>
-          <div class="tname">Portabilidad editor-clinica.jsx y editor-proveedores.jsx</div>
-          <div class="badges"><span class="badge b-prod">Producto</span><span class="badge b-mes">Este mes</span></div>
-          <i class="ti ti-chevron-down chev" aria-hidden="true"></i>
+    <div class="grid-wrap">
+      <div class="scroll-btn scroll-left" onclick="scrollSec('mes',-1)"><i class="ti ti-chevron-left"></i></div>
+      <div class="grid-scroll" id="sec-mes">
+
+        <div class="task-card" data-urg="Este mes" data-area="Producto" data-id="t9">
+          <div class="card-top" onclick="toggleCard(this.closest('.task-card'))">
+            <div class="card-dot-row">
+              <div class="dot" style="background:#6B8C7A;"></div>
+              <div class="card-status"><span class="status-label" id="lbl-t9">Pendiente</span></div>
+            </div>
+            <div class="card-name">Portabilidad editor-clinica.jsx y editor-proveedores.jsx</div>
+            <div class="card-badges"><span class="badge b-prod">Producto</span><span class="badge b-mes">Este mes</span></div>
+          </div>
+          <button class="card-expand-btn" onclick="toggleCard(this.closest('.task-card'))">
+            <span>Ver detalle</span><i class="ti ti-chevron-down"></i>
+          </button>
+          <div class="card-body">
+            <div class="card-body-inner">
+              <div class="cb-label">Descripción</div>
+              <div class="cb-desc">Portar mejoras del editor-profesional (dual-collection, cropper, galería, WhatsApp, Instagram) a los otros editores.</div>
+              <div class="cb-label">Estado</div>
+              <div class="estado-row">
+                <button class="estado-btn sel-pend" onclick="setEstado('t9','Pendiente',this)">⏳ Pendiente</button>
+                <button class="estado-btn" onclick="setEstado('t9','En curso',this)">🔄 En curso</button>
+                <button class="estado-btn" onclick="setEstado('t9','Lista',this)">✅ Lista</button>
+              </div>
+              <div class="cb-label">Notas</div>
+              <div class="notes-list" id="notes-t9">
+                <div class="note-item"><div class="note-meta">Sep 2026</div><div class="note-txt">editor-profesional.jsx ya tiene todo. Hay que replicar en clínica y proveedores.</div></div>
+              </div>
+              <div class="add-note-area">
+                <textarea id="ta-t9" rows="2" placeholder="Agregar nota..."></textarea>
+                <button class="add-note-btn" onclick="addNote('t9')">+ Agregar nota</button>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="task-body">
-          <div class="tdesc">Portar las mejoras del editor-profesional (dual-collection, cropper, galería, WhatsApp, Instagram) a los editores de clínica y proveedores.</div>
-          <div class="notes-lbl">Notas</div>
-          <div class="note"><div class="nmeta">Sep 2026</div><div class="ntxt">editor-profesional.jsx ya tiene todas las funciones. Hay que replicarlas en los otros dos editores.</div></div>
+
+        <div class="task-card" data-urg="Este mes" data-area="Producto" data-id="t10">
+          <div class="card-top" onclick="toggleCard(this.closest('.task-card'))">
+            <div class="card-dot-row">
+              <div class="dot" style="background:#6B8C7A;"></div>
+              <div class="card-status"><span class="status-label" id="lbl-t10">Pendiente</span></div>
+            </div>
+            <div class="card-name">Completar setup Firebase Cloud Functions</div>
+            <div class="card-badges"><span class="badge b-prod">Producto</span><span class="badge b-mes">Este mes</span></div>
+          </div>
+          <button class="card-expand-btn" onclick="toggleCard(this.closest('.task-card'))">
+            <span>Ver detalle</span><i class="ti ti-chevron-down"></i>
+          </button>
+          <div class="card-body">
+            <div class="card-body-inner">
+              <div class="cb-label">Descripción</div>
+              <div class="cb-desc">Habilitar eliminación completa de usuarios (Auth + Firestore). Requiere Firebase Cloud Functions.</div>
+              <div class="cb-label">Estado</div>
+              <div class="estado-row">
+                <button class="estado-btn sel-pend" onclick="setEstado('t10','Pendiente',this)">⏳ Pendiente</button>
+                <button class="estado-btn" onclick="setEstado('t10','En curso',this)">🔄 En curso</button>
+                <button class="estado-btn" onclick="setEstado('t10','Lista',this)">✅ Lista</button>
+              </div>
+              <div class="cb-label">Notas</div>
+              <div class="notes-list" id="notes-t10">
+                <div class="note-item"><div class="note-meta">Sep 2026</div><div class="note-txt">Stalled en error de red en npm install -g firebase-tools. Pendiente retomar.</div></div>
+              </div>
+              <div class="add-note-area">
+                <textarea id="ta-t10" rows="2" placeholder="Agregar nota..."></textarea>
+                <button class="add-note-btn" onclick="addNote('t10')">+ Agregar nota</button>
+              </div>
+            </div>
+          </div>
         </div>
+
+        <div class="task-card" data-urg="Este mes" data-area="Producto" data-id="t11">
+          <div class="card-top" onclick="toggleCard(this.closest('.task-card'))">
+            <div class="card-dot-row">
+              <div class="dot" style="background:#6B8C7A;"></div>
+              <div class="card-status"><span class="status-label" id="lbl-t11">Pendiente</span></div>
+            </div>
+            <div class="card-name">Refactorizar componentes reutilizables del editor</div>
+            <div class="card-badges"><span class="badge b-prod">Producto</span><span class="badge b-mes">Este mes</span></div>
+          </div>
+          <button class="card-expand-btn" onclick="toggleCard(this.closest('.task-card'))">
+            <span>Ver detalle</span><i class="ti ti-chevron-down"></i>
+          </button>
+          <div class="card-body">
+            <div class="card-body-inner">
+              <div class="cb-label">Descripción</div>
+              <div class="cb-desc">Extraer Tooltip, InputGroup, SelectGroup, Accordion, ToggleSwitch, SimpleCropper a EditorComponents.jsx.</div>
+              <div class="cb-label">Estado</div>
+              <div class="estado-row">
+                <button class="estado-btn sel-pend" onclick="setEstado('t11','Pendiente',this)">⏳ Pendiente</button>
+                <button class="estado-btn" onclick="setEstado('t11','En curso',this)">🔄 En curso</button>
+                <button class="estado-btn" onclick="setEstado('t11','Lista',this)">✅ Lista</button>
+              </div>
+              <div class="cb-label">Notas</div>
+              <div class="notes-list" id="notes-t11">
+                <div class="note-item"><div class="note-meta">Sep 2026</div><div class="note-txt">Hacerlo antes de seguir agregando features a los editores.</div></div>
+              </div>
+              <div class="add-note-area">
+                <textarea id="ta-t11" rows="2" placeholder="Agregar nota..."></textarea>
+                <button class="add-note-btn" onclick="addNote('t11')">+ Agregar nota</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="task-card" data-urg="Este mes" data-area="SEO" data-id="t12">
+          <div class="card-top" onclick="toggleCard(this.closest('.task-card'))">
+            <div class="card-dot-row">
+              <div class="dot" style="background:#6B8C7A;"></div>
+              <div class="card-status"><span class="status-label" id="lbl-t12">Pendiente</span></div>
+            </div>
+            <div class="card-name">Optimizar SEO on-page de perfiles públicos</div>
+            <div class="card-badges"><span class="badge b-seo">SEO</span><span class="badge b-mes">Este mes</span></div>
+          </div>
+          <button class="card-expand-btn" onclick="toggleCard(this.closest('.task-card'))">
+            <span>Ver detalle</span><i class="ti ti-chevron-down"></i>
+          </button>
+          <div class="card-body">
+            <div class="card-body-inner">
+              <div class="cb-label">Descripción</div>
+              <div class="cb-desc">Meta tags, Open Graph, títulos dinámicos por perfil para aparecer en búsquedas de "veterinario en [ciudad]".</div>
+              <div class="cb-label">Estado</div>
+              <div class="estado-row">
+                <button class="estado-btn sel-pend" onclick="setEstado('t12','Pendiente',this)">⏳ Pendiente</button>
+                <button class="estado-btn" onclick="setEstado('t12','En curso',this)">🔄 En curso</button>
+                <button class="estado-btn" onclick="setEstado('t12','Lista',this)">✅ Lista</button>
+              </div>
+              <div class="cb-label">Notas</div>
+              <div class="notes-list" id="notes-t12">
+                <div class="note-item"><div class="note-meta">Sep 2026</div><div class="note-txt">Crítico para indexación de perfiles individuales.</div></div>
+              </div>
+              <div class="add-note-area">
+                <textarea id="ta-t12" rows="2" placeholder="Agregar nota..."></textarea>
+                <button class="add-note-btn" onclick="addNote('t12')">+ Agregar nota</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
-      <div class="task" data-urg="Este mes" data-area="Producto" onclick="toggle(this)">
-        <div class="task-head">
-          <div class="dot" style="background:#6B8C7A;"></div>
-          <div class="tname">Completar setup Firebase Cloud Functions</div>
-          <div class="badges"><span class="badge b-prod">Producto</span><span class="badge b-mes">Este mes</span></div>
-          <i class="ti ti-chevron-down chev" aria-hidden="true"></i>
-        </div>
-        <div class="task-body">
-          <div class="tdesc">Habilitar eliminación completa de usuarios (Auth + Firestore simultáneo). Requiere Firebase Cloud Functions.</div>
-          <div class="notes-lbl">Notas</div>
-          <div class="note"><div class="nmeta">Sep 2026</div><div class="ntxt">Stalled en error de red durante npm install -g firebase-tools. Instalación pendiente de retomar.</div></div>
-        </div>
-      </div>
-      <div class="task" data-urg="Este mes" data-area="Producto" onclick="toggle(this)">
-        <div class="task-head">
-          <div class="dot" style="background:#6B8C7A;"></div>
-          <div class="tname">Refactorizar componentes reutilizables del editor</div>
-          <div class="badges"><span class="badge b-prod">Producto</span><span class="badge b-mes">Este mes</span></div>
-          <i class="ti ti-chevron-down chev" aria-hidden="true"></i>
-        </div>
-        <div class="task-body">
-          <div class="tdesc">Extraer Tooltip, InputGroup, SelectGroup, Accordion, ToggleSwitch, SimpleCropper a EditorComponents.jsx para evitar duplicación.</div>
-          <div class="notes-lbl">Notas</div>
-          <div class="note"><div class="nmeta">Sep 2026</div><div class="ntxt">Mejora de código planificada. Hacerlo antes de seguir agregando features a los editores.</div></div>
-        </div>
-      </div>
-      <div class="task" data-urg="Este mes" data-area="SEO" onclick="toggle(this)">
-        <div class="task-head">
-          <div class="dot" style="background:#6B8C7A;"></div>
-          <div class="tname">Optimizar SEO on-page de perfiles públicos</div>
-          <div class="badges"><span class="badge b-seo">SEO</span><span class="badge b-mes">Este mes</span></div>
-          <i class="ti ti-chevron-down chev" aria-hidden="true"></i>
-        </div>
-        <div class="task-body">
-          <div class="tdesc">Meta tags, Open Graph, títulos dinámicos por perfil para mejorar la indexación de cada veterinario en Google.</div>
-          <div class="notes-lbl">Notas</div>
-          <div class="note"><div class="nmeta">Sep 2026</div><div class="ntxt">Crítico para que cada perfil aparezca en búsquedas de "veterinario en [ciudad]".</div></div>
-        </div>
-      </div>
+      <div class="scroll-btn scroll-right" onclick="scrollSec('mes',1)"><i class="ti ti-chevron-right"></i></div>
     </div>
   </div>
 
-  <div id="sec-fut-wrap">
+  <!-- A FUTURO -->
+  <div id="wrap-fut">
     <div class="sec-label"><span>A futuro</span><span id="cnt-fut">5 tareas</span></div>
-    <div class="tasks" id="sec-fut">
-      <div class="task" data-urg="A futuro" data-area="Producto" onclick="toggle(this)">
-        <div class="task-head">
-          <div class="dot" style="background:#A89880;"></div>
-          <div class="tname">QR descargable en editor-profesional.jsx</div>
-          <div class="badges"><span class="badge b-prod">Producto</span><span class="badge b-fut">A futuro</span></div>
-          <i class="ti ti-chevron-down chev" aria-hidden="true"></i>
+    <div class="grid-wrap">
+      <div class="scroll-btn scroll-left" onclick="scrollSec('fut',-1)"><i class="ti ti-chevron-left"></i></div>
+      <div class="grid-scroll" id="sec-fut">
+
+        <div class="task-card" data-urg="A futuro" data-area="Producto" data-id="t13">
+          <div class="card-top" onclick="toggleCard(this.closest('.task-card'))">
+            <div class="card-dot-row"><div class="dot" style="background:#A89880;"></div><div class="card-status"><span class="status-label" id="lbl-t13">Pendiente</span></div></div>
+            <div class="card-name">QR descargable en editor-profesional.jsx</div>
+            <div class="card-badges"><span class="badge b-prod">Producto</span><span class="badge b-fut">A futuro</span></div>
+          </div>
+          <button class="card-expand-btn" onclick="toggleCard(this.closest('.task-card'))"><span>Ver detalle</span><i class="ti ti-chevron-down"></i></button>
+          <div class="card-body"><div class="card-body-inner">
+            <div class="cb-label">Descripción</div><div class="cb-desc">QR por perfil con qrcode.react. Deshabilitado con tooltip hasta que el dominio esté live.</div>
+            <div class="cb-label">Estado</div>
+            <div class="estado-row"><button class="estado-btn sel-pend" onclick="setEstado('t13','Pendiente',this)">⏳ Pendiente</button><button class="estado-btn" onclick="setEstado('t13','En curso',this)">🔄 En curso</button><button class="estado-btn" onclick="setEstado('t13','Lista',this)">✅ Lista</button></div>
+            <div class="cb-label">Notas</div>
+            <div class="notes-list" id="notes-t13"><div class="note-item"><div class="nmeta">Sep 2026</div><div class="note-txt">Bloque 3 — post-lanzamiento.</div></div></div>
+            <div class="add-note-area"><textarea id="ta-t13" rows="2" placeholder="Agregar nota..."></textarea><button class="add-note-btn" onclick="addNote('t13')">+ Agregar nota</button></div>
+          </div></div>
         </div>
-        <div class="task-body">
-          <div class="tdesc">Código QR por perfil usando qrcode.react. Mostrar como deshabilitado con tooltip hasta que el dominio esté live.</div>
-          <div class="notes-lbl">Notas</div>
-          <div class="note"><div class="nmeta">Sep 2026</div><div class="ntxt">Bloque 3 — SVG descargable. Post-lanzamiento.</div></div>
+
+        <div class="task-card" data-urg="A futuro" data-area="Producto" data-id="t14">
+          <div class="card-top" onclick="toggleCard(this.closest('.task-card'))">
+            <div class="card-dot-row"><div class="dot" style="background:#A89880;"></div><div class="card-status"><span class="status-label" id="lbl-t14">Pendiente</span></div></div>
+            <div class="card-name">Integrar MercadoPago — modelo de suscripción</div>
+            <div class="card-badges"><span class="badge b-prod">Producto</span><span class="badge b-fut">A futuro</span></div>
+          </div>
+          <button class="card-expand-btn" onclick="toggleCard(this.closest('.task-card'))"><span>Ver detalle</span><i class="ti ti-chevron-down"></i></button>
+          <div class="card-body"><div class="card-body-inner">
+            <div class="cb-label">Descripción</div><div class="cb-desc">Monetización via suscripción mensual. Requiere backend y definición del modelo de negocio.</div>
+            <div class="cb-label">Estado</div>
+            <div class="estado-row"><button class="estado-btn sel-pend" onclick="setEstado('t14','Pendiente',this)">⏳ Pendiente</button><button class="estado-btn" onclick="setEstado('t14','En curso',this)">🔄 En curso</button><button class="estado-btn" onclick="setEstado('t14','Lista',this)">✅ Lista</button></div>
+            <div class="cb-label">Notas</div>
+            <div class="notes-list" id="notes-t14"><div class="note-item"><div class="nmeta">Sep 2026</div><div class="note-txt">Bloque 3 — requiere backend. Post-lanzamiento.</div></div></div>
+            <div class="add-note-area"><textarea id="ta-t14" rows="2" placeholder="Agregar nota..."></textarea><button class="add-note-btn" onclick="addNote('t14')">+ Agregar nota</button></div>
+          </div></div>
         </div>
+
+        <div class="task-card" data-urg="A futuro" data-area="Marketing" data-id="t15">
+          <div class="card-top" onclick="toggleCard(this.closest('.task-card'))">
+            <div class="card-dot-row"><div class="dot" style="background:#A89880;"></div><div class="card-status"><span class="status-label" id="lbl-t15">Pendiente</span></div></div>
+            <div class="card-name">Canal de WhatsApp para usuarios registrados</div>
+            <div class="card-badges"><span class="badge b-mkt">Marketing</span><span class="badge b-fut">A futuro</span></div>
+          </div>
+          <button class="card-expand-btn" onclick="toggleCard(this.closest('.task-card'))"><span>Ver detalle</span><i class="ti ti-chevron-down"></i></button>
+          <div class="card-body"><div class="card-body-inner">
+            <div class="cb-label">Descripción</div><div class="cb-desc">Canal de comunicación directa con la comunidad. Alta apertura, bajo costo.</div>
+            <div class="cb-label">Estado</div>
+            <div class="estado-row"><button class="estado-btn sel-pend" onclick="setEstado('t15','Pendiente',this)">⏳ Pendiente</button><button class="estado-btn" onclick="setEstado('t15','En curso',this)">🔄 En curso</button><button class="estado-btn" onclick="setEstado('t15','Lista',this)">✅ Lista</button></div>
+            <div class="cb-label">Notas</div>
+            <div class="notes-list" id="notes-t15"><div class="note-item"><div class="nmeta">Sep 2026</div><div class="note-txt">Fase 2 — cuando crezca la base de usuarios.</div></div></div>
+            <div class="add-note-area"><textarea id="ta-t15" rows="2" placeholder="Agregar nota..."></textarea><button class="add-note-btn" onclick="addNote('t15')">+ Agregar nota</button></div>
+          </div></div>
+        </div>
+
+        <div class="task-card" data-urg="A futuro" data-area="SEO" data-id="t16">
+          <div class="card-top" onclick="toggleCard(this.closest('.task-card'))">
+            <div class="card-dot-row"><div class="dot" style="background:#A89880;"></div><div class="card-status"><span class="status-label" id="lbl-t16">Pendiente</span></div></div>
+            <div class="card-name">Sitemap.xml dinámico con URLs de perfiles</div>
+            <div class="card-badges"><span class="badge b-seo">SEO</span><span class="badge b-fut">A futuro</span></div>
+          </div>
+          <button class="card-expand-btn" onclick="toggleCard(this.closest('.task-card'))"><span>Ver detalle</span><i class="ti ti-chevron-down"></i></button>
+          <div class="card-body"><div class="card-body-inner">
+            <div class="cb-label">Descripción</div><div class="cb-desc">Generar sitemap dinámico para enviar a Google Search Console.</div>
+            <div class="cb-label">Estado</div>
+            <div class="estado-row"><button class="estado-btn sel-pend" onclick="setEstado('t16','Pendiente',this)">⏳ Pendiente</button><button class="estado-btn" onclick="setEstado('t16','En curso',this)">🔄 En curso</button><button class="estado-btn" onclick="setEstado('t16','Lista',this)">✅ Lista</button></div>
+            <div class="cb-label">Notas</div>
+            <div class="notes-list" id="notes-t16"><div class="note-item"><div class="nmeta">Sep 2026</div><div class="note-txt">Fase 3 SEO — después del lanzamiento.</div></div></div>
+            <div class="add-note-area"><textarea id="ta-t16" rows="2" placeholder="Agregar nota..."></textarea><button class="add-note-btn" onclick="addNote('t16')">+ Agregar nota</button></div>
+          </div></div>
+        </div>
+
+        <div class="task-card" data-urg="A futuro" data-area="Producto" data-id="t17">
+          <div class="card-top" onclick="toggleCard(this.closest('.task-card'))">
+            <div class="card-dot-row"><div class="dot" style="background:#A89880;"></div><div class="card-status"><span class="status-label" id="lbl-t17">Pendiente</span></div></div>
+            <div class="card-name">Login con Google</div>
+            <div class="card-badges"><span class="badge b-prod">Producto</span><span class="badge b-fut">A futuro</span></div>
+          </div>
+          <button class="card-expand-btn" onclick="toggleCard(this.closest('.task-card'))"><span>Ver detalle</span><i class="ti ti-chevron-down"></i></button>
+          <div class="card-body"><div class="card-body-inner">
+            <div class="cb-label">Descripción</div><div class="cb-desc">Autenticación con Google para simplificar registro y login de usuarios.</div>
+            <div class="cb-label">Estado</div>
+            <div class="estado-row"><button class="estado-btn sel-pend" onclick="setEstado('t17','Pendiente',this)">⏳ Pendiente</button><button class="estado-btn" onclick="setEstado('t17','En curso',this)">🔄 En curso</button><button class="estado-btn" onclick="setEstado('t17','Lista',this)">✅ Lista</button></div>
+            <div class="cb-label">Notas</div>
+            <div class="notes-list" id="notes-t17"><div class="note-item"><div class="nmeta">Sep 2026</div><div class="note-txt">Bloque 3 — post-lanzamiento.</div></div></div>
+            <div class="add-note-area"><textarea id="ta-t17" rows="2" placeholder="Agregar nota..."></textarea><button class="add-note-btn" onclick="addNote('t17')">+ Agregar nota</button></div>
+          </div></div>
+        </div>
+
       </div>
-      <div class="task" data-urg="A futuro" data-area="Producto" onclick="toggle(this)">
-        <div class="task-head">
-          <div class="dot" style="background:#A89880;"></div>
-          <div class="tname">Integrar MercadoPago — modelo de suscripción</div>
-          <div class="badges"><span class="badge b-prod">Producto</span><span class="badge b-fut">A futuro</span></div>
-          <i class="ti ti-chevron-down chev" aria-hidden="true"></i>
-        </div>
-        <div class="task-body">
-          <div class="tdesc">Monetización via suscripción mensual. Requiere backend y definición del modelo de negocio.</div>
-          <div class="notes-lbl">Notas</div>
-          <div class="note"><div class="nmeta">Sep 2026</div><div class="ntxt">Bloque 3 — requiere backend. Post-lanzamiento.</div></div>
-        </div>
-      </div>
-      <div class="task" data-urg="A futuro" data-area="Marketing" onclick="toggle(this)">
-        <div class="task-head">
-          <div class="dot" style="background:#A89880;"></div>
-          <div class="tname">Canal de WhatsApp para usuarios registrados</div>
-          <div class="badges"><span class="badge b-mkt">Marketing</span><span class="badge b-fut">A futuro</span></div>
-          <i class="ti ti-chevron-down chev" aria-hidden="true"></i>
-        </div>
-        <div class="task-body">
-          <div class="tdesc">Canal de comunicación directa con la comunidad. Alta apertura de mensajes, bajo costo.</div>
-          <div class="notes-lbl">Notas</div>
-          <div class="note"><div class="nmeta">Sep 2026</div><div class="ntxt">Fase 2 — una vez que la base de usuarios crezca.</div></div>
-        </div>
-      </div>
-      <div class="task" data-urg="A futuro" data-area="SEO" onclick="toggle(this)">
-        <div class="task-head">
-          <div class="dot" style="background:#A89880;"></div>
-          <div class="tname">Sitemap.xml dinámico con URLs de perfiles</div>
-          <div class="badges"><span class="badge b-seo">SEO</span><span class="badge b-fut">A futuro</span></div>
-          <i class="ti ti-chevron-down chev" aria-hidden="true"></i>
-        </div>
-        <div class="task-body">
-          <div class="tdesc">Generar sitemap dinámico con todas las URLs de perfiles para enviar a Google Search Console.</div>
-          <div class="notes-lbl">Notas</div>
-          <div class="note"><div class="nmeta">Sep 2026</div><div class="ntxt">Fase 3 SEO — después del lanzamiento cuando haya suficientes perfiles.</div></div>
-        </div>
-      </div>
-      <div class="task" data-urg="A futuro" data-area="Producto" onclick="toggle(this)">
-        <div class="task-head">
-          <div class="dot" style="background:#A89880;"></div>
-          <div class="tname">Login con Google</div>
-          <div class="badges"><span class="badge b-prod">Producto</span><span class="badge b-fut">A futuro</span></div>
-          <i class="ti ti-chevron-down chev" aria-hidden="true"></i>
-        </div>
-        <div class="task-body">
-          <div class="tdesc">Agregar autenticación con Google para simplificar el registro y login de usuarios.</div>
-          <div class="notes-lbl">Notas</div>
-          <div class="note"><div class="nmeta">Sep 2026</div><div class="ntxt">Bloque 3 — post-lanzamiento.</div></div>
-        </div>
-      </div>
+      <div class="scroll-btn scroll-right" onclick="scrollSec('fut',1)"><i class="ti ti-chevron-right"></i></div>
     </div>
   </div>
 
@@ -382,7 +719,63 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 
 <script>
 let filtroUrg=null,filtroArea=null;
-function toggle(el){el.classList.toggle('open');}
+const estados={};
+
+function toggleCard(card){card.classList.toggle('open');}
+
+function scrollSec(sec,dir){
+  const el=document.getElementById('sec-'+sec);
+  el.scrollBy({left:dir*300,behavior:'smooth'});
+}
+
+function setEstado(id,estado,btn){
+  estados[id]=estado;
+  // Actualizar botones
+  const row=btn.closest('.estado-row');
+  row.querySelectorAll('.estado-btn').forEach(b=>{
+    b.classList.remove('sel-pend','sel-start','sel-done');
+  });
+  if(estado==='Pendiente')btn.classList.add('sel-pend');
+  else if(estado==='En curso')btn.classList.add('sel-start');
+  else btn.classList.add('sel-done');
+  // Actualizar label
+  const lbl=document.getElementById('lbl-'+id);
+  if(lbl)lbl.textContent=estado;
+  // Actualizar card
+  const card=btn.closest('.task-card');
+  card.classList.remove('started','done');
+  if(estado==='En curso')card.classList.add('started');
+  if(estado==='Lista')card.classList.add('done');
+  // Actualizar KPIs
+  actualizarKPIs();
+}
+
+function addNote(id){
+  const ta=document.getElementById('ta-'+id);
+  const txt=ta.value.trim();
+  if(!txt)return;
+  const lista=document.getElementById('notes-'+id);
+  const hoy=new Date();
+  const fecha=hoy.toLocaleDateString('es-AR',{month:'short',year:'numeric'});
+  const nota=document.createElement('div');
+  nota.className='note-item';
+  nota.innerHTML='<div class="note-meta">'+fecha+'</div><div class="note-txt">'+txt+'</div>';
+  lista.appendChild(nota);
+  ta.value='';
+}
+
+function actualizarKPIs(){
+  const cards=document.querySelectorAll('.task-card');
+  let prog=0,done=0;
+  cards.forEach(c=>{
+    const id=c.dataset.id;
+    if(estados[id]==='En curso')prog++;
+    if(estados[id]==='Lista')done++;
+  });
+  document.getElementById('n-prog').textContent=prog;
+  document.getElementById('n-done').textContent=done;
+}
+
 function setFiltro(val,btn){
   document.querySelectorAll('.f').forEach(b=>{
     if(['Todas','Urgente','Esta semana','Este mes','A futuro'].includes(b.textContent.trim()))b.classList.remove('on');
@@ -391,6 +784,7 @@ function setFiltro(val,btn){
   filtroUrg=val==='todo'?null:val;
   aplicar();
 }
+
 function setArea(val,btn){
   document.querySelectorAll('.f').forEach(b=>{
     if(['Producto','Marketing','SEO','Comunidad'].includes(b.textContent.trim()))b.classList.remove('on');
@@ -399,25 +793,192 @@ function setArea(val,btn){
   if(filtroArea)btn.classList.add('on');
   aplicar();
 }
+
 function aplicar(){
-  const secs={urg:'Urgente',sem:'Esta semana',mes:'Este mes',fut:'A futuro'};
+  const secs=['urg','sem','mes','fut'];
   let total=0;
-  Object.entries(secs).forEach(([key,urgVal])=>{
-    const tasks=document.querySelectorAll('#sec-'+key+' .task');
+  secs.forEach(key=>{
+    const cards=document.querySelectorAll('#sec-'+key+' .task-card');
     let vis=0;
-    tasks.forEach(t=>{
-      const ok=(!filtroUrg||t.dataset.urg===filtroUrg)&&(!filtroArea||t.dataset.area===filtroArea);
-      t.style.display=ok?'':'none';
+    cards.forEach(c=>{
+      const ok=(!filtroUrg||c.dataset.urg===filtroUrg)&&(!filtroArea||c.dataset.area===filtroArea);
+      c.style.display=ok?'':'none';
       if(ok)vis++;
     });
     total+=vis;
-    document.getElementById('sec-'+key+'-wrap').style.display=vis?'':'none';
-    const el=document.getElementById('cnt-'+key);
-    if(el)el.textContent=vis+(vis===1?' tarea':' tareas');
+    document.getElementById('wrap-'+key).style.display=vis?'':'none';
+    const cnt=document.getElementById('cnt-'+key);
+    if(cnt)cnt.textContent=vis+(vis===1?' tarea':' tareas');
   });
   document.getElementById('empty').style.display=total?'none':'block';
 }
-aplicar();
+</script>
+
+<!-- BOTÓN FLOTANTE -->
+<button class="fab" onclick="abrirModal()" title="Agregar tarea">
+  <i class="ti ti-plus"></i>
+</button>
+
+<!-- MODAL NUEVA TAREA -->
+<div class="modal-bg" id="modal-bg" onclick="cerrarModal(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">Nueva tarea</div>
+      <button class="modal-close" onclick="cerrarModalBtn()"><i class="ti ti-x"></i></button>
+    </div>
+    <div class="modal-body">
+      <div class="field">
+        <label>Título <span class="req">*</span></label>
+        <input type="text" id="new-titulo" placeholder="Ej: Revisar copy del landing...">
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label>Área <span class="req">*</span></label>
+          <select id="new-area">
+            <option value="">— Elegir —</option>
+            <option>Producto</option>
+            <option>Marketing</option>
+            <option>SEO</option>
+            <option>Comunidad</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Urgencia <span class="req">*</span></label>
+          <select id="new-urg">
+            <option value="">— Elegir —</option>
+            <option>Urgente</option>
+            <option>Esta semana</option>
+            <option>Este mes</option>
+            <option>A futuro</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label>Descripción</label>
+        <textarea id="new-desc" rows="3" placeholder="¿En qué consiste esta tarea?"></textarea>
+      </div>
+      <div class="field">
+        <label>Nota inicial</label>
+        <textarea id="new-nota" rows="2" placeholder="Contexto, chat donde trabajamos esto, etc..."></textarea>
+      </div>
+      <div class="modal-error" id="modal-error">Completá el título, área y urgencia.</div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="cerrarModalBtn()">Cancelar</button>
+      <button class="btn-crear" onclick="crearTarea()">Agregar tarea</button>
+    </div>
+  </div>
+</div>
+
+<style>
+/* FAB */
+.fab{position:fixed;bottom:32px;right:32px;width:52px;height:52px;border-radius:50%;background:var(--bosque);color:#fff;border:none;cursor:pointer;font-size:24px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(61,90,79,0.35);transition:all 0.2s;z-index:200;}
+.fab:hover{background:#2e4a40;transform:scale(1.07);}
+
+/* MODAL */
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(44,40,32,0.45);z-index:300;align-items:center;justify-content:center;padding:20px;}
+.modal-bg.open{display:flex;}
+.modal{background:var(--card);border-radius:16px;width:100%;max-width:520px;box-shadow:0 8px 40px rgba(44,40,32,0.18);overflow:hidden;}
+.modal-header{padding:20px 24px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1.5px solid var(--border-c);}
+.modal-title{font-size:17px;font-weight:500;color:var(--txt);}
+.modal-close{background:none;border:none;cursor:pointer;color:var(--txt3);font-size:20px;line-height:1;padding:2px;}
+.modal-close:hover{color:var(--txt);}
+.modal-body{padding:20px 24px;display:flex;flex-direction:column;gap:14px;}
+.field{display:flex;flex-direction:column;gap:6px;}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.field label{font-size:12px;font-weight:600;color:var(--txt2);text-transform:uppercase;letter-spacing:0.5px;}
+.req{color:var(--burg);}
+.field input,.field select,.field textarea{border:1.5px solid var(--border-c);border-radius:8px;padding:10px 12px;font-size:14px;color:var(--txt);font-family:inherit;background:var(--bg);outline:none;transition:border-color 0.15s;resize:none;}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--bosque);}
+.modal-error{font-size:12px;color:var(--burg);display:none;}
+.modal-error.show{display:block;}
+.modal-footer{padding:16px 24px;border-top:1.5px solid var(--border-c);display:flex;justify-content:flex-end;gap:10px;}
+.btn-cancel{padding:9px 20px;border-radius:8px;border:1.5px solid var(--border-c);background:none;color:var(--txt2);font-size:14px;font-weight:500;cursor:pointer;font-family:inherit;}
+.btn-cancel:hover{border-color:var(--txt2);}
+.btn-crear{padding:9px 20px;border-radius:8px;border:none;background:var(--bosque);color:#fff;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;}
+.btn-crear:hover{background:#2e4a40;}
+</style>
+
+<script>
+let taskCounter=18;
+
+function abrirModal(){document.getElementById('modal-bg').classList.add('open');document.getElementById('new-titulo').focus();}
+function cerrarModalBtn(){document.getElementById('modal-bg').classList.remove('open');limpiarModal();}
+function cerrarModal(e){if(e.target===document.getElementById('modal-bg'))cerrarModalBtn();}
+function limpiarModal(){
+  ['new-titulo','new-desc','new-nota'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('new-area').value='';
+  document.getElementById('new-urg').value='';
+  document.getElementById('modal-error').classList.remove('show');
+}
+
+function crearTarea(){
+  const titulo=document.getElementById('new-titulo').value.trim();
+  const area=document.getElementById('new-area').value;
+  const urg=document.getElementById('new-urg').value;
+  const desc=document.getElementById('new-desc').value.trim();
+  const nota=document.getElementById('new-nota').value.trim();
+  if(!titulo||!area||!urg){document.getElementById('modal-error').classList.add('show');return;}
+
+  const id='t'+taskCounter++;
+  const secMap={'Urgente':'urg','Esta semana':'sem','Este mes':'mes','A futuro':'fut'};
+  const dotMap={'Urgente':'#8B3A3A','Esta semana':'#B8924A','Este mes':'#6B8C7A','A futuro':'#A89880'};
+  const badgeMap={'Producto':'b-prod','Marketing':'b-mkt','SEO':'b-seo','Comunidad':'b-com'};
+  const urgBadgeMap={'Urgente':'b-urg','Esta semana':'b-sem','Este mes':'b-mes','A futuro':'b-fut'};
+
+  const hoy=new Date().toLocaleDateString('es-AR',{month:'short',year:'numeric'});
+  const notaHTML=nota?`<div class="note-item"><div class="note-meta">${hoy}</div><div class="note-txt">${nota}</div></div>`:'';
+
+  const html=`
+  <div class="task-card" data-urg="${urg}" data-area="${area}" data-id="${id}">
+    <div class="card-top" onclick="toggleCard(this.closest('.task-card'))">
+      <div class="card-dot-row">
+        <div class="dot" style="background:${dotMap[urg]};"></div>
+        <div class="card-status"><span class="status-label" id="lbl-${id}">Pendiente</span></div>
+      </div>
+      <div class="card-name">${titulo}</div>
+      <div class="card-badges"><span class="badge ${badgeMap[area]}">${area}</span><span class="badge ${urgBadgeMap[urg]}">${urg}</span></div>
+    </div>
+    <button class="card-expand-btn" onclick="toggleCard(this.closest('.task-card'))">
+      <span>Ver detalle</span><i class="ti ti-chevron-down"></i>
+    </button>
+    <div class="card-body"><div class="card-body-inner">
+      <div class="cb-label">Descripción</div>
+      <div class="cb-desc">${desc||'Sin descripción.'}</div>
+      <div class="cb-label">Estado</div>
+      <div class="estado-row">
+        <button class="estado-btn sel-pend" onclick="setEstado('${id}','Pendiente',this)">⏳ Pendiente</button>
+        <button class="estado-btn" onclick="setEstado('${id}','En curso',this)">🔄 En curso</button>
+        <button class="estado-btn" onclick="setEstado('${id}','Lista',this)">✅ Lista</button>
+      </div>
+      <div class="cb-label">Notas</div>
+      <div class="notes-list" id="notes-${id}">${notaHTML}</div>
+      <div class="add-note-area">
+        <textarea id="ta-${id}" rows="2" placeholder="Agregar nota..."></textarea>
+        <button class="add-note-btn" onclick="addNote('${id}')">+ Agregar nota</button>
+      </div>
+    </div></div>
+  </div>`;
+
+  const sec=document.getElementById('sec-'+secMap[urg]);
+  sec.insertAdjacentHTML('beforeend',html);
+
+  // Actualizar contador
+  const cnt=document.getElementById('cnt-'+secMap[urg]);
+  const wrap=document.getElementById('wrap-'+secMap[urg]);
+  if(cnt){
+    const n=sec.querySelectorAll('.task-card').length;
+    cnt.textContent=n+(n===1?' tarea':' tareas');
+  }
+  wrap.style.display='';
+
+  // Actualizar total KPI
+  const total=document.querySelectorAll('.task-card').length;
+  document.getElementById('n-total').textContent=total;
+
+  cerrarModalBtn();
+  sec.lastElementChild.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
 </script>
 </body>
 </html>
