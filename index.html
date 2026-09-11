@@ -87,8 +87,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
 .sec-label.lbl-fut{color:var(--txt3);}
 
 /* GRID HORIZONTAL con scroll */
-.grid-wrap{position:relative;margin-bottom:28px;padding:0 44px;}
-.grid-scroll{display:flex;gap:14px;overflow-x:auto;padding:4px 4px 12px;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;align-items:stretch;}
+.grid-wrap{position:relative;margin-bottom:28px;padding:0 40px;}
+.grid-scroll{display:flex;gap:14px;overflow-x:auto;padding:4px 16px 12px 4px;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;align-items:stretch;}
 .grid-scroll::-webkit-scrollbar{height:4px;}
 .grid-scroll::-webkit-scrollbar-track{background:transparent;}
 .grid-scroll::-webkit-scrollbar-thumb{background:var(--border-c);border-radius:4px;}
@@ -128,7 +128,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
 .task-card[data-area="SEO"] .card-area-label{color:#2E4A8B;}
 .task-card[data-area="Comunidad"] .card-area-label{color:#7A6A1A;}
 
-.card-name{font-size:15px;font-weight:500;color:var(--txt);line-height:1.4;margin-bottom:14px;flex:1;padding-right:20px;}
+.card-name{font-size:15px;font-weight:500;color:var(--txt);line-height:1.4;margin-bottom:14px;flex:1;padding-right:20px;min-height:44px;}
 
 .card-badges{display:flex;gap:6px;flex-wrap:wrap;}
 .badge{font-size:11px;padding:4px 10px;border-radius:20px;font-weight:600;white-space:nowrap;}
@@ -280,22 +280,20 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
     </div>
     <!-- Caja derecha: filtros y orden -->
     <div class="top-card">
-      <div class="top-card-title">Filtros y vista</div>
+      <div class="top-card-title">Filtros</div>
       <div class="filter-card">
         <div class="filter-group">
           <div class="filter-group-label">Tiempo</div>
           <div class="pill-group" id="pill-tiempo">
-            <button class="pill on" onclick="setPillFiltro('todo',this,'tiempo')">Todas</button>
-            <button class="pill" onclick="setPillFiltro('Urgente',this,'tiempo')">Urgente</button>
-            <button class="pill" onclick="setPillFiltro('Esta semana',this,'tiempo')">Esta semana</button>
-            <button class="pill" onclick="setPillFiltro('Este mes',this,'tiempo')">Este mes</button>
-            <button class="pill" onclick="setPillFiltro('A futuro',this,'tiempo')">A futuro</button>
+            <button class="pill" onclick="setPillFiltro('Urgente',this)">Urgente</button>
+            <button class="pill" onclick="setPillFiltro('Esta semana',this)">Esta semana</button>
+            <button class="pill" onclick="setPillFiltro('Este mes',this)">Este mes</button>
+            <button class="pill" onclick="setPillFiltro('A futuro',this)">A futuro</button>
           </div>
         </div>
         <div class="filter-group">
           <div class="filter-group-label">Área</div>
           <div class="pill-group" id="pill-area">
-            <button class="pill on" onclick="setPillArea('todo',this)">Todas</button>
             <button class="pill" onclick="setPillArea('Producto',this)">Producto</button>
             <button class="pill" onclick="setPillArea('Marketing',this)">Marketing</button>
             <button class="pill" onclick="setPillArea('SEO',this)">SEO</button>
@@ -920,16 +918,18 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
 <script>
 let filtroUrg=null,filtroArea=null;
 
-function setPillFiltro(val,btn,group){
+function setPillFiltro(val,btn){
+  const isOn=btn.classList.contains('on');
   document.querySelectorAll('#pill-tiempo .pill').forEach(b=>b.classList.remove('on'));
-  btn.classList.add('on');
-  filtroUrg=val==='todo'?null:val;
+  if(!isOn){btn.classList.add('on');filtroUrg=val;}
+  else{filtroUrg=null;}
   aplicar();
 }
 function setPillArea(val,btn){
+  const isOn=btn.classList.contains('on');
   document.querySelectorAll('#pill-area .pill').forEach(b=>b.classList.remove('on'));
-  btn.classList.add('on');
-  filtroArea=val==='todo'?null:val;
+  if(!isOn){btn.classList.add('on');filtroArea=val;}
+  else{filtroArea=null;}
   aplicar();
 }
 
