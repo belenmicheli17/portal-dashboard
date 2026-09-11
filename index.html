@@ -984,7 +984,6 @@ function toggleQaExtra(){
   icon.className=extra.classList.contains('open')?'ti ti-chevron-up':'ti ti-chevron-down';
 }
 
-let filtroUrg=null,filtroArea=null;
 const estados={};
 
 function eliminarCard(btn){
@@ -1099,88 +1098,7 @@ function aplicar(){
   });
   document.getElementById('empty').style.display=total?'none':'block';
 }
-</script>
 
-
-<!-- MODAL NUEVA TAREA -->
-<div class="modal-bg" id="modal-bg" onclick="cerrarModal(event)">
-  <div class="modal">
-    <div class="modal-header">
-      <div class="modal-title">Nueva tarea</div>
-      <button class="modal-close" onclick="cerrarModalBtn()"><i class="ti ti-x"></i></button>
-    </div>
-    <div class="modal-body">
-      <div class="field">
-        <label>Título <span class="req">*</span></label>
-        <input type="text" id="new-titulo" placeholder="Ej: Revisar copy del landing...">
-      </div>
-      <div class="field-row">
-        <div class="field">
-          <label>Área <span class="req">*</span></label>
-          <select id="new-area">
-            <option value="">— Elegir —</option>
-            <option>Producto</option>
-            <option>Marketing</option>
-            <option>SEO</option>
-            <option>Comunidad</option>
-          </select>
-        </div>
-        <div class="field">
-          <label>Urgencia <span class="req">*</span></label>
-          <select id="new-urg">
-            <option value="">— Elegir —</option>
-            <option>Urgente</option>
-            <option>Esta semana</option>
-            <option>Este mes</option>
-            <option>A futuro</option>
-          </select>
-        </div>
-      </div>
-      <div class="field">
-        <label>Descripción</label>
-        <textarea id="new-desc" rows="3" placeholder="¿En qué consiste esta tarea?"></textarea>
-      </div>
-      <div class="field">
-        <label>Nota inicial</label>
-        <textarea id="new-nota" rows="2" placeholder="Contexto, chat donde trabajamos esto, etc..."></textarea>
-      </div>
-      <div class="modal-error" id="modal-error">Completá el título, área y urgencia.</div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn-cancel" onclick="cerrarModalBtn()">Cancelar</button>
-      <button class="btn-crear" onclick="crearTarea()">Agregar tarea</button>
-    </div>
-  </div>
-</div>
-
-<style>
-
-
-/* MODAL */
-.modal-bg{display:none;position:fixed;inset:0;background:rgba(44,40,32,0.45);z-index:300;align-items:center;justify-content:center;padding:20px;}
-.modal-bg.open{display:flex;}
-.modal{background:var(--card);border-radius:16px;width:100%;max-width:520px;box-shadow:0 8px 40px rgba(44,40,32,0.18);overflow:hidden;}
-.modal-header{padding:20px 24px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1.5px solid var(--border-c);}
-.modal-title{font-size:17px;font-weight:500;color:var(--txt);}
-.modal-close{background:none;border:none;cursor:pointer;color:var(--txt3);font-size:20px;line-height:1;padding:2px;}
-.modal-close:hover{color:var(--txt);}
-.modal-body{padding:20px 24px;display:flex;flex-direction:column;gap:14px;}
-.field{display:flex;flex-direction:column;gap:6px;}
-.field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
-.field label{font-size:12px;font-weight:600;color:var(--txt2);text-transform:uppercase;letter-spacing:0.5px;}
-.req{color:var(--burg);}
-.field input,.field select,.field textarea{border:1.5px solid var(--border-c);border-radius:8px;padding:10px 12px;font-size:14px;color:var(--txt);font-family:inherit;background:var(--bg);outline:none;transition:border-color 0.15s;resize:none;}
-.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--bosque);}
-.modal-error{font-size:12px;color:var(--burg);display:none;}
-.modal-error.show{display:block;}
-.modal-footer{padding:16px 24px;border-top:1.5px solid var(--border-c);display:flex;justify-content:flex-end;gap:10px;}
-.btn-cancel{padding:9px 20px;border-radius:8px;border:1.5px solid var(--border-c);background:none;color:var(--txt2);font-size:14px;font-weight:500;cursor:pointer;font-family:inherit;}
-.btn-cancel:hover{border-color:var(--txt2);}
-.btn-crear{padding:9px 20px;border-radius:8px;border:none;background:var(--bosque);color:#fff;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;}
-.btn-crear:hover{background:#2e4a40;}
-</style>
-
-<script>
 let taskCounter=18;
 
 function quickAdd(){
