@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>El Portal — Panel de Admin</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3CradialGradient id='g' cx='50%25' cy='40%25' r='55%25'%3E%3Cstop offset='0%25' stop-color='%2345a0a0'/%3E%3Cstop offset='100%25' stop-color='%231a4f4f'/%3E%3C/radialGradient%3E%3C/defs%3E%3Cpolygon points='16,3 18,11 26,11 20,16 22,24 16,20 10,24 12,16 6,11 14,11' fill='url(%23g)'/%3E%3Cpolygon points='16,7 17.2,11.5 21.5,11.5 18,14 19.2,18.5 16,16.5 12.8,18.5 14,14 10.5,11.5 14.8,11.5' fill='white' opacity='0.35'/%3E%3C/svg%3E">>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3CradialGradient id='g' cx='50%25' cy='40%25' r='55%25'%3E%3Cstop offset='0%25' stop-color='%2345a0a0'/%3E%3Cstop offset='100%25' stop-color='%231a4f4f'/%3E%3C/radialGradient%3E%3C/defs%3E%3Cpolygon points='16,3 18,11 26,11 20,16 22,24 16,20 10,24 12,16 6,11 14,11' fill='url(%23g)'/%3E%3Cpolygon points='16,7 17.2,11.5 21.5,11.5 18,14 19.2,18.5 16,16.5 12.8,18.5 14,14 10.5,11.5 14.8,11.5' fill='white' opacity='0.35'/%3E%3C/svg%3E">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 :root{
@@ -34,7 +34,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
 .wrap{padding:24px;}
 
 /* KPIs */
-.top-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:24px;align-items:stretch;}
+.top-row{display:grid;grid-template-columns:0.75fr 1.5fr 0.75fr;gap:14px;margin-bottom:20px;align-items:stretch;}
 .top-card{background:var(--card);border-radius:12px;padding:20px 24px;border:1.5px solid var(--border-c);}
 .top-card-title{font-size:12px;font-weight:600;color:var(--txt3);text-transform:uppercase;letter-spacing:0.7px;margin-bottom:14px;}
 /* Caja izquierda — resumen de áreas */
@@ -71,28 +71,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
 .pill{padding:5px 12px;border-radius:20px;font-size:12px;border:1.5px solid var(--border-c);color:var(--txt2);cursor:pointer;background:var(--bg);transition:all 0.15s;font-family:inherit;white-space:nowrap;}
 .pill:hover{border-color:var(--bosque);color:var(--bosque);}
 .pill.on{background:var(--bosque);color:#fff;border-color:var(--bosque);}
-.pill-layout{display:flex;gap:5px;}
-.pill-layout .pill{display:flex;align-items:center;gap:5px;}
 /* FILTERS */
 .filters-bar{display:none;}
 .filters{display:flex;gap:7px;flex-wrap:wrap;flex:1;}
-.layout-btn{flex-shrink:0;width:38px;height:38px;border-radius:8px;border:1.5px solid var(--border-c);background:var(--card);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--txt2);font-size:18px;transition:all 0.15s;}
-.layout-btn:hover{border-color:var(--bosque);color:var(--bosque);}
-/* Layout vertical */
-.wrap.layout-vertical .grid-wrap{padding:0 4px;}
-.wrap.layout-vertical .grid-scroll{flex-direction:column;overflow-x:visible;overflow-y:visible;align-items:stretch;}
-.wrap.layout-vertical .task-card{width:100%;min-width:unset;flex-direction:row;align-items:center;}
-.wrap.layout-vertical .task-card .card-header-bar{width:6px;height:auto;min-height:100%;flex-shrink:0;}
-.wrap.layout-vertical .task-card .card-top{flex:1;flex-direction:row;align-items:center;gap:12px;padding:12px 16px;}
-.wrap.layout-vertical .task-card .card-name{min-height:unset;margin-bottom:0;flex:1;}
-.wrap.layout-vertical .task-card .card-area-label{display:none;}
-.wrap.layout-vertical .task-card .card-expand-btn{width:auto;border-top:none;border-left:1px solid rgba(0,0,0,0.07);padding:0 14px;height:100%;}
-.wrap.layout-vertical .task-card.open{flex-direction:column;}
-.wrap.layout-vertical .task-card.open .card-header-bar{width:100%;height:6px;min-height:unset;}
-.wrap.layout-vertical .task-card.open .card-top{flex-direction:column;align-items:flex-start;}
-.wrap.layout-vertical .task-card.open .card-name{margin-bottom:10px;}
-.wrap.layout-vertical .task-card.open .card-expand-btn{width:100%;border-top:1px solid rgba(0,0,0,0.07);border-left:none;height:auto;padding:10px 18px;}
-.wrap.layout-vertical .scroll-btn{display:none;}
 .f{padding:7px 16px;border-radius:20px;font-size:13px;border:1.5px solid var(--border-c);color:var(--txt2);cursor:pointer;background:var(--card);transition:all 0.15s;font-family:inherit;}
 .f:hover{border-color:var(--bosque);color:var(--bosque);}
 .f.on{background:var(--bosque);color:#fff;border-color:var(--bosque);}
@@ -321,12 +302,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
             <button class="pill" onclick="setPillArea('Comunidad',this)">Comunidad</button>
           </div>
         </div>
-        <div class="filter-group">
-          <div class="filter-group-label">Vista</div>
-          <div class="pill-layout">
-            <button class="pill on" id="pill-h" onclick="setPillLayout('horizontal')"><i class="ti ti-layout-rows"></i> Horizontal</button>
-            <button class="pill" id="pill-v" onclick="setPillLayout('vertical')"><i class="ti ti-layout-list"></i> Vertical</button>
-          </div>
         </div>
       </div>
     </div>
@@ -344,7 +319,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
     <button class="f" onclick="setArea('SEO',this)">SEO</button>
     <button class="f" onclick="setArea('Comunidad',this)">Comunidad</button>
   </div>
-  <button class="layout-btn" id="layout-btn" onclick="toggleLayout()" title="Cambiar vista"><i class="ti ti-layout-rows" id="layout-icon"></i></button>
   </div>
 
   <!-- URGENTES -->
@@ -944,7 +918,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
 </div>
 
 <script>
-let filtroUrg=null,filtroArea=null,isVertical=false;
+let filtroUrg=null,filtroArea=null;
 
 function setPillFiltro(val,btn,group){
   document.querySelectorAll('#pill-tiempo .pill').forEach(b=>b.classList.remove('on'));
@@ -957,22 +931,6 @@ function setPillArea(val,btn){
   btn.classList.add('on');
   filtroArea=val==='todo'?null:val;
   aplicar();
-}
-function setPillLayout(modo){
-  isVertical=modo==='vertical';
-  document.querySelector('.wrap').classList.toggle('layout-vertical',isVertical);
-  document.getElementById('pill-h').classList.toggle('on',!isVertical);
-  document.getElementById('pill-v').classList.toggle('on',isVertical);
-  // Sync botón viejo si existe
-  const icon=document.getElementById('layout-icon');
-  if(icon)icon.className=isVertical?'ti ti-layout-columns':'ti ti-layout-list';
-}
-function toggleLayout(){
-  isVertical=!isVertical;
-  const wrap=document.querySelector('.wrap');
-  wrap.classList.toggle('layout-vertical',isVertical);
-  document.getElementById('layout-icon').className=isVertical?'ti ti-layout-columns':'ti ti-layout-list';
-  document.getElementById('layout-btn').title=isVertical?'Vista horizontal':'Vista vertical';
 }
 
 function toggleQaExtra(){
