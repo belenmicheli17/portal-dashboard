@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>El Portal — Panel de Fundadora</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background:#F4F7F7; color:#333; }
+  .header { background:#1A3D3D; padding:24px 40px; display:flex; align-items:center; justify-content:space-between; }
+  .header h1 { color:white; font-size:20px; font-weight:600; letter-spacing:-0.3px; }
+  .header .logo { color:white; font-size:22px; font-weight:800; letter-spacing:-1px; }
+  .header .logo span { color:#4DB6AC; }
+  .metrics { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; padding:28px 40px 0; }
+  .metric { background:white; border-radius:16px; padding:20px 24px; border:1px solid #e5e7eb; }
+  .metric .label { font-size:12px; color:#6B7280; font-weight:500; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:8px; }
+  .metric .value { font-size:32px; font-weight:700; margin-bottom:4px; }
+  .metric .sub { font-size:12px; color:#9CA3AF; }
+  .metric.urgente .value { color:#DC2626; }
+  .metric.total .value { color:#1A3D3D; }
+  .metric.progreso .value { color:#D97706; }
+  .metric.listas .value { color:#16A34A; }
+  .filters { padding:24px 40px 16px; display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+  .filters span { font-size:13px; color:#6B7280; margin-right:4px; }
+  .filter-btn { padding:7px 16px; border-radius:20px; border:1px solid #e5e7eb; background:white; font-size:13px; color:#374151; cursor:pointer; transition:all 0.2s; font-family:inherit; }
+  .filter-btn:hover { border-color:#2D6A6A; color:#2D6A6A; }
+  .filter-btn.active { background:#1A3D3D; color:white; border-color:#1A3D3D; }
+  .table-wrap { padding:0 40px 40px; }
+  .table-card { background:white; border-radius:20px; border:1px solid #e5e7eb; overflow:hidden; }
+  .table-header { padding:20px 24px; border-bottom:1px solid #f3f4f6; display:flex; align-items:center; justify-content:space-between; }
+  .table-header h2 { font-size:15px; font-weight:600; color:#111827; }
+  .table-header .count { font-size:13px; color:#6B7280; background:#F4F7F7; padding:4px 12px; border-radius:20px; }
+  table { width:100%; border-collapse:collapse; }
+  thead th { padding:12px 16px; text-align:left; font-size:11px; font-weight:600; color:#6B7280; text-transform:uppercase; letter-spacing:0.5px; background:#F9FAFB; border-bottom:1px solid #f3f4f6; }
+  tbody tr { border-bottom:1px solid #f9fafb; transition:background 0.15s; }
+  tbody tr:hover { background:#F0FDF4 !important; }
+  tbody tr:last-child { border-bottom:none; }
+  .empty { text-align:center; padding:48px; color:#9CA3AF; font-size:14px; }
+  .updated { text-align:center; padding:16px; font-size:11px; color:#9CA3AF; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo">Portal<span>.</span>Veterinario</div>
+  <h1>Panel de Fundadora</h1>
+  <div style="color:#4DB6AC; font-size:13px;">Fase 0 — Cimientos</div>
+</div>
+
+<div class="metrics">
+  <div class="metric urgente">
+    <div class="label">Urgentes pendientes</div>
+    <div class="value">4</div>
+    <div class="sub">requieren atención inmediata</div>
+  </div>
+  <div class="metric total">
+    <div class="label">Total de tareas</div>
+    <div class="value">24</div>
+    <div class="sub">en el tablero</div>
+  </div>
+  <div class="metric progreso">
+    <div class="label">En progreso</div>
+    <div class="value">0</div>
+    <div class="sub">tareas en curso</div>
+  </div>
+  <div class="metric listas">
+    <div class="label">Completadas</div>
+    <div class="value">0</div>
+    <div class="sub">tareas listas</div>
+  </div>
+</div>
+
+<div class="filters">
+  <span>Filtrar:</span>
+  <button class="filter-btn active" onclick="filtrar('todo', this)">Todas</button>
+  <button class="filter-btn" onclick="filtrar('Urgente', this)">🔴 Urgente</button>
+  <button class="filter-btn" onclick="filtrar('Esta semana', this)">🟡 Esta semana</button>
+  <button class="filter-btn" onclick="filtrar('Este mes', this)">🟢 Este mes</button>
+  <button class="filter-btn" onclick="filtrar('A futuro', this)">⚫ A futuro</button>
+  <button class="filter-btn" onclick="filtrarArea('Producto', this)">🛠 Producto</button>
+  <button class="filter-btn" onclick="filtrarArea('Marketing', this)">📣 Marketing</button>
+  <button class="filter-btn" onclick="filtrarArea('SEO', this)">🔍 SEO</button>
+  <button class="filter-btn" onclick="filtrarArea('Comunidad', this)">🤝 Comunidad</button>
+</div>
+
+<div class="table-wrap">
+  <div class="table-card">
+    <div class="table-header">
+      <h2>Tablero de tareas</h2>
+      <div class="count" id="count">24 tareas</div>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th style="width:35%">Tarea</th>
+          <th style="width:12%">Área</th>
+          <th style="width:13%">Urgencia</th>
+          <th style="width:11%">Estado</th>
+          <th>Notas</th>
+        </tr>
+      </thead>
+      <tbody id="tbody">
+        
+    <tr style="background:#ffffff;" data-area="Comunidad" data-urg="Urgente" data-estado="Pendiente">
+      <td style="padding:14px 16px; font-size:13px; color:#111827; line-height:1.4;">Contactar usuarios beta para completar perfil (WhatsApp o Zoom grupal)</td>
+      <td style="padding:14px 16px; text-align:center;">
+        <span style="background:#FEF3C7;color:#D97706;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;white-space:nowrap;">Comunidad</span>
+      </td>
+      <td style="padding:14px 16px; text-align:center;">
+        <span style="display:inline-flex;align-items:center;gap:5px;background:#FEE2E2;color:#DC2626;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;white-space:nowrap;">
+          <span style="width:7px;height:7px;border-radius:50%;background:#DC2626;display:inline-block;"></span>Urgente
+        </span>
+      </td>
+      <td style="padding:14px 16px; text-align:center;">
+        <span style="background:#FEF3C7;color:#D97706;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;">Pendiente</span>
+      </td>
+      <td style="padding:14px 16px; font-size:12px; color:#6B7280; line-height:1.4;">Meta: 4-5 perfiles completos antes de Meta Ads</td>
+    </tr>
+    <tr style="background:#f9fafb;" data-area="Marketing" data-urg="Urgente" data-estado="Pendiente">
+      <td style="padding:14px 16px; font-size:13px; color:#111827; line-height:1.4;">Revisar y mejorar logo para Instagram (Canva)</td>
+      <td style="padding:14px 16px; text-align:center;">
+        <span style="background:#EDE9FE;color:#7C3AED;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;white-space:nowrap;">Marketing</span>
+      </td>
+      <td style="padding:14px 16px; text-align:center;">
+        <span style="display:inline-flex;align-items:center;gap:5px;background:#FEE2E2;color:#DC2626;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;white-space:nowrap;">
+          <span style="width:7px;height:7px;border-radius:50%;background:#DC2626;display:inline-block;"></span>Urgente
+        </span>
+      </td>
+      <td style="padding:14px 16px; text-align:center;">
+        <span style="background:#FEF3C7;color:#D97706;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;">Pendiente</span>
+      </td>
+      <td style="padding:14px 16px; font-size:12px; color:#6B7280; line-height:1.4;">No lanzar Instagram hasta tener esto resuelto</td>
+    </tr>
+    <tr style="background:#ffffff;" data-area="Marketing" data-urg="Urgente" data-estado="Pendiente">
+      <td style="padding:14px 16px; font-size:13px; color:#111827; line-height:1.4;">Completar bio de Instagram con palabras clave</td>
+      <td style="padding:14px 16px; text-align:center;">
+        <span style="background:#EDE9FE;color:#7C3AED;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;white-space:nowrap;">Marketing</span>
+      </td>
+      <td style="padding:14px 16px; text-align:center;">
+        <span style="display:inline-flex;align-items:center;gap:5px;background:#FEE2E2;color:#DC2626;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;white-space:nowrap;">
+          <span style="width:7px;height:7px;border-radius:50%;background:#DC2626;display:inline-block;"></span>Urgente
+        </span>
+      </td>
+      <td style="padding:14px 16px; text-align:center;">
+        <span style="background:#FEF3C7;color:#D97706;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;">Pendiente</span>
+      </td>
+      <td style="padding:14px 16px; font-size:12px; color:#6B7280; line-height:1.4;">150 caracteres. Ver sección Marketing en Notion</td>
+    </tr>
+    <tr style="background:#f9fafb;" data-area="Producto" data-urg="Urgente" data-estado="Pendiente">
+      <td style="padding:14px 16px; font-size:13px; color:#111827; line-height:1.4;">Reglas de seguridad de Firestore (cerrar allow read/write: if true)</td>
+      <td style="padding:14px 16px; text-align:center;">
+        <span style="background:#DCFCE7;color:#16A34A;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;white-space:nowrap;">Producto</span>
+      </td>
+      <td style="padding:14px 16px; text-align:center;">
+        <span style="display:inline-flex;align-items:center;gap:5px;background:#FEE2E2;color:#DC2626;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;white-space:nowrap;">
+          <span style="width:7px;height:7px;border-radius:50%;background:#DC2626;display:inline-block;"></span>Urgente
+        </span>
+      </td>
+      <td style="padding:14px 16px; text-align:center;">
+        <span style="background:#FEF3C7;color:#D97706;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;">Pendiente</span>
+      </td>
+      <td style="padding:14px 16px; font-size:12px; color:#6B7280; line-height:1.4;">Bloque 1 Crítico — obligatorio antes del lanzamiento</td>
+    </tr>
+    <tr style="background:#ffffff;" data-area="SEO" data-urg="Esta semana" data-estado="Pendiente">
+      <td style="padding:14px 16px; font-size:13px; color:#111827; line-height:1.4;">Configurar Google Search Console</td>
+      <td style="padding:14px 16px; text-align:center;">
+        <span style="background:#DBEAFE;color:#2563EB;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;white-space:nowrap;">SEO</span>
+      </td>
+      <td style="padding:14px 16px; text-align:center;">
+        <span style="display:inline-flex;align-items:center;gap:5px;background:#FEF3C7;color:#D97706;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;white-space:nowrap;">
+          <span style="width:7px;height:7px;border-radius:50%;background:#F59E0B;display:inline-block;"></span>Esta semana
+        </span>
+      </td>
+      <td style="padding:14px 16px; text-align:center;">
+        <span style="background:#FEF3C7;color:#D97706;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;">Pendiente</span>
+      </td>
+      <td style="padding:14px 16px; font-size:12px; color:#6B7280; line-height:1.4;">Gratis, tarda ~10 min. Dominio: portalveterinario.ar</td>
+    </tr>
+    <tr style="background:#f9fafb;" data-area="SEO" data-urg="Esta semana" data-estado="Pendiente">
+      <td style="padding:14px 16px; font-size:13px; color:#111827; line-height:1.4;">Configurar Google Analytics 4</td>
+      <td style="padding:14px 16px; text-align:center;">
+        <span style="background:#DBEAFE;color:#2563EB;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;white-space:nowrap;">SEO</span>
+      </td>
+      <td style="padding:14px 16px; text-align:center;">
+        <span style="display:inline-flex;align-items:center;gap:5px;background:#FEF3C7;color:#D97706;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;white-space:nowrap;">
+          <span style="width:7px;height:7px;border-radius:50%;background:#F59E0B;display:inline-block;"></span>Esta semana
+        </span>
+      </td>
+      <td style="padding:14px 16px; text-align:center;">
+        <span style="background:#FEF3C7;color:#D97706;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;">Pendiente</span>
+      </td>
+      <td style="padding:14px 16px; font-size:12px; color:#6B7280; line-height:1.4;">Conectar con Search Console</td>
+    </tr>
+    <tr style="background:#ffffff;" data-area="Marketing" data-urg="Esta semana" data-estado="Pendiente">
+      <td style="padding:14px 16px; font-size:13px; color:#111827; line-height:1.4;">Definir color lila para redes (HEX)</td>
+      <td style="padding:14px 16px; text-align:center;">
+        <span style="background:#EDE9FE;color:#7C3AED;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;white-space:nowrap;">Marketing</span>
+      </td>
+      <td style="padding:14px 16px; text-align:center;">
+        <span style="display:inline-flex;align-items:center;gap:5px;background:#FEF3C7;color:#D97706;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;white-space:nowrap;">
+          <span style="width:7px;height:7px;border-radius:50%;background:#F59E0B;display:inline-block;"></span>Esta semana
+        </span>
+      </td>
+      <td style="padding:14px 16px; text-align:center;">
+        <span style="background:#FEF3C7;color:#D97706;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;">Pendiente</span>
+      </td>
+      <td style="padding:14px 16px; font-size:12px; color:#6B7280; line-height:1.4;">Pendiente definir si es para contenido educativo o capacitaciones</td>
+    </tr>
+    <tr style="background:#f9fafb;" data-area="Marketing" data-urg="Esta semana" data-estado="Pendiente">
+      <td style="padding:14px 16px; font-size:13px; color:#111827; line-height:1.4;">Armar plantillas base en Canva (post, story, carrusel)</td>
+      <td style="padding:14px 16px; text-align:center;">
+        <span style="background:#EDE9FE;color:#7C3AED;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;white-space:nowrap;">Marketing</span>
+      </td>
+      <td style="padding:14px 16px; text-align:center;">
+        <span style="display:inline-flex;align-items:center;gap:5px;background:#FEF3C7;color:#D97706;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;white-space:nowrap;">
+          <span style="width:7px;height:7px;border-radius:50%;background:#F59E0B;display:inline-block;"></span>Esta semana
+        </span>
+      </td>
+      <td style="padding:14px 16px; text-align:center;">
+        <span style="background:#FEF3C7;color:#D97706;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;">Pendiente</span>
+      </td>
+      <td style="padding:14px 16px; font-size:12px; color:#6B7280; line-height:1.4;">Requiere tener logo resuelto primero</td>
+    </tr>
+    <tr style="background:#ffffff;" data-area="Producto" data-urg="Esta semana" data-estado="Pendiente">
+      <td style="padding:14px 16px; font-size:13px; color:#111827; line-height:1.4;">Editor de clínica — completar dirección con API de Maps</td>
+      <td style="padding:14px 16px; text-align:center;">
+        <span style="background:#DCFCE7;color:#16A34A;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;white-space:nowrap;">Producto</span>
+      </td>
+      <td style="padding:14px 16px; text-align:center;">
+        <span style="display:inline-flex;align-items:center;gap:5px;background:#FEF3C7;color:#D97706;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;white-space:nowrap;">
+          <span style="width:7px;height:7px;border-radius:50%;background:#F59E0B;display:inline-block;"></span>Esta semana
+        </span>
+      </td>
+      <td style="padding:14px 16px; text-align:center;">
+        <span style="background:#FEF3C7;color:#D97706;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;">Pendiente</span>
+      </td>
+      <td style="padding:14px 16px; font-size:12px; color:#6B7280; line-height:1.4;">editor-clinica.jsx — conexión a Google Maps API</td>
+    </tr>
+    <tr style="background:#f9fafb;" data-area="Producto" data-urg="Esta semana" data-estado="Pendiente">
+      <td style="padding:14px 16px; font-size:13px; color:#111827; line-height:1.4;">Sincronizar colección usuarios al guardar en editores de clínica y proveedor</td>
+      <td style="padding:14px 16px; text-align:center;">
+        <span style="background:#DCFCE7;color:#16A34A;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;white-space:nowrap;">Producto</span>
+      </td>
+      <td style="padding:14px 16px; text-align:center;">
+        <span style="display:inline-flex;align-items:center;gap:5px;background:#FEF3C7;color:#D97706;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;white-space:nowrap;">
+          <span style="width:7px;height:7px;border-radius:50%;background:#F59E0B;display:inline-block;"></span>Esta semana
+        </span>
+      </td>
+      <td style="padding:14px 16px; text-align:center;">
+        <span style="background:#FEF3C7;color:#D97706;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;">Pendiente</span>
+      </td>
+      <td style="padding:14px 16px; font-size:12px; color:#6B7280; line-height:1.4;">Evita desincronización de slug/nombre en Ecosistema</td>
+    </tr>
+    <tr style="background:#ffffff;" data-area="Marketing" data-urg="Este mes" data-estado="Pendiente">
+      <td style="padding:14px 16px; font-size:13px; color:#111827; line-height:1.4;">Preparar 9 posts antes de publicar en Instagram</td>
+      <td style="padding:14px 16px; text-align:center;">
+        <span style="background:#EDE9FE;color:#7C3AED;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;white-space:nowrap;">Marketing</span>
+      </td>
+      <td style="padding:14px 16px; text-align:center;">
+        <span style="display:inline-flex;align-items:center;gap:5px;background:#DCFCE7;color:#16A34A;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;white-space:nowrap;">
+          <span style="width:7px;height:7px;border-radius:50%;background:#22C55E;display:inline-block;"></span>Este mes
+        </span>
+      </td>
+      <td style="padding:14px 16px; text-align:center;">
+        <span style="background:#FEF3C7;color:#D97706;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;">Pendiente</span>
+      </td>
+      <td style="padding:14px 16px; font-size:12px; color:#6B7280; line-height:1.4;">Ver plan de contenido: Semanas 1 a 4 en Notion</td>
+    </tr>
+    <tr style="background:#f9fafb;" data-area="Producto" data-urg="Este mes" data-estado="Pendiente">
+      <td style="padding:14px 16px; font-size:13px; color:#111827; line-height:1.4;">Notificaciones automáticas de capacitaciones y proveedores</td>
+      <td style="padding:14px 16px; text-align:center;">
+        <span style="background:#DCFCE7;color:#16A34A;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;white-space:nowrap;">Producto</span>
+      </td>
+      <td style="padding:14px 16px; text-align:center;">
+        <span style="display:inline-flex;align-items:center;gap:5px;background:#DCFCE7;color:#16A34A;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;white-space:nowrap;">
+          <span style="width:7px;height:7px;border-radius:50%;background:#22C55E;display:inline-block;"></span>Este mes
+        </span>
+      </td>
+      <td style="padding:14px 16px; text-align:center;">
+        <span style="background:#FEF3C7;color:#D97706;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;">Pendiente</span>
+      </td>
+      <td style="padding:14px 16px; font-size:12px; color:#6B7280; line-height:1.4;">Bloque 2 — colección notificaciones en Firestore</td>
+    </tr>
+    <tr style="background:#ffffff;" data-area="Producto" data-urg="Este mes" data-estado="Pendiente">
+      <td style="padding:14px 16px; font-size:13px; color:#111827; line-height:1.4;">Editor de alumno — crear reciclando editor existente + campo universidad</td>
+      <td style="padding:14px 16px; text-align:center;">
+        <span style="background:#DCFCE7;color:#16A34A;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;white-space:nowrap;">Producto</span>
+      </td>
+      <td style="padding:14px 16px; text-align:center;">
+        <span style="display:inline-flex;align-items:center;gap:5px;background:#DCFCE7;color:#16A34A;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;white-space:nowrap;">
+          <span style="width:7px;height:7px;border-radius:50%;background:#22C55E;display:inline-block;"></span>Este mes
+        </span>
+      </td>
+      <td style="padding:14px 16px; text-align:center;">
+        <span style="background:#FEF3C7;color:#D97706;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;">Pendiente</span>
+      </td>
+      <td style="padding:14px 16px; font-size:12px; color:#6B7280; line-height:1.4;">Bloque 2 — incluir teléfono, conectar a Firestore</td>
+    </tr>
+    <tr style="background:#f9fafb;" data-area="Producto" data-urg="Este mes" data-estado="Pendiente">
+      <td style="padding:14px 16px; font-size:13px; color:#111827; line-height:1.4;">Mail automático al docente cuando alguien se inscribe a un curso</td>
+      <td style="padding:14px 16px; text-align:center;">
+        <span style="background:#DCFCE7;color:#16A34A;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;white-space:nowrap;">Producto</span>
+      </td>
+      <td style="padding:14px 16px; text-align:center;">
+        <span style="display:inline-flex;align-items:center;gap:5px;background:#DCFCE7;color:#16A34A;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;white-space:nowrap;">
+          <span style="width:7px;height:7px;border-radius:50%;background:#22C55E;display:inline-block;"></span>Este mes
+        </span>
+      </td>
+      <td style="padding:14px 16px; text-align:center;">
+        <span style="background:#FEF3C7;color:#D97706;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;">Pendiente</span>
+      </td>
+      <td style="padding:14px 16px; font-size:12px; color:#6B7280; line-height:1.4;">Capacitaciones — Brevo, plantilla nueva</td>
+    </tr>
+    <tr style="background:#ffffff;" data-area="Producto" data-urg="Este mes" data-estado="Pendiente">
+      <td style="padding:14px 16px; font-size:13px; color:#111827; line-height:1.4;">Mail automático al inscripto con confirmación de curso</td>
+      <td style="padding:14px 16px; text-align:center;">
+        <span style="background:#DCFCE7;color:#16A34A;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;white-space:nowrap;">Producto</span>
+      </td>
+      <td style="padding:14px 16px; text-align:center;">
+        <span style="display:inline-flex;align-items:center;gap:5px;background:#DCFCE7;color:#16A34A;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;white-space:nowrap;">
+          <span style="width:7px;height:7px;border-radius:50%;background:#22C55E;display:inline-block;"></span>Este mes
+        </span>
+      </td>
+      <td style="padding:14px 16px; text-align:center;">
+        <span style="background:#FEF3C7;color:#D97706;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;">Pendiente</span>
+      </td>
+      <td style="padding:14px 16px; font-size:12px; color:#6B7280; line-height:1.4;">Capacitaciones — Brevo, plantilla nueva</td>
+    </tr>
+    <tr style="background:#f9fafb;" data-area="SEO" data-urg="Este mes" data-estado="Pendiente">
+      <td style="padding:14px 16px; font-size:13px; color:#111827; line-height:1.4;">Implementar Helmet en vistas clave (perfiles, bolsa, capacitaciones)</td>
+      <td style="padding:14px 16px; text-align:center;">
+        <span style="background:#DBEAFE;color:#2563EB;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;white-space:nowrap;">SEO</span>
+      </td>
+      <td style="padding:14px 16px; text-align:center;">
+        <span style="display:inline-flex;align-items:center;gap:5px;background:#DCFCE7;color:#16A34A;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;white-space:nowrap;">
+          <span style="width:7px;height:7px;border-radius:50%;background:#22C55E;display:inline-block;"></span>Este mes
+        </span>
+      </td>
+      <td style="padding:14px 16px; text-align:center;">
+        <span style="background:#FEF3C7;color:#D97706;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;">Pendiente</span>
+      </td>
+      <td style="padding:14px 16px; font-size:12px; color:#6B7280; line-height:1.4;">Fase 2 SEO — títulos dinámicos para Google</td>
+    </tr>
+    <tr style="background:#ffffff;" data-area="Marketing" data-urg="A futuro" data-estado="Pendiente">
+      <td style="padding:14px 16px; font-size:13px; color:#111827; line-height:1.4;">Definir presupuesto inicial y lanzar Meta Ads</td>
+      <td style="padding:14px 16px; text-align:center;">
+        <span style="background:#EDE9FE;color:#7C3AED;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;white-space:nowrap;">Marketing</span>
+      </td>
+      <td style="padding:14px 16px; text-align:center;">
+        <span style="display:inline-flex;align-items:center;gap:5px;background:#F3F4F6;color:#6B7280;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;white-space:nowrap;">
+          <span style="width:7px;height:7px;border-radius:50%;background:#9CA3AF;display:inline-block;"></span>A futuro
+        </span>
+      </td>
+      <td style="padding:14px 16px; text-align:center;">
+        <span style="background:#FEF3C7;color:#D97706;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;">Pendiente</span>
+      </td>
+      <td style="padding:14px 16px; font-size:12px; color:#6B7280; line-height:1.4;">Recién cuando haya 4-5 perfiles completos en la plataforma</td>
+    </tr>
+    <tr style="background:#f9fafb;" data-area="Producto" data-urg="A futuro" data-estado="Pendiente">
+      <td style="padding:14px 16px; font-size:13px; color:#111827; line-height:1.4;">Migrar imágenes de Base64 a Firebase Storage</td>
+      <td style="padding:14px 16px; text-align:center;">
+        <span style="background:#DCFCE7;color:#16A34A;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;white-space:nowrap;">Producto</span>
+      </td>
+      <td style="padding:14px 16px; text-align:center;">
+        <span style="display:inline-flex;align-items:center;gap:5px;background:#F3F4F6;color:#6B7280;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;white-space:nowrap;">
+          <span style="width:7px;height:7px;border-radius:50%;background:#9CA3AF;display:inline-block;"></span>A futuro
+        </span>
+      </td>
+      <td style="padding:14px 16px; text-align:center;">
+        <span style="background:#FEF3C7;color:#D97706;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;">Pendiente</span>
+      </td>
+      <td style="padding:14px 16px; font-size:12px; color:#6B7280; line-height:1.4;">Bloque 3 — post-lanzamiento</td>
+    </tr>
+    <tr style="background:#ffffff;" data-area="Producto" data-urg="A futuro" data-estado="Pendiente">
+      <td style="padding:14px 16px; font-size:13px; color:#111827; line-height:1.4;">QR descargable para perfiles de profesionales</td>
+      <td style="padding:14px 16px; text-align:center;">
+        <span style="background:#DCFCE7;color:#16A34A;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;white-space:nowrap;">Producto</span>
+      </td>
+      <td style="padding:14px 16px; text-align:center;">
+        <span style="display:inline-flex;align-items:center;gap:5px;background:#F3F4F6;color:#6B7280;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;white-space:nowrap;">
+          <span style="width:7px;height:7px;border-radius:50%;background:#9CA3AF;display:inline-block;"></span>A futuro
+        </span>
+      </td>
+      <td style="padding:14px 16px; text-align:center;">
+        <span style="background:#FEF3C7;color:#D97706;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;">Pendiente</span>
+      </td>
+      <td style="padding:14px 16px; font-size:12px; color:#6B7280; line-height:1.4;">Bloque 3 — SVG descargable en editor-profesional.jsx</td>
+    </tr>
+    <tr style="background:#f9fafb;" data-area="Producto" data-urg="A futuro" data-estado="Pendiente">
+      <td style="padding:14px 16px; font-size:13px; color:#111827; line-height:1.4;">Integrar MercadoPago — modelo de suscripción</td>
+      <td style="padding:14px 16px; text-align:center;">
+        <span style="background:#DCFCE7;color:#16A34A;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;white-space:nowrap;">Producto</span>
+      </td>
+      <td style="padding:14px 16px; text-align:center;">
+        <span style="display:inline-flex;align-items:center;gap:5px;background:#F3F4F6;color:#6B7280;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;white-space:nowrap;">
+          <span style="width:7px;height:7px;border-radius:50%;background:#9CA3AF;display:inline-block;"></span>A futuro
+        </span>
+      </td>
+      <td style="padding:14px 16px; text-align:center;">
+        <span style="background:#FEF3C7;color:#D97706;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;">Pendiente</span>
+      </td>
+      <td style="padding:14px 16px; font-size:12px; color:#6B7280; line-height:1.4;">Bloque 3 — requiere backend</td>
+    </tr>
+    <tr style="background:#ffffff;" data-area="SEO" data-urg="A futuro" data-estado="Pendiente">
+      <td style="padding:14px 16px; font-size:13px; color:#111827; line-height:1.4;">Crear Sitemap.xml dinámico con todas las URLs de perfiles</td>
+      <td style="padding:14px 16px; text-align:center;">
+        <span style="background:#DBEAFE;color:#2563EB;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;white-space:nowrap;">SEO</span>
+      </td>
+      <td style="padding:14px 16px; text-align:center;">
+        <span style="display:inline-flex;align-items:center;gap:5px;background:#F3F4F6;color:#6B7280;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;white-space:nowrap;">
+          <span style="width:7px;height:7px;border-radius:50%;background:#9CA3AF;display:inline-block;"></span>A futuro
+        </span>
+      </td>
+      <td style="padding:14px 16px; text-align:center;">
+        <span style="background:#FEF3C7;color:#D97706;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;">Pendiente</span>
+      </td>
+      <td style="padding:14px 16px; font-size:12px; color:#6B7280; line-height:1.4;">Fase 3 SEO — enviar a Google Search Console</td>
+    </tr>
+    <tr style="background:#f9fafb;" data-area="Producto" data-urg="A futuro" data-estado="Pendiente">
+      <td style="padding:14px 16px; font-size:13px; color:#111827; line-height:1.4;">Login con Google</td>
+      <td style="padding:14px 16px; text-align:center;">
+        <span style="background:#DCFCE7;color:#16A34A;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;white-space:nowrap;">Producto</span>
+      </td>
+      <td style="padding:14px 16px; text-align:center;">
+        <span style="display:inline-flex;align-items:center;gap:5px;background:#F3F4F6;color:#6B7280;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;white-space:nowrap;">
+          <span style="width:7px;height:7px;border-radius:50%;background:#9CA3AF;display:inline-block;"></span>A futuro
+        </span>
+      </td>
+      <td style="padding:14px 16px; text-align:center;">
+        <span style="background:#FEF3C7;color:#D97706;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;">Pendiente</span>
+      </td>
+      <td style="padding:14px 16px; font-size:12px; color:#6B7280; line-height:1.4;">Bloque 3 — post-lanzamiento</td>
+    </tr>
+    <tr style="background:#ffffff;" data-area="Marketing" data-urg="A futuro" data-estado="Pendiente">
+      <td style="padding:14px 16px; font-size:13px; color:#111827; line-height:1.4;">Canal de WhatsApp para usuarios registrados</td>
+      <td style="padding:14px 16px; text-align:center;">
+        <span style="background:#EDE9FE;color:#7C3AED;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;white-space:nowrap;">Marketing</span>
+      </td>
+      <td style="padding:14px 16px; text-align:center;">
+        <span style="display:inline-flex;align-items:center;gap:5px;background:#F3F4F6;color:#6B7280;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;white-space:nowrap;">
+          <span style="width:7px;height:7px;border-radius:50%;background:#9CA3AF;display:inline-block;"></span>A futuro
+        </span>
+      </td>
+      <td style="padding:14px 16px; text-align:center;">
+        <span style="background:#FEF3C7;color:#D97706;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;">Pendiente</span>
+      </td>
+      <td style="padding:14px 16px; font-size:12px; color:#6B7280; line-height:1.4;">Fase 2 — alta apertura de mensajes, bajo costo</td>
+    </tr>
+    <tr style="background:#f9fafb;" data-area="Marketing" data-urg="A futuro" data-estado="Pendiente">
+      <td style="padding:14px 16px; font-size:13px; color:#111827; line-height:1.4;">LinkedIn para clínicas y proveedores</td>
+      <td style="padding:14px 16px; text-align:center;">
+        <span style="background:#EDE9FE;color:#7C3AED;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;white-space:nowrap;">Marketing</span>
+      </td>
+      <td style="padding:14px 16px; text-align:center;">
+        <span style="display:inline-flex;align-items:center;gap:5px;background:#F3F4F6;color:#6B7280;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;white-space:nowrap;">
+          <span style="width:7px;height:7px;border-radius:50%;background:#9CA3AF;display:inline-block;"></span>A futuro
+        </span>
+      </td>
+      <td style="padding:14px 16px; text-align:center;">
+        <span style="background:#FEF3C7;color:#D97706;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;">Pendiente</span>
+      </td>
+      <td style="padding:14px 16px; font-size:12px; color:#6B7280; line-height:1.4;">Fase 2-3 — decisores institucionales</td>
+    </tr>
+      </tbody>
+    </table>
+    <div id="empty" class="empty" style="display:none">No hay tareas con ese filtro.</div>
+  </div>
+</div>
+
+<div class="updated">Actualizado: septiembre 2026 · El Portal Veterinario</div>
+
+<script>
+let filtroUrg = null;
+let filtroArea = null;
+
+function aplicar() {
+  const rows = document.querySelectorAll('#tbody tr');
+  let visible = 0;
+  rows.forEach(r => {
+    const urg = r.dataset.urg;
+    const area = r.dataset.area;
+    const okUrg = !filtroUrg || urg === filtroUrg;
+    const okArea = !filtroArea || area === filtroArea;
+    if (okUrg && okArea) { r.style.display = ''; visible++; }
+    else r.style.display = 'none';
+  });
+  document.getElementById('count').textContent = visible + ' tareas';
+  document.getElementById('empty').style.display = visible === 0 ? '' : 'none';
+}
+
+function filtrar(val, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => {
+    if (['Urgente','Esta semana','Este mes','A futuro','todo'].some(v => b.textContent.includes(v.replace('🔴 ','').replace('🟡 ','').replace('🟢 ','').replace('⚫ ','')))) b.classList.remove('active');
+  });
+  btn.classList.add('active');
+  filtroUrg = val === 'todo' ? null : val;
+  aplicar();
+}
+
+function filtrarArea(val, btn) {
+  const areaButtons = document.querySelectorAll('.filter-btn');
+  areaButtons.forEach(b => {
+    if (['Producto','Marketing','SEO','Comunidad'].some(v => b.textContent.includes(v))) b.classList.remove('active');
+  });
+  if (filtroArea === val) { filtroArea = null; }
+  else { btn.classList.add('active'); filtroArea = val; }
+  aplicar();
+}
+</script>
+</body>
+</html>
