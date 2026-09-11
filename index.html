@@ -23,81 +23,102 @@ html,body{min-height:100vh;width:100%;background:var(--bg);}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
 
 /* NAVBAR */
-.nav{background:var(--bosque);padding:20px 40px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
-.nav .logo{color:#fff;font-size:20px;font-weight:500;letter-spacing:-0.3px;}
+.nav{background:var(--bosque);padding:16px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+.nav .logo{color:#fff;font-size:18px;font-weight:500;letter-spacing:-0.3px;}
 .nav .logo em{color:#A8C9BC;font-style:normal;}
-.nav .center{color:rgba(255,255,255,0.6);font-size:15px;}
-.nav .right{display:flex;align-items:center;gap:12px;}
-.fase-chip{background:rgba(168,201,188,0.18);border:1px solid rgba(168,201,188,0.35);color:#A8C9BC;font-size:13px;padding:6px 16px;border-radius:20px;}
+.nav .center{color:rgba(255,255,255,0.6);font-size:14px;}
+.nav .right{display:flex;align-items:center;gap:10px;}
+.fase-chip{background:rgba(168,201,188,0.18);border:1px solid rgba(168,201,188,0.35);color:#A8C9BC;font-size:12px;padding:5px 13px;border-radius:20px;}
 
-.wrap{padding:32px 40px;}
+.wrap{padding:24px;}
 
 /* KPIs */
-.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:32px;}
-.kpi{background:var(--card);border-radius:12px;padding:22px 24px;border:1.5px solid var(--border-c);border-top:4px solid;}
-.kpi .lbl{font-size:12px;color:var(--txt2);text-transform:uppercase;letter-spacing:0.7px;margin-bottom:10px;font-weight:600;}
-.kpi .val{font-size:44px;font-weight:500;line-height:1;margin-bottom:6px;}
-.kpi .sub{font-size:13px;color:var(--txt3);}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px;}
+.kpi{background:var(--card);border-radius:12px;padding:18px 20px;border:1.5px solid var(--border-c);border-top:4px solid;}
+.kpi .lbl{font-size:11px;color:var(--txt2);text-transform:uppercase;letter-spacing:0.7px;margin-bottom:8px;font-weight:600;}
+.kpi .val{font-size:38px;font-weight:500;line-height:1;margin-bottom:4px;}
+.kpi .sub{font-size:12px;color:var(--txt3);}
 
 /* FILTERS */
-.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px;}
-.f{padding:8px 18px;border-radius:20px;font-size:13px;border:1.5px solid var(--border-c);color:var(--txt2);cursor:pointer;background:var(--card);transition:all 0.15s;font-family:inherit;}
+.filters{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:24px;}
+.f{padding:7px 16px;border-radius:20px;font-size:13px;border:1.5px solid var(--border-c);color:var(--txt2);cursor:pointer;background:var(--card);transition:all 0.15s;font-family:inherit;}
 .f:hover{border-color:var(--bosque);color:var(--bosque);}
 .f.on{background:var(--bosque);color:#fff;border-color:var(--bosque);}
 
-/* SECTION */
-.sec-label{font-size:12px;font-weight:600;color:var(--txt3);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;padding:0 2px;}
+/* SECTION LABELS — más grandes y con color */
+.sec-label{font-size:16px;font-weight:700;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center;padding:0 2px;}
+.sec-label .cnt{font-size:12px;font-weight:500;color:var(--txt3);}
+.sec-label.lbl-urg{color:var(--burg);}
+.sec-label.lbl-sem{color:var(--trigo);}
+.sec-label.lbl-mes{color:var(--salvia);}
+.sec-label.lbl-fut{color:var(--txt3);}
 
 /* GRID HORIZONTAL con scroll */
-.grid-wrap{position:relative;margin-bottom:32px;}
-.grid-scroll{display:flex;gap:14px;overflow-x:auto;padding-bottom:8px;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;}
+.grid-wrap{position:relative;margin-bottom:28px;}
+.grid-scroll{display:flex;gap:14px;overflow-x:auto;padding:4px 4px 12px;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;}
 .grid-scroll::-webkit-scrollbar{height:4px;}
 .grid-scroll::-webkit-scrollbar-track{background:transparent;}
 .grid-scroll::-webkit-scrollbar-thumb{background:var(--border-c);border-radius:4px;}
 
-/* TASK CARD */
-.task-card{background:var(--card);border:1.5px solid var(--border-c);border-radius:14px;width:260px;min-width:260px;flex-shrink:0;transition:border-color 0.2s;overflow:hidden;}
-.task-card:hover{border-color:#9AAFA6;}
-.task-card.started{border-color:var(--trigo);}
-.task-card.done{border-color:var(--salvia);opacity:0.75;}
+/* TASK CARD — fondo por área */
+.task-card{border:1.5px solid transparent;border-radius:14px;width:280px;min-width:280px;flex-shrink:0;transition:all 0.2s;overflow:hidden;box-shadow:0 1px 4px rgba(44,40,32,0.06);}
+.task-card:hover{box-shadow:0 4px 14px rgba(44,40,32,0.12);transform:translateY(-1px);}
+.task-card.started{box-shadow:0 0 0 2px var(--trigo);}
+.task-card.done{opacity:0.7;}
 
-.card-top{padding:18px 18px 14px;cursor:pointer;}
-.card-dot-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+/* Fondos y bordes por área */
+.task-card[data-area="Producto"]{background:#EBF3EE;border-color:#C2D9CC;}
+.task-card[data-area="Marketing"]{background:#F3EBE5;border-color:#D9C4B8;}
+.task-card[data-area="SEO"]{background:#E5EBF3;border-color:#B8C4D9;}
+.task-card[data-area="Comunidad"]{background:#F3F0E5;border-color:#D9D0B8;}
+
+/* Header de color sólido por área */
+.card-header-bar{height:6px;width:100%;}
+.task-card[data-area="Producto"] .card-header-bar{background:#5C8C70;}
+.task-card[data-area="Marketing"] .card-header-bar{background:#A0674A;}
+.task-card[data-area="SEO"] .card-header-bar{background:#4A6A9E;}
+.task-card[data-area="Comunidad"] .card-header-bar{background:#9E8A3A;}
+
+.card-top{padding:16px 18px 14px;cursor:pointer;}
+.card-dot-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
 .dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
-.card-status{display:flex;align-items:center;gap:6px;}
-.status-label{font-size:11px;color:var(--txt3);}
+.card-status{font-size:11px;color:var(--txt3);}
 
-.card-name{font-size:15px;font-weight:500;color:var(--txt);line-height:1.4;margin-bottom:14px;min-height:42px;}
+.card-area-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:8px;}
+.task-card[data-area="Producto"] .card-area-label{color:#3D6B52;}
+.task-card[data-area="Marketing"] .card-area-label{color:#8B4A2E;}
+.task-card[data-area="SEO"] .card-area-label{color:#2E4A8B;}
+.task-card[data-area="Comunidad"] .card-area-label{color:#7A6A1A;}
+
+.card-name{font-size:15px;font-weight:500;color:var(--txt);line-height:1.4;margin-bottom:14px;min-height:44px;}
 
 .card-badges{display:flex;gap:6px;flex-wrap:wrap;}
 .badge{font-size:11px;padding:4px 10px;border-radius:20px;font-weight:600;white-space:nowrap;}
-.b-urg{background:#F5E8E8;color:#7A2A2A;}
-.b-sem{background:#F5F0E6;color:#7A5A1A;}
-.b-mes{background:#E8F0EC;color:#2E5042;}
-.b-fut{background:#EDEBE6;color:#7A6E60;}
-.b-com{background:#F5EFE0;color:#7A5A1A;}
-.b-mkt{background:#F0EAE0;color:#6B4F2A;}
-.b-prod{background:#E8F0EC;color:#2E5042;}
-.b-seo{background:#EEF2F0;color:#3D5A4F;}
+.b-urg{background:rgba(139,58,58,0.12);color:#7A2A2A;}
+.b-sem{background:rgba(184,146,74,0.15);color:#7A5A1A;}
+.b-mes{background:rgba(107,140,122,0.15);color:#2E5042;}
+.b-fut{background:rgba(168,152,128,0.15);color:#6B5F52;}
+.b-com{background:rgba(158,138,58,0.15);color:#7A6A1A;}
+.b-mkt{background:rgba(160,103,74,0.15);color:#8B4A2E;}
+.b-prod{background:rgba(92,140,112,0.15);color:#2E5042;}
+.b-seo{background:rgba(74,106,158,0.15);color:#2E4A8B;}
 
 /* EXPAND TOGGLE */
-.card-expand-btn{width:100%;padding:10px 18px;background:none;border:none;border-top:1.5px solid var(--border-c);cursor:pointer;font-size:12px;color:var(--txt3);display:flex;align-items:center;justify-content:center;gap:6px;font-family:inherit;transition:background 0.15s;}
-.card-expand-btn:hover{background:#F0EDE6;}
+.card-expand-btn{width:100%;padding:10px 18px;background:rgba(0,0,0,0.04);border:none;border-top:1px solid rgba(0,0,0,0.07);cursor:pointer;font-size:12px;color:var(--txt3);display:flex;align-items:center;justify-content:center;gap:6px;font-family:inherit;transition:background 0.15s;}
+.card-expand-btn:hover{background:rgba(0,0,0,0.08);}
 .card-expand-btn i{transition:transform 0.2s;font-size:14px;}
 .task-card.open .card-expand-btn i{transform:rotate(180deg);}
 
 /* EXPANDED BODY */
-.card-body{display:none;border-top:1.5px solid var(--border-c);background:#F5F2EC;}
+.card-body{display:none;border-top:1px solid rgba(0,0,0,0.07);background:rgba(255,255,255,0.6);}
 .task-card.open .card-body{display:block;}
-
 .card-body-inner{padding:16px 18px;}
-
 .cb-label{font-size:11px;font-weight:600;color:var(--txt3);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:8px;}
 .cb-desc{font-size:13px;color:var(--txt2);line-height:1.65;margin-bottom:14px;}
 
-/* CHECK DE ESTADO */
+/* ESTADO */
 .estado-row{display:flex;gap:8px;margin-bottom:14px;}
-.estado-btn{flex:1;padding:7px 10px;border-radius:8px;border:1.5px solid var(--border-c);background:var(--card);font-size:12px;font-weight:600;color:var(--txt2);cursor:pointer;font-family:inherit;transition:all 0.15s;text-align:center;}
+.estado-btn{flex:1;padding:7px 8px;border-radius:8px;border:1.5px solid var(--border-c);background:white;font-size:11px;font-weight:600;color:var(--txt2);cursor:pointer;font-family:inherit;transition:all 0.15s;text-align:center;}
 .estado-btn:hover{border-color:var(--bosque);}
 .estado-btn.sel-pend{background:#EDEBE6;border-color:#BFBAB3;color:#7A6E60;}
 .estado-btn.sel-start{background:#FEF3E0;border-color:var(--trigo);color:#7A5A1A;}
@@ -110,14 +131,29 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
 .note-txt{font-size:13px;color:var(--txt2);line-height:1.55;}
 
 .add-note-area{display:flex;flex-direction:column;gap:6px;}
-.add-note-area textarea{width:100%;border:1.5px solid var(--border-c);border-radius:8px;padding:10px 12px;font-size:13px;color:var(--txt);font-family:inherit;background:var(--card);resize:none;outline:none;line-height:1.5;}
+.add-note-area textarea{width:100%;border:1.5px solid var(--border-c);border-radius:8px;padding:10px 12px;font-size:13px;color:var(--txt);font-family:inherit;background:white;resize:none;outline:none;line-height:1.5;}
 .add-note-area textarea:focus{border-color:var(--bosque);}
 .add-note-btn{align-self:flex-end;padding:7px 16px;background:var(--bosque);color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;}
 .add-note-btn:hover{background:#2e4a40;}
 
 /* SCROLL ARROWS */
-.scroll-btn{position:absolute;top:50%;transform:translateY(-50%);width:36px;height:36px;border-radius:50%;background:var(--card);border:1.5px solid var(--border-c);display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:10;box-shadow:0 2px 8px rgba(44,40,32,0.1);color:var(--txt2);font-size:18px;transition:all 0.15s;}
+.scroll-btn{position:absolute;top:40%;transform:translateY(-50%);width:36px;height:36px;border-radius:50%;background:var(--card);border:1.5px solid var(--border-c);display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:10;box-shadow:0 2px 8px rgba(44,40,32,0.12);color:var(--txt2);font-size:18px;transition:all 0.15s;}
 .scroll-btn:hover{border-color:var(--bosque);color:var(--bosque);}
+
+/* MOBILE */
+@media(max-width:640px){
+  .nav{padding:14px 16px;}
+  .nav .center{display:none;}
+  .fase-chip{font-size:11px;padding:4px 10px;}
+  .wrap{padding:16px;}
+  .kpis{grid-template-columns:repeat(2,1fr);gap:10px;}
+  .kpi .val{font-size:28px;}
+  .filters{gap:6px;}
+  .f{padding:6px 12px;font-size:12px;}
+  .task-card{width:240px;min-width:240px;}
+  .scroll-btn{display:none;}
+  .sec-label{font-size:14px;}
+}
 .scroll-left{left:-18px;}
 .scroll-right{right:-18px;}
 
@@ -174,7 +210,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
 
   <!-- URGENTES -->
   <div id="wrap-urg">
-    <div class="sec-label"><span>Urgentes</span><span id="cnt-urg">4 tareas</span></div>
+    <div class="sec-label lbl-urg"><span>Urgentes</span><span class="cnt" id="cnt-urg">4 tareas</span></div>
     <div class="grid-wrap">
       <div class="scroll-btn scroll-left" onclick="scrollSec('urg',-1)"><i class="ti ti-chevron-left"></i></div>
       <div class="grid-scroll" id="sec-urg">
@@ -185,7 +221,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
               <div class="dot" style="background:#8B3A3A;"></div>
               <div class="card-status"><span class="status-label" id="lbl-t1">Pendiente</span></div>
             </div>
-            <div class="card-name">Contactar usuarios beta para completar perfil</div>
+            <div class="card-area-label">Comunidad</div>
+          <div class="card-name">Contactar usuarios beta para completar perfil</div>
             <div class="card-badges"><span class="badge b-com">Comunidad</span><span class="badge b-urg">Urgente</span></div>
           </div>
           <button class="card-expand-btn" onclick="toggleCard(this.closest('.task-card'))">
@@ -219,7 +256,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
               <div class="dot" style="background:#8B3A3A;"></div>
               <div class="card-status"><span class="status-label" id="lbl-t2">Pendiente</span></div>
             </div>
-            <div class="card-name">Revisar y mejorar logo para Instagram (Canva)</div>
+            <div class="card-area-label">Marketing</div>
+          <div class="card-name">Revisar y mejorar logo para Instagram (Canva)</div>
             <div class="card-badges"><span class="badge b-mkt">Marketing</span><span class="badge b-urg">Urgente</span></div>
           </div>
           <button class="card-expand-btn" onclick="toggleCard(this.closest('.task-card'))">
@@ -253,7 +291,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
               <div class="dot" style="background:#8B3A3A;"></div>
               <div class="card-status"><span class="status-label" id="lbl-t3">Pendiente</span></div>
             </div>
-            <div class="card-name">Preparar 9 posts antes de lanzar Instagram</div>
+            <div class="card-area-label">Marketing</div>
+          <div class="card-name">Preparar 9 posts antes de lanzar Instagram</div>
             <div class="card-badges"><span class="badge b-mkt">Marketing</span><span class="badge b-urg">Urgente</span></div>
           </div>
           <button class="card-expand-btn" onclick="toggleCard(this.closest('.task-card'))">
@@ -287,7 +326,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
               <div class="dot" style="background:#8B3A3A;"></div>
               <div class="card-status"><span class="status-label" id="lbl-t4">Pendiente</span></div>
             </div>
-            <div class="card-name">Autenticar dominio portalveterinario.ar en Brevo (DNS)</div>
+            <div class="card-area-label">Producto</div>
+          <div class="card-name">Autenticar dominio portalveterinario.ar en Brevo (DNS)</div>
             <div class="card-badges"><span class="badge b-prod">Producto</span><span class="badge b-urg">Urgente</span></div>
           </div>
           <button class="card-expand-btn" onclick="toggleCard(this.closest('.task-card'))">
@@ -322,7 +362,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
 
   <!-- ESTA SEMANA -->
   <div id="wrap-sem">
-    <div class="sec-label"><span>Esta semana</span><span id="cnt-sem">4 tareas</span></div>
+    <div class="sec-label lbl-sem"><span>Esta semana</span><span class="cnt" id="cnt-sem">4 tareas</span></div>
     <div class="grid-wrap">
       <div class="scroll-btn scroll-left" onclick="scrollSec('sem',-1)"><i class="ti ti-chevron-left"></i></div>
       <div class="grid-scroll" id="sec-sem">
@@ -333,7 +373,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
               <div class="dot" style="background:#B8924A;"></div>
               <div class="card-status"><span class="status-label" id="lbl-t5">Pendiente</span></div>
             </div>
-            <div class="card-name">Configurar Google Search Console</div>
+            <div class="card-area-label">SEO</div>
+          <div class="card-name">Configurar Google Search Console</div>
             <div class="card-badges"><span class="badge b-seo">SEO</span><span class="badge b-sem">Esta semana</span></div>
           </div>
           <button class="card-expand-btn" onclick="toggleCard(this.closest('.task-card'))">
@@ -367,7 +408,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
               <div class="dot" style="background:#B8924A;"></div>
               <div class="card-status"><span class="status-label" id="lbl-t6">Pendiente</span></div>
             </div>
-            <div class="card-name">Integrar email de bienvenida con Brevo API</div>
+            <div class="card-area-label">Producto</div>
+          <div class="card-name">Integrar email de bienvenida con Brevo API</div>
             <div class="card-badges"><span class="badge b-prod">Producto</span><span class="badge b-sem">Esta semana</span></div>
           </div>
           <button class="card-expand-btn" onclick="toggleCard(this.closest('.task-card'))">
@@ -401,7 +443,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
               <div class="dot" style="background:#B8924A;"></div>
               <div class="card-status"><span class="status-label" id="lbl-t7">Pendiente</span></div>
             </div>
-            <div class="card-name">Implementar reglas de seguridad Firestore</div>
+            <div class="card-area-label">Producto</div>
+          <div class="card-name">Implementar reglas de seguridad Firestore</div>
             <div class="card-badges"><span class="badge b-prod">Producto</span><span class="badge b-sem">Esta semana</span></div>
           </div>
           <button class="card-expand-btn" onclick="toggleCard(this.closest('.task-card'))">
@@ -435,7 +478,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
               <div class="dot" style="background:#B8924A;"></div>
               <div class="card-status"><span class="status-label" id="lbl-t8">Pendiente</span></div>
             </div>
-            <div class="card-name">Configurar Meta Ads (cuando haya 4–5 perfiles completos)</div>
+            <div class="card-area-label">Marketing</div>
+          <div class="card-name">Configurar Meta Ads (cuando haya 4–5 perfiles completos)</div>
             <div class="card-badges"><span class="badge b-mkt">Marketing</span><span class="badge b-sem">Esta semana</span></div>
           </div>
           <button class="card-expand-btn" onclick="toggleCard(this.closest('.task-card'))">
@@ -470,7 +514,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
 
   <!-- ESTE MES -->
   <div id="wrap-mes">
-    <div class="sec-label"><span>Este mes</span><span id="cnt-mes">4 tareas</span></div>
+    <div class="sec-label lbl-mes"><span>Este mes</span><span class="cnt" id="cnt-mes">4 tareas</span></div>
     <div class="grid-wrap">
       <div class="scroll-btn scroll-left" onclick="scrollSec('mes',-1)"><i class="ti ti-chevron-left"></i></div>
       <div class="grid-scroll" id="sec-mes">
@@ -481,7 +525,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
               <div class="dot" style="background:#6B8C7A;"></div>
               <div class="card-status"><span class="status-label" id="lbl-t9">Pendiente</span></div>
             </div>
-            <div class="card-name">Portabilidad editor-clinica.jsx y editor-proveedores.jsx</div>
+            <div class="card-area-label">Producto</div>
+          <div class="card-name">Portabilidad editor-clinica.jsx y editor-proveedores.jsx</div>
             <div class="card-badges"><span class="badge b-prod">Producto</span><span class="badge b-mes">Este mes</span></div>
           </div>
           <button class="card-expand-btn" onclick="toggleCard(this.closest('.task-card'))">
@@ -515,7 +560,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
               <div class="dot" style="background:#6B8C7A;"></div>
               <div class="card-status"><span class="status-label" id="lbl-t10">Pendiente</span></div>
             </div>
-            <div class="card-name">Completar setup Firebase Cloud Functions</div>
+            <div class="card-area-label">Producto</div>
+          <div class="card-name">Completar setup Firebase Cloud Functions</div>
             <div class="card-badges"><span class="badge b-prod">Producto</span><span class="badge b-mes">Este mes</span></div>
           </div>
           <button class="card-expand-btn" onclick="toggleCard(this.closest('.task-card'))">
@@ -549,7 +595,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
               <div class="dot" style="background:#6B8C7A;"></div>
               <div class="card-status"><span class="status-label" id="lbl-t11">Pendiente</span></div>
             </div>
-            <div class="card-name">Refactorizar componentes reutilizables del editor</div>
+            <div class="card-area-label">Producto</div>
+          <div class="card-name">Refactorizar componentes reutilizables del editor</div>
             <div class="card-badges"><span class="badge b-prod">Producto</span><span class="badge b-mes">Este mes</span></div>
           </div>
           <button class="card-expand-btn" onclick="toggleCard(this.closest('.task-card'))">
@@ -583,7 +630,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
               <div class="dot" style="background:#6B8C7A;"></div>
               <div class="card-status"><span class="status-label" id="lbl-t12">Pendiente</span></div>
             </div>
-            <div class="card-name">Optimizar SEO on-page de perfiles públicos</div>
+            <div class="card-area-label">SEO</div>
+          <div class="card-name">Optimizar SEO on-page de perfiles públicos</div>
             <div class="card-badges"><span class="badge b-seo">SEO</span><span class="badge b-mes">Este mes</span></div>
           </div>
           <button class="card-expand-btn" onclick="toggleCard(this.closest('.task-card'))">
@@ -618,7 +666,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
 
   <!-- A FUTURO -->
   <div id="wrap-fut">
-    <div class="sec-label"><span>A futuro</span><span id="cnt-fut">5 tareas</span></div>
+    <div class="sec-label lbl-fut"><span>A futuro</span><span class="cnt" id="cnt-fut">5 tareas</span></div>
     <div class="grid-wrap">
       <div class="scroll-btn scroll-left" onclick="scrollSec('fut',-1)"><i class="ti ti-chevron-left"></i></div>
       <div class="grid-scroll" id="sec-fut">
@@ -626,7 +674,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
         <div class="task-card" data-urg="A futuro" data-area="Producto" data-id="t13">
           <div class="card-top" onclick="toggleCard(this.closest('.task-card'))">
             <div class="card-dot-row"><div class="dot" style="background:#A89880;"></div><div class="card-status"><span class="status-label" id="lbl-t13">Pendiente</span></div></div>
-            <div class="card-name">QR descargable en editor-profesional.jsx</div>
+            <div class="card-area-label">Producto</div>
+          <div class="card-name">QR descargable en editor-profesional.jsx</div>
             <div class="card-badges"><span class="badge b-prod">Producto</span><span class="badge b-fut">A futuro</span></div>
           </div>
           <button class="card-expand-btn" onclick="toggleCard(this.closest('.task-card'))"><span>Ver detalle</span><i class="ti ti-chevron-down"></i></button>
@@ -643,7 +692,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
         <div class="task-card" data-urg="A futuro" data-area="Producto" data-id="t14">
           <div class="card-top" onclick="toggleCard(this.closest('.task-card'))">
             <div class="card-dot-row"><div class="dot" style="background:#A89880;"></div><div class="card-status"><span class="status-label" id="lbl-t14">Pendiente</span></div></div>
-            <div class="card-name">Integrar MercadoPago — modelo de suscripción</div>
+            <div class="card-area-label">Producto</div>
+          <div class="card-name">Integrar MercadoPago — modelo de suscripción</div>
             <div class="card-badges"><span class="badge b-prod">Producto</span><span class="badge b-fut">A futuro</span></div>
           </div>
           <button class="card-expand-btn" onclick="toggleCard(this.closest('.task-card'))"><span>Ver detalle</span><i class="ti ti-chevron-down"></i></button>
@@ -660,7 +710,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
         <div class="task-card" data-urg="A futuro" data-area="Marketing" data-id="t15">
           <div class="card-top" onclick="toggleCard(this.closest('.task-card'))">
             <div class="card-dot-row"><div class="dot" style="background:#A89880;"></div><div class="card-status"><span class="status-label" id="lbl-t15">Pendiente</span></div></div>
-            <div class="card-name">Canal de WhatsApp para usuarios registrados</div>
+            <div class="card-area-label">Marketing</div>
+          <div class="card-name">Canal de WhatsApp para usuarios registrados</div>
             <div class="card-badges"><span class="badge b-mkt">Marketing</span><span class="badge b-fut">A futuro</span></div>
           </div>
           <button class="card-expand-btn" onclick="toggleCard(this.closest('.task-card'))"><span>Ver detalle</span><i class="ti ti-chevron-down"></i></button>
@@ -677,7 +728,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
         <div class="task-card" data-urg="A futuro" data-area="SEO" data-id="t16">
           <div class="card-top" onclick="toggleCard(this.closest('.task-card'))">
             <div class="card-dot-row"><div class="dot" style="background:#A89880;"></div><div class="card-status"><span class="status-label" id="lbl-t16">Pendiente</span></div></div>
-            <div class="card-name">Sitemap.xml dinámico con URLs de perfiles</div>
+            <div class="card-area-label">SEO</div>
+          <div class="card-name">Sitemap.xml dinámico con URLs de perfiles</div>
             <div class="card-badges"><span class="badge b-seo">SEO</span><span class="badge b-fut">A futuro</span></div>
           </div>
           <button class="card-expand-btn" onclick="toggleCard(this.closest('.task-card'))"><span>Ver detalle</span><i class="ti ti-chevron-down"></i></button>
@@ -694,7 +746,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
         <div class="task-card" data-urg="A futuro" data-area="Producto" data-id="t17">
           <div class="card-top" onclick="toggleCard(this.closest('.task-card'))">
             <div class="card-dot-row"><div class="dot" style="background:#A89880;"></div><div class="card-status"><span class="status-label" id="lbl-t17">Pendiente</span></div></div>
-            <div class="card-name">Login con Google</div>
+            <div class="card-area-label">Producto</div>
+          <div class="card-name">Login con Google</div>
             <div class="card-badges"><span class="badge b-prod">Producto</span><span class="badge b-fut">A futuro</span></div>
           </div>
           <button class="card-expand-btn" onclick="toggleCard(this.closest('.task-card'))"><span>Ver detalle</span><i class="ti ti-chevron-down"></i></button>
