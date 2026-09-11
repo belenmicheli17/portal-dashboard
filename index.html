@@ -33,11 +33,26 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
 .wrap{padding:24px;}
 
 /* KPIs */
-.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px;}
-.kpi{background:var(--card);border-radius:12px;padding:18px 20px;border:1.5px solid var(--border-c);border-top:4px solid;}
-.kpi .lbl{font-size:11px;color:var(--txt2);text-transform:uppercase;letter-spacing:0.7px;margin-bottom:8px;font-weight:600;}
-.kpi .val{font-size:38px;font-weight:500;line-height:1;margin-bottom:4px;}
-.kpi .sub{font-size:12px;color:var(--txt3);}
+.top-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px;}
+.top-card{background:var(--card);border-radius:12px;padding:20px 24px;border:1.5px solid var(--border-c);}
+/* Caja izquierda — resumen de áreas */
+.areas-list{display:flex;flex-direction:column;gap:10px;}
+.area-row{display:flex;align-items:center;gap:10px;}
+.area-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+.area-name{font-size:14px;color:var(--txt);font-weight:500;}
+.area-count{font-size:13px;color:var(--txt3);margin-left:auto;}
+.top-card-title{font-size:12px;font-weight:600;color:var(--txt3);text-transform:uppercase;letter-spacing:0.7px;margin-bottom:14px;}
+/* Caja derecha — agregar tarea rápida */
+.quick-add{display:flex;flex-direction:column;gap:10px;}
+.qa-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.qa-input{border:1.5px solid var(--border-c);border-radius:8px;padding:9px 12px;font-size:13px;color:var(--txt);font-family:inherit;background:var(--bg);outline:none;transition:border-color 0.15s;width:100%;}
+.qa-input:focus{border-color:var(--bosque);}
+.qa-textarea{border:1.5px solid var(--border-c);border-radius:8px;padding:9px 12px;font-size:13px;color:var(--txt);font-family:inherit;background:var(--bg);outline:none;resize:none;line-height:1.5;width:100%;transition:border-color 0.15s;}
+.qa-textarea:focus{border-color:var(--bosque);}
+.qa-btn{align-self:flex-end;padding:9px 20px;background:var(--bosque);color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:background 0.15s;}
+.qa-btn:hover{background:#2e4a40;}
+.qa-error{font-size:12px;color:var(--burg);display:none;}
+.qa-error.show{display:block;}
 
 /* FILTERS */
 .filters{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:24px;}
@@ -46,7 +61,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
 .f.on{background:var(--bosque);color:#fff;border-color:var(--bosque);}
 
 /* SECTION LABELS — más grandes y con color */
-.sec-label{font-size:16px;font-weight:700;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center;padding:0 2px;}
+.sec-label{font-size:15px;font-weight:400;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center;padding:0 2px;}
 .sec-label .cnt{font-size:12px;font-weight:500;color:var(--txt3);}
 .sec-label.lbl-urg{color:var(--burg);}
 .sec-label.lbl-sem{color:var(--trigo);}
@@ -86,7 +101,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
 
 .card-top{padding:16px 18px 14px;cursor:pointer;}
 .card-dot-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
-.dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
+.dot{display:none;}
 .card-status{font-size:11px;color:var(--txt3);}
 
 .card-area-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:8px;}
@@ -153,8 +168,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
   .nav .center{display:none;}
   .fase-chip{font-size:11px;padding:4px 10px;}
   .wrap{padding:16px;}
-  .kpis{grid-template-columns:repeat(2,1fr);gap:10px;}
-  .kpi .val{font-size:28px;}
+  .top-row{grid-template-columns:1fr;}
   .filters{gap:6px;}
   .f{padding:6px 12px;font-size:12px;}
   .grid-wrap{padding:0 8px;}
@@ -181,26 +195,59 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
 
 <div class="wrap">
 
-  <div class="kpis">
-    <div class="kpi" style="border-top-color:#8B3A3A;">
-      <div class="lbl">Urgentes</div>
-      <div class="val" style="color:#8B3A3A;" id="n-urg">4</div>
-      <div class="sub">atención inmediata</div>
+  <div class="top-row">
+    <!-- Caja izquierda: resumen por área -->
+    <div class="top-card">
+      <div class="top-card-title">Áreas del proyecto</div>
+      <div class="areas-list">
+        <div class="area-row">
+          <div class="area-dot" style="background:#5C8C70;"></div>
+          <div class="area-name">Producto</div>
+          <div class="area-count" id="cnt-area-prod">7 tareas</div>
+        </div>
+        <div class="area-row">
+          <div class="area-dot" style="background:#A0674A;"></div>
+          <div class="area-name">Marketing</div>
+          <div class="area-count" id="cnt-area-mkt">6 tareas</div>
+        </div>
+        <div class="area-row">
+          <div class="area-dot" style="background:#4A6A9E;"></div>
+          <div class="area-name">SEO</div>
+          <div class="area-count" id="cnt-area-seo">3 tareas</div>
+        </div>
+        <div class="area-row">
+          <div class="area-dot" style="background:#9E8A3A;"></div>
+          <div class="area-name">Comunidad</div>
+          <div class="area-count" id="cnt-area-com">1 tarea</div>
+        </div>
+      </div>
     </div>
-    <div class="kpi" style="border-top-color:#3D5A4F;">
-      <div class="lbl">Total tareas</div>
-      <div class="val" style="color:#3D5A4F;" id="n-total">17</div>
-      <div class="sub">en el tablero</div>
-    </div>
-    <div class="kpi" style="border-top-color:#B8924A;">
-      <div class="lbl">En progreso</div>
-      <div class="val" style="color:#B8924A;" id="n-prog">0</div>
-      <div class="sub">en curso</div>
-    </div>
-    <div class="kpi" style="border-top-color:#6B8C7A;">
-      <div class="lbl">Completadas</div>
-      <div class="val" style="color:#6B8C7A;" id="n-done">0</div>
-      <div class="sub">listas</div>
+    <!-- Caja derecha: agregar tarea rápida -->
+    <div class="top-card">
+      <div class="top-card-title">Agregar tarea</div>
+      <div class="quick-add">
+        <input class="qa-input" id="qa-titulo" type="text" placeholder="Título de la tarea *">
+        <div class="qa-row">
+          <select class="qa-input" id="qa-area">
+            <option value="">Área *</option>
+            <option>Producto</option>
+            <option>Marketing</option>
+            <option>SEO</option>
+            <option>Comunidad</option>
+          </select>
+          <select class="qa-input" id="qa-urg">
+            <option value="">Urgencia *</option>
+            <option>Urgente</option>
+            <option>Esta semana</option>
+            <option>Este mes</option>
+            <option>A futuro</option>
+          </select>
+        </div>
+        <textarea class="qa-textarea" id="qa-desc" rows="2" placeholder="Descripción (opcional)"></textarea>
+        <textarea class="qa-textarea" id="qa-nota" rows="2" placeholder="Nota inicial (opcional)"></textarea>
+        <div class="qa-error" id="qa-error">Completá el título, área y urgencia.</div>
+        <button class="qa-btn" onclick="quickAdd()">+ Agregar tarea</button>
+      </div>
     </div>
   </div>
 
@@ -930,10 +977,6 @@ function aplicar(){
 }
 </script>
 
-<!-- BOTÓN FLOTANTE -->
-<button class="fab" onclick="abrirModal()" title="Agregar tarea">
-  <i class="ti ti-plus"></i>
-</button>
 
 <!-- MODAL NUEVA TAREA -->
 <div class="modal-bg" id="modal-bg" onclick="cerrarModal(event)">
@@ -987,9 +1030,7 @@ function aplicar(){
 </div>
 
 <style>
-/* FAB */
-.fab{position:fixed;bottom:32px;right:32px;width:52px;height:52px;border-radius:50%;background:var(--bosque);color:#fff;border:none;cursor:pointer;font-size:24px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(61,90,79,0.35);transition:all 0.2s;z-index:200;}
-.fab:hover{background:#2e4a40;transform:scale(1.07);}
+
 
 /* MODAL */
 .modal-bg{display:none;position:fixed;inset:0;background:rgba(44,40,32,0.45);z-index:300;align-items:center;justify-content:center;padding:20px;}
@@ -1018,6 +1059,22 @@ function aplicar(){
 <script>
 let taskCounter=18;
 
+function quickAdd(){
+  const titulo=document.getElementById('qa-titulo').value.trim();
+  const area=document.getElementById('qa-area').value;
+  const urg=document.getElementById('qa-urg').value;
+  const desc=document.getElementById('qa-desc').value.trim();
+  const nota=document.getElementById('qa-nota').value.trim();
+  if(!titulo||!area||!urg){document.getElementById('qa-error').classList.add('show');return;}
+  document.getElementById('qa-error').classList.remove('show');
+  // Reusar crearTarea con estos valores
+  crearTareaDirecta(titulo,area,urg,desc,nota);
+  // Limpiar
+  ['qa-titulo','qa-desc','qa-nota'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('qa-area').value='';
+  document.getElementById('qa-urg').value='';
+}
+
 function abrirModal(){document.getElementById('modal-bg').classList.add('open');document.getElementById('new-titulo').focus();}
 function cerrarModalBtn(){document.getElementById('modal-bg').classList.remove('open');limpiarModal();}
 function cerrarModal(e){if(e.target===document.getElementById('modal-bg'))cerrarModalBtn();}
@@ -1035,6 +1092,10 @@ function crearTarea(){
   const desc=document.getElementById('new-desc').value.trim();
   const nota=document.getElementById('new-nota').value.trim();
   if(!titulo||!area||!urg){document.getElementById('modal-error').classList.add('show');return;}
+  crearTareaDirecta(titulo,area,urg,desc,nota);
+}
+
+function crearTareaDirecta(titulo,area,urg,desc,nota){
 
   const id='t'+taskCounter++;
   const secMap={'Urgente':'urg','Esta semana':'sem','Este mes':'mes','A futuro':'fut'};
