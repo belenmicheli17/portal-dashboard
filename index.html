@@ -54,17 +54,22 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
 .sec-label.lbl-fut{color:var(--txt3);}
 
 /* GRID HORIZONTAL con scroll */
-.grid-wrap{position:relative;margin-bottom:28px;}
-.grid-scroll{display:flex;gap:14px;overflow-x:auto;padding:4px 4px 12px;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;}
+.grid-wrap{position:relative;margin-bottom:28px;padding:0 44px;}
+.grid-scroll{display:flex;gap:14px;overflow-x:auto;padding:4px 4px 12px;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;align-items:flex-start;}
 .grid-scroll::-webkit-scrollbar{height:4px;}
 .grid-scroll::-webkit-scrollbar-track{background:transparent;}
 .grid-scroll::-webkit-scrollbar-thumb{background:var(--border-c);border-radius:4px;}
 
 /* TASK CARD — fondo por área */
-.task-card{border:1.5px solid transparent;border-radius:14px;width:280px;min-width:280px;flex-shrink:0;transition:all 0.2s;overflow:hidden;box-shadow:0 1px 4px rgba(44,40,32,0.06);}
+.task-card{border:1.5px solid transparent;border-radius:14px;width:280px;min-width:280px;flex-shrink:0;transition:all 0.2s;overflow:hidden;box-shadow:0 1px 4px rgba(44,40,32,0.06);position:relative;}
 .task-card:hover{box-shadow:0 4px 14px rgba(44,40,32,0.12);transform:translateY(-1px);}
 .task-card.started{box-shadow:0 0 0 2px var(--trigo);}
 .task-card.done{opacity:0.7;}
+
+/* BOTÓN ELIMINAR */
+.card-delete{position:absolute;top:10px;right:10px;width:22px;height:22px;border-radius:50%;background:rgba(0,0,0,0.07);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--txt3);font-size:13px;opacity:0;transition:all 0.15s;z-index:5;line-height:1;}
+.task-card:hover .card-delete{opacity:1;}
+.card-delete:hover{background:rgba(139,58,58,0.15);color:var(--burg);}
 
 /* Fondos y bordes por área */
 .task-card[data-area="Producto"]{background:#EBF3EE;border-color:#C2D9CC;}
@@ -90,7 +95,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
 .task-card[data-area="SEO"] .card-area-label{color:#2E4A8B;}
 .task-card[data-area="Comunidad"] .card-area-label{color:#7A6A1A;}
 
-.card-name{font-size:15px;font-weight:500;color:var(--txt);line-height:1.4;margin-bottom:14px;min-height:44px;}
+.card-name{font-size:15px;font-weight:500;color:var(--txt);line-height:1.4;margin-bottom:14px;min-height:44px;padding-right:20px;}
 
 .card-badges{display:flex;gap:6px;flex-wrap:wrap;}
 .badge{font-size:11px;padding:4px 10px;border-radius:20px;font-weight:600;white-space:nowrap;}
@@ -137,8 +142,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
 .add-note-btn:hover{background:#2e4a40;}
 
 /* SCROLL ARROWS */
-.scroll-btn{position:absolute;top:40%;transform:translateY(-50%);width:36px;height:36px;border-radius:50%;background:var(--card);border:1.5px solid var(--border-c);display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:10;box-shadow:0 2px 8px rgba(44,40,32,0.12);color:var(--txt2);font-size:18px;transition:all 0.15s;}
+.scroll-btn{position:absolute;top:50%;transform:translateY(-60%);width:36px;height:36px;border-radius:50%;background:var(--card);border:1.5px solid var(--border-c);display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:10;box-shadow:0 2px 8px rgba(44,40,32,0.12);color:var(--txt2);font-size:18px;transition:all 0.15s;}
 .scroll-btn:hover{border-color:var(--bosque);color:var(--bosque);}
+.scroll-left{left:0;}
+.scroll-right{right:0;}
 
 /* MOBILE */
 @media(max-width:640px){
@@ -150,6 +157,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
   .kpi .val{font-size:28px;}
   .filters{gap:6px;}
   .f{padding:6px 12px;font-size:12px;}
+  .grid-wrap{padding:0 8px;}
   .task-card{width:240px;min-width:240px;}
   .scroll-btn{display:none;}
   .sec-label{font-size:14px;}
@@ -216,6 +224,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
       <div class="grid-scroll" id="sec-urg">
 
         <div class="task-card" data-urg="Urgente" data-area="Comunidad" data-id="t1">
+          <div class="card-header-bar"></div>
+          <button class="card-delete" onclick="eliminarCard(this)" title="Eliminar">×</button>
           <div class="card-top" onclick="toggleCard(this.closest('.task-card'))">
             <div class="card-dot-row">
               <div class="dot" style="background:#8B3A3A;"></div>
@@ -223,7 +233,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
             </div>
             <div class="card-area-label">Comunidad</div>
           <div class="card-name">Contactar usuarios beta para completar perfil</div>
-            <div class="card-badges"><span class="badge b-com">Comunidad</span><span class="badge b-urg">Urgente</span></div>
+            <div class="card-badges"><span class="badge b-com">Comunidad</span></div>
           </div>
           <button class="card-expand-btn" onclick="toggleCard(this.closest('.task-card'))">
             <span>Ver detalle</span><i class="ti ti-chevron-down"></i>
@@ -251,6 +261,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
         </div>
 
         <div class="task-card" data-urg="Urgente" data-area="Marketing" data-id="t2">
+          <div class="card-header-bar"></div>
+          <button class="card-delete" onclick="eliminarCard(this)" title="Eliminar">×</button>
           <div class="card-top" onclick="toggleCard(this.closest('.task-card'))">
             <div class="card-dot-row">
               <div class="dot" style="background:#8B3A3A;"></div>
@@ -258,7 +270,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
             </div>
             <div class="card-area-label">Marketing</div>
           <div class="card-name">Revisar y mejorar logo para Instagram (Canva)</div>
-            <div class="card-badges"><span class="badge b-mkt">Marketing</span><span class="badge b-urg">Urgente</span></div>
+            <div class="card-badges"><span class="badge b-mkt">Marketing</span></div>
           </div>
           <button class="card-expand-btn" onclick="toggleCard(this.closest('.task-card'))">
             <span>Ver detalle</span><i class="ti ti-chevron-down"></i>
@@ -286,6 +298,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
         </div>
 
         <div class="task-card" data-urg="Urgente" data-area="Marketing" data-id="t3">
+          <div class="card-header-bar"></div>
+          <button class="card-delete" onclick="eliminarCard(this)" title="Eliminar">×</button>
           <div class="card-top" onclick="toggleCard(this.closest('.task-card'))">
             <div class="card-dot-row">
               <div class="dot" style="background:#8B3A3A;"></div>
@@ -293,7 +307,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
             </div>
             <div class="card-area-label">Marketing</div>
           <div class="card-name">Preparar 9 posts antes de lanzar Instagram</div>
-            <div class="card-badges"><span class="badge b-mkt">Marketing</span><span class="badge b-urg">Urgente</span></div>
+            <div class="card-badges"><span class="badge b-mkt">Marketing</span></div>
           </div>
           <button class="card-expand-btn" onclick="toggleCard(this.closest('.task-card'))">
             <span>Ver detalle</span><i class="ti ti-chevron-down"></i>
@@ -321,6 +335,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
         </div>
 
         <div class="task-card" data-urg="Urgente" data-area="Producto" data-id="t4">
+          <div class="card-header-bar"></div>
+          <button class="card-delete" onclick="eliminarCard(this)" title="Eliminar">×</button>
           <div class="card-top" onclick="toggleCard(this.closest('.task-card'))">
             <div class="card-dot-row">
               <div class="dot" style="background:#8B3A3A;"></div>
@@ -328,7 +344,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
             </div>
             <div class="card-area-label">Producto</div>
           <div class="card-name">Autenticar dominio portalveterinario.ar en Brevo (DNS)</div>
-            <div class="card-badges"><span class="badge b-prod">Producto</span><span class="badge b-urg">Urgente</span></div>
+            <div class="card-badges"><span class="badge b-prod">Producto</span></div>
           </div>
           <button class="card-expand-btn" onclick="toggleCard(this.closest('.task-card'))">
             <span>Ver detalle</span><i class="ti ti-chevron-down"></i>
@@ -368,6 +384,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
       <div class="grid-scroll" id="sec-sem">
 
         <div class="task-card" data-urg="Esta semana" data-area="SEO" data-id="t5">
+          <div class="card-header-bar"></div>
+          <button class="card-delete" onclick="eliminarCard(this)" title="Eliminar">×</button>
           <div class="card-top" onclick="toggleCard(this.closest('.task-card'))">
             <div class="card-dot-row">
               <div class="dot" style="background:#B8924A;"></div>
@@ -375,7 +393,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
             </div>
             <div class="card-area-label">SEO</div>
           <div class="card-name">Configurar Google Search Console</div>
-            <div class="card-badges"><span class="badge b-seo">SEO</span><span class="badge b-sem">Esta semana</span></div>
+            <div class="card-badges"><span class="badge b-seo">SEO</span></div>
           </div>
           <button class="card-expand-btn" onclick="toggleCard(this.closest('.task-card'))">
             <span>Ver detalle</span><i class="ti ti-chevron-down"></i>
@@ -403,6 +421,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
         </div>
 
         <div class="task-card" data-urg="Esta semana" data-area="Producto" data-id="t6">
+          <div class="card-header-bar"></div>
+          <button class="card-delete" onclick="eliminarCard(this)" title="Eliminar">×</button>
           <div class="card-top" onclick="toggleCard(this.closest('.task-card'))">
             <div class="card-dot-row">
               <div class="dot" style="background:#B8924A;"></div>
@@ -410,7 +430,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
             </div>
             <div class="card-area-label">Producto</div>
           <div class="card-name">Integrar email de bienvenida con Brevo API</div>
-            <div class="card-badges"><span class="badge b-prod">Producto</span><span class="badge b-sem">Esta semana</span></div>
+            <div class="card-badges"><span class="badge b-prod">Producto</span></div>
           </div>
           <button class="card-expand-btn" onclick="toggleCard(this.closest('.task-card'))">
             <span>Ver detalle</span><i class="ti ti-chevron-down"></i>
@@ -438,6 +458,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
         </div>
 
         <div class="task-card" data-urg="Esta semana" data-area="Producto" data-id="t7">
+          <div class="card-header-bar"></div>
+          <button class="card-delete" onclick="eliminarCard(this)" title="Eliminar">×</button>
           <div class="card-top" onclick="toggleCard(this.closest('.task-card'))">
             <div class="card-dot-row">
               <div class="dot" style="background:#B8924A;"></div>
@@ -445,7 +467,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
             </div>
             <div class="card-area-label">Producto</div>
           <div class="card-name">Implementar reglas de seguridad Firestore</div>
-            <div class="card-badges"><span class="badge b-prod">Producto</span><span class="badge b-sem">Esta semana</span></div>
+            <div class="card-badges"><span class="badge b-prod">Producto</span></div>
           </div>
           <button class="card-expand-btn" onclick="toggleCard(this.closest('.task-card'))">
             <span>Ver detalle</span><i class="ti ti-chevron-down"></i>
@@ -473,6 +495,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
         </div>
 
         <div class="task-card" data-urg="Esta semana" data-area="Marketing" data-id="t8">
+          <div class="card-header-bar"></div>
+          <button class="card-delete" onclick="eliminarCard(this)" title="Eliminar">×</button>
           <div class="card-top" onclick="toggleCard(this.closest('.task-card'))">
             <div class="card-dot-row">
               <div class="dot" style="background:#B8924A;"></div>
@@ -480,7 +504,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
             </div>
             <div class="card-area-label">Marketing</div>
           <div class="card-name">Configurar Meta Ads (cuando haya 4–5 perfiles completos)</div>
-            <div class="card-badges"><span class="badge b-mkt">Marketing</span><span class="badge b-sem">Esta semana</span></div>
+            <div class="card-badges"><span class="badge b-mkt">Marketing</span></div>
           </div>
           <button class="card-expand-btn" onclick="toggleCard(this.closest('.task-card'))">
             <span>Ver detalle</span><i class="ti ti-chevron-down"></i>
@@ -520,6 +544,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
       <div class="grid-scroll" id="sec-mes">
 
         <div class="task-card" data-urg="Este mes" data-area="Producto" data-id="t9">
+          <div class="card-header-bar"></div>
+          <button class="card-delete" onclick="eliminarCard(this)" title="Eliminar">×</button>
           <div class="card-top" onclick="toggleCard(this.closest('.task-card'))">
             <div class="card-dot-row">
               <div class="dot" style="background:#6B8C7A;"></div>
@@ -527,7 +553,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
             </div>
             <div class="card-area-label">Producto</div>
           <div class="card-name">Portabilidad editor-clinica.jsx y editor-proveedores.jsx</div>
-            <div class="card-badges"><span class="badge b-prod">Producto</span><span class="badge b-mes">Este mes</span></div>
+            <div class="card-badges"><span class="badge b-prod">Producto</span></div>
           </div>
           <button class="card-expand-btn" onclick="toggleCard(this.closest('.task-card'))">
             <span>Ver detalle</span><i class="ti ti-chevron-down"></i>
@@ -555,6 +581,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
         </div>
 
         <div class="task-card" data-urg="Este mes" data-area="Producto" data-id="t10">
+          <div class="card-header-bar"></div>
+          <button class="card-delete" onclick="eliminarCard(this)" title="Eliminar">×</button>
           <div class="card-top" onclick="toggleCard(this.closest('.task-card'))">
             <div class="card-dot-row">
               <div class="dot" style="background:#6B8C7A;"></div>
@@ -562,7 +590,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
             </div>
             <div class="card-area-label">Producto</div>
           <div class="card-name">Completar setup Firebase Cloud Functions</div>
-            <div class="card-badges"><span class="badge b-prod">Producto</span><span class="badge b-mes">Este mes</span></div>
+            <div class="card-badges"><span class="badge b-prod">Producto</span></div>
           </div>
           <button class="card-expand-btn" onclick="toggleCard(this.closest('.task-card'))">
             <span>Ver detalle</span><i class="ti ti-chevron-down"></i>
@@ -590,6 +618,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
         </div>
 
         <div class="task-card" data-urg="Este mes" data-area="Producto" data-id="t11">
+          <div class="card-header-bar"></div>
+          <button class="card-delete" onclick="eliminarCard(this)" title="Eliminar">×</button>
           <div class="card-top" onclick="toggleCard(this.closest('.task-card'))">
             <div class="card-dot-row">
               <div class="dot" style="background:#6B8C7A;"></div>
@@ -597,7 +627,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
             </div>
             <div class="card-area-label">Producto</div>
           <div class="card-name">Refactorizar componentes reutilizables del editor</div>
-            <div class="card-badges"><span class="badge b-prod">Producto</span><span class="badge b-mes">Este mes</span></div>
+            <div class="card-badges"><span class="badge b-prod">Producto</span></div>
           </div>
           <button class="card-expand-btn" onclick="toggleCard(this.closest('.task-card'))">
             <span>Ver detalle</span><i class="ti ti-chevron-down"></i>
@@ -625,6 +655,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
         </div>
 
         <div class="task-card" data-urg="Este mes" data-area="SEO" data-id="t12">
+          <div class="card-header-bar"></div>
+          <button class="card-delete" onclick="eliminarCard(this)" title="Eliminar">×</button>
           <div class="card-top" onclick="toggleCard(this.closest('.task-card'))">
             <div class="card-dot-row">
               <div class="dot" style="background:#6B8C7A;"></div>
@@ -632,7 +664,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
             </div>
             <div class="card-area-label">SEO</div>
           <div class="card-name">Optimizar SEO on-page de perfiles públicos</div>
-            <div class="card-badges"><span class="badge b-seo">SEO</span><span class="badge b-mes">Este mes</span></div>
+            <div class="card-badges"><span class="badge b-seo">SEO</span></div>
           </div>
           <button class="card-expand-btn" onclick="toggleCard(this.closest('.task-card'))">
             <span>Ver detalle</span><i class="ti ti-chevron-down"></i>
@@ -672,11 +704,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
       <div class="grid-scroll" id="sec-fut">
 
         <div class="task-card" data-urg="A futuro" data-area="Producto" data-id="t13">
+          <div class="card-header-bar"></div>
+          <button class="card-delete" onclick="eliminarCard(this)" title="Eliminar">×</button>
           <div class="card-top" onclick="toggleCard(this.closest('.task-card'))">
             <div class="card-dot-row"><div class="dot" style="background:#A89880;"></div><div class="card-status"><span class="status-label" id="lbl-t13">Pendiente</span></div></div>
             <div class="card-area-label">Producto</div>
           <div class="card-name">QR descargable en editor-profesional.jsx</div>
-            <div class="card-badges"><span class="badge b-prod">Producto</span><span class="badge b-fut">A futuro</span></div>
+            <div class="card-badges"><span class="badge b-prod">Producto</span></div>
           </div>
           <button class="card-expand-btn" onclick="toggleCard(this.closest('.task-card'))"><span>Ver detalle</span><i class="ti ti-chevron-down"></i></button>
           <div class="card-body"><div class="card-body-inner">
@@ -690,11 +724,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
         </div>
 
         <div class="task-card" data-urg="A futuro" data-area="Producto" data-id="t14">
+          <div class="card-header-bar"></div>
+          <button class="card-delete" onclick="eliminarCard(this)" title="Eliminar">×</button>
           <div class="card-top" onclick="toggleCard(this.closest('.task-card'))">
             <div class="card-dot-row"><div class="dot" style="background:#A89880;"></div><div class="card-status"><span class="status-label" id="lbl-t14">Pendiente</span></div></div>
             <div class="card-area-label">Producto</div>
           <div class="card-name">Integrar MercadoPago — modelo de suscripción</div>
-            <div class="card-badges"><span class="badge b-prod">Producto</span><span class="badge b-fut">A futuro</span></div>
+            <div class="card-badges"><span class="badge b-prod">Producto</span></div>
           </div>
           <button class="card-expand-btn" onclick="toggleCard(this.closest('.task-card'))"><span>Ver detalle</span><i class="ti ti-chevron-down"></i></button>
           <div class="card-body"><div class="card-body-inner">
@@ -708,11 +744,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
         </div>
 
         <div class="task-card" data-urg="A futuro" data-area="Marketing" data-id="t15">
+          <div class="card-header-bar"></div>
+          <button class="card-delete" onclick="eliminarCard(this)" title="Eliminar">×</button>
           <div class="card-top" onclick="toggleCard(this.closest('.task-card'))">
             <div class="card-dot-row"><div class="dot" style="background:#A89880;"></div><div class="card-status"><span class="status-label" id="lbl-t15">Pendiente</span></div></div>
             <div class="card-area-label">Marketing</div>
           <div class="card-name">Canal de WhatsApp para usuarios registrados</div>
-            <div class="card-badges"><span class="badge b-mkt">Marketing</span><span class="badge b-fut">A futuro</span></div>
+            <div class="card-badges"><span class="badge b-mkt">Marketing</span></div>
           </div>
           <button class="card-expand-btn" onclick="toggleCard(this.closest('.task-card'))"><span>Ver detalle</span><i class="ti ti-chevron-down"></i></button>
           <div class="card-body"><div class="card-body-inner">
@@ -726,11 +764,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
         </div>
 
         <div class="task-card" data-urg="A futuro" data-area="SEO" data-id="t16">
+          <div class="card-header-bar"></div>
+          <button class="card-delete" onclick="eliminarCard(this)" title="Eliminar">×</button>
           <div class="card-top" onclick="toggleCard(this.closest('.task-card'))">
             <div class="card-dot-row"><div class="dot" style="background:#A89880;"></div><div class="card-status"><span class="status-label" id="lbl-t16">Pendiente</span></div></div>
             <div class="card-area-label">SEO</div>
           <div class="card-name">Sitemap.xml dinámico con URLs de perfiles</div>
-            <div class="card-badges"><span class="badge b-seo">SEO</span><span class="badge b-fut">A futuro</span></div>
+            <div class="card-badges"><span class="badge b-seo">SEO</span></div>
           </div>
           <button class="card-expand-btn" onclick="toggleCard(this.closest('.task-card'))"><span>Ver detalle</span><i class="ti ti-chevron-down"></i></button>
           <div class="card-body"><div class="card-body-inner">
@@ -744,11 +784,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
         </div>
 
         <div class="task-card" data-urg="A futuro" data-area="Producto" data-id="t17">
+          <div class="card-header-bar"></div>
+          <button class="card-delete" onclick="eliminarCard(this)" title="Eliminar">×</button>
           <div class="card-top" onclick="toggleCard(this.closest('.task-card'))">
             <div class="card-dot-row"><div class="dot" style="background:#A89880;"></div><div class="card-status"><span class="status-label" id="lbl-t17">Pendiente</span></div></div>
             <div class="card-area-label">Producto</div>
           <div class="card-name">Login con Google</div>
-            <div class="card-badges"><span class="badge b-prod">Producto</span><span class="badge b-fut">A futuro</span></div>
+            <div class="card-badges"><span class="badge b-prod">Producto</span></div>
           </div>
           <button class="card-expand-btn" onclick="toggleCard(this.closest('.task-card'))"><span>Ver detalle</span><i class="ti ti-chevron-down"></i></button>
           <div class="card-body"><div class="card-body-inner">
@@ -774,6 +816,27 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
 let filtroUrg=null,filtroArea=null;
 const estados={};
 
+function eliminarCard(btn){
+  const card=btn.closest('.task-card');
+  const sec=card.closest('.grid-scroll');
+  const wrap=card.closest('[id^="wrap-"]');
+  const key=wrap.id.replace('wrap-','');
+  card.style.transition='opacity 0.2s, transform 0.2s';
+  card.style.opacity='0';
+  card.style.transform='scale(0.95)';
+  setTimeout(()=>{
+    card.remove();
+    // Actualizar contador
+    const vis=sec.querySelectorAll('.task-card:not([style*="display: none"])').length;
+    const cnt=document.getElementById('cnt-'+key);
+    if(cnt)cnt.textContent=vis+(vis===1?' tarea':' tareas');
+    if(vis===0)wrap.style.display='none';
+    // Actualizar total
+    const total=document.querySelectorAll('.task-card').length;
+    document.getElementById('n-total').textContent=total;
+    actualizarKPIs();
+  },200);
+}
 function toggleCard(card){card.classList.toggle('open');}
 
 function scrollSec(sec,dir){
@@ -990,7 +1053,7 @@ function crearTarea(){
         <div class="card-status"><span class="status-label" id="lbl-${id}">Pendiente</span></div>
       </div>
       <div class="card-name">${titulo}</div>
-      <div class="card-badges"><span class="badge ${badgeMap[area]}">${area}</span><span class="badge ${urgBadgeMap[urg]}">${urg}</span></div>
+      <div class="card-badges"><span class="badge ${badgeMap[area]}">${area}</span></div>
     </div>
     <button class="card-expand-btn" onclick="toggleCard(this.closest('.task-card'))">
       <span>Ver detalle</span><i class="ti ti-chevron-down"></i>
