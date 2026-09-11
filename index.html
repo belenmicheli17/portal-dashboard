@@ -10,65 +10,71 @@
 :root{
   --bg:#F0EDE6;
   --card:#FAF8F4;
-  --border-c:#E0D9CE;
+  --border-c:#DDD6CC;
   --txt:#2C2820;
-  --txt2:#7A6E60;
-  --txt3:#A89880;
+  --txt2:#6B5F52;
+  --txt3:#9E8E7E;
   --burg:#8B3A3A;
   --bosque:#3D5A4F;
   --salvia:#6B8C7A;
   --trigo:#B8924A;
 }
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);min-height:100vh;padding:24px;}
-.db{max-width:860px;margin:0 auto;border-radius:14px;overflow:hidden;border:0.5px solid var(--border-c);box-shadow:0 2px 20px rgba(44,40,32,0.08);}
+html,body{min-height:100vh;width:100%;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);padding:32px 40px;}
 
-.hdr{background:var(--bosque);padding:20px 28px;display:flex;align-items:center;justify-content:space-between;}
-.hdr .logo{color:#fff;font-size:17px;font-weight:500;letter-spacing:-0.2px;}
+.db{max-width:1100px;margin:0 auto;}
+
+/* HEADER */
+.hdr{background:var(--bosque);padding:24px 36px;border-radius:14px 14px 0 0;display:flex;align-items:center;justify-content:space-between;}
+.hdr .logo{color:#fff;font-size:22px;font-weight:500;letter-spacing:-0.3px;}
 .hdr .logo em{color:#A8C9BC;font-style:normal;}
-.hdr .right{display:flex;align-items:center;gap:16px;}
-.hdr .title{color:rgba(255,255,255,0.55);font-size:13px;}
-.fase-chip{background:rgba(168,201,188,0.2);border:1px solid rgba(168,201,188,0.3);color:#A8C9BC;font-size:11px;padding:4px 12px;border-radius:20px;}
+.hdr .right{display:flex;align-items:center;gap:20px;}
+.hdr .title{color:rgba(255,255,255,0.55);font-size:15px;}
+.fase-chip{background:rgba(168,201,188,0.2);border:1px solid rgba(168,201,188,0.35);color:#A8C9BC;font-size:13px;padding:6px 16px;border-radius:20px;}
 
-.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;padding:20px 20px 16px;background:var(--bg);}
-.kpi{background:var(--card);border-radius:10px;padding:16px 18px;border:0.5px solid var(--border-c);border-top:3px solid;}
-.kpi .lbl{font-size:10px;color:var(--txt2);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:8px;font-weight:500;}
-.kpi .val{font-size:30px;font-weight:500;line-height:1;margin-bottom:4px;}
-.kpi .sub{font-size:11px;color:var(--txt3);}
+/* KPIs */
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;padding:24px 0 20px;}
+.kpi{background:var(--card);border-radius:12px;padding:22px 24px;border:1.5px solid var(--border-c);border-top-width:4px;}
+.kpi .lbl{font-size:12px;color:var(--txt2);text-transform:uppercase;letter-spacing:0.7px;margin-bottom:12px;font-weight:600;}
+.kpi .val{font-size:44px;font-weight:500;line-height:1;margin-bottom:6px;}
+.kpi .sub{font-size:13px;color:var(--txt3);}
 
-.body{padding:0 20px 24px;background:var(--bg);}
-
-.filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px;}
-.f{padding:5px 13px;border-radius:20px;font-size:11px;border:0.5px solid var(--border-c);color:var(--txt2);cursor:pointer;background:var(--card);transition:all 0.15s;font-family:inherit;}
+/* FILTERS */
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px;}
+.f{padding:8px 18px;border-radius:20px;font-size:13px;border:1.5px solid var(--border-c);color:var(--txt2);cursor:pointer;background:var(--card);transition:all 0.15s;font-family:inherit;}
 .f:hover{border-color:var(--bosque);color:var(--bosque);}
 .f.on{background:var(--bosque);color:#fff;border-color:var(--bosque);}
 
-.sec-label{font-size:10px;font-weight:500;color:var(--txt3);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;display:flex;justify-content:space-between;padding:0 2px;}
+/* SECTION LABEL */
+.sec-label{font-size:12px;font-weight:600;color:var(--txt3);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;display:flex;justify-content:space-between;padding:0 4px;}
 
-.tasks{display:flex;flex-direction:column;gap:5px;margin-bottom:18px;}
+/* TASKS */
+.tasks{display:flex;flex-direction:column;gap:6px;margin-bottom:24px;}
 
-.task{background:var(--card);border:0.5px solid var(--border-c);border-radius:10px;overflow:hidden;cursor:pointer;transition:border-color 0.2s;}
+.task{background:var(--card);border:1.5px solid var(--border-c);border-radius:12px;overflow:hidden;cursor:pointer;transition:border-color 0.2s;}
 .task:hover{border-color:#9AAFA6;}
 .task.open{border-color:var(--bosque);}
 
-.task-head{display:flex;align-items:center;gap:10px;padding:11px 14px;}
-.dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
-.tname{font-size:13px;color:var(--txt);flex:1;line-height:1.35;}
-.badges{display:flex;gap:5px;align-items:center;flex-wrap:wrap;}
-.chev{color:var(--txt3);font-size:14px;transition:transform 0.2s;margin-left:2px;flex-shrink:0;}
+.task-head{display:flex;align-items:center;gap:12px;padding:16px 20px;}
+.dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
+.tname{font-size:15px;color:var(--txt);flex:1;line-height:1.4;}
+.badges{display:flex;gap:6px;align-items:center;flex-wrap:wrap;}
+.chev{color:var(--txt3);font-size:18px;transition:transform 0.2s;margin-left:4px;flex-shrink:0;}
 .task.open .chev{transform:rotate(180deg);}
 
-.task-body{display:none;padding:12px 14px 14px;border-top:0.5px solid var(--border-c);background:#F5F2EC;}
+.task-body{display:none;padding:16px 20px 20px;border-top:1.5px solid var(--border-c);background:#F5F2EC;}
 .task.open .task-body{display:block;}
-.tdesc{font-size:12px;color:var(--txt2);line-height:1.65;margin-bottom:10px;}
-.notes-lbl{font-size:10px;font-weight:500;color:var(--txt3);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;}
-.note{background:#fff;border-left:2px solid var(--trigo);border-radius:0 6px 6px 0;padding:8px 12px;margin-bottom:5px;}
-.note .nmeta{font-size:10px;color:var(--txt3);margin-bottom:3px;}
-.note .ntxt{font-size:12px;color:var(--txt2);line-height:1.55;}
+.tdesc{font-size:14px;color:var(--txt2);line-height:1.7;margin-bottom:14px;}
+.notes-lbl{font-size:11px;font-weight:600;color:var(--txt3);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:8px;}
+.note{background:#fff;border-left:3px solid var(--trigo);border-radius:0 8px 8px 0;padding:10px 14px;margin-bottom:6px;}
+.note .nmeta{font-size:11px;color:var(--txt3);margin-bottom:4px;}
+.note .ntxt{font-size:14px;color:var(--txt2);line-height:1.6;}
 
-.empty{text-align:center;padding:40px;font-size:13px;color:var(--txt3);display:none;}
-.footer{text-align:center;padding:14px;font-size:11px;color:var(--txt3);background:var(--bg);}
+.empty{text-align:center;padding:60px;font-size:15px;color:var(--txt3);display:none;}
+.footer{text-align:center;padding:20px;font-size:12px;color:var(--txt3);}
 
-.badge{font-size:10px;padding:3px 8px;border-radius:20px;font-weight:500;white-space:nowrap;}
+/* BADGES */
+.badge{font-size:12px;padding:4px 10px;border-radius:20px;font-weight:600;white-space:nowrap;}
 .b-urg{background:#F5E8E8;color:#7A2A2A;}
 .b-sem{background:#F5F0E6;color:#7A5A1A;}
 .b-mes{background:#E8F0EC;color:#2E5042;}
@@ -81,6 +87,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 </head>
 <body>
 <div class="db">
+
   <div class="hdr">
     <div class="logo">Portal<em>.</em>Veterinario</div>
     <div class="right">
@@ -92,334 +99,324 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
   <div class="kpis">
     <div class="kpi" style="border-top-color:#8B3A3A;">
       <div class="lbl">Urgentes</div>
-      <div class="val" style="color:#8B3A3A;" id="n-urg">4</div>
+      <div class="val" style="color:#8B3A3A;">4</div>
       <div class="sub">atención inmediata</div>
     </div>
     <div class="kpi" style="border-top-color:#3D5A4F;">
       <div class="lbl">Total tareas</div>
-      <div class="val" style="color:#3D5A4F;" id="n-total">24</div>
+      <div class="val" style="color:#3D5A4F;">24</div>
       <div class="sub">en el tablero</div>
     </div>
     <div class="kpi" style="border-top-color:#B8924A;">
       <div class="lbl">En progreso</div>
-      <div class="val" style="color:#B8924A;" id="n-prog">0</div>
+      <div class="val" style="color:#B8924A;">0</div>
       <div class="sub">en curso</div>
     </div>
     <div class="kpi" style="border-top-color:#6B8C7A;">
       <div class="lbl">Completadas</div>
-      <div class="val" style="color:#6B8C7A;" id="n-done">0</div>
+      <div class="val" style="color:#6B8C7A;">0</div>
       <div class="sub">listas</div>
     </div>
   </div>
 
-  <div class="body">
-    <div class="filters">
-      <button class="f on" onclick="setFiltro('todo',this)">Todas</button>
-      <button class="f" onclick="setFiltro('Urgente',this)">Urgente</button>
-      <button class="f" onclick="setFiltro('Esta semana',this)">Esta semana</button>
-      <button class="f" onclick="setFiltro('Este mes',this)">Este mes</button>
-      <button class="f" onclick="setFiltro('A futuro',this)">A futuro</button>
-      <button class="f" onclick="setArea('Producto',this)">Producto</button>
-      <button class="f" onclick="setArea('Marketing',this)">Marketing</button>
-      <button class="f" onclick="setArea('SEO',this)">SEO</button>
-      <button class="f" onclick="setArea('Comunidad',this)">Comunidad</button>
-    </div>
-
-    <div id="sec-urg-wrap">
-      <div class="sec-label"><span>Urgentes</span><span id="cnt-urg"></span></div>
-      <div class="tasks" id="sec-urg">
-        <div class="task" data-urg="Urgente" data-area="Comunidad" data-estado="Pendiente" onclick="toggle(this)">
-          <div class="task-head">
-            <div class="dot" style="background:#8B3A3A;"></div>
-            <div class="tname">Contactar usuarios beta para completar perfil (WhatsApp o Zoom grupal)</div>
-            <div class="badges"><span class="badge b-com">Comunidad</span><span class="badge b-urg">Urgente</span></div>
-            <i class="ti ti-chevron-down chev" aria-hidden="true"></i>
-          </div>
-          <div class="task-body">
-            <div class="tdesc">Meta principal: lograr que 4–5 veterinarios tengan su perfil completo antes de activar Meta Ads. Canal sugerido: WhatsApp individual o Zoom grupal corto.</div>
-            <div class="notes-lbl">Notas</div>
-            <div class="note"><div class="nmeta">Sep 2026</div><div class="ntxt">Hay 9 usuarios registrados pero solo 1 tiene perfil completo. Es la prioridad número 1 antes de cualquier acción de marketing.</div></div>
-          </div>
-        </div>
-        <div class="task" data-urg="Urgente" data-area="Marketing" data-estado="Pendiente" onclick="toggle(this)">
-          <div class="task-head">
-            <div class="dot" style="background:#8B3A3A;"></div>
-            <div class="tname">Revisar y mejorar logo para Instagram (Canva)</div>
-            <div class="badges"><span class="badge b-mkt">Marketing</span><span class="badge b-urg">Urgente</span></div>
-            <i class="ti ti-chevron-down chev" aria-hidden="true"></i>
-          </div>
-          <div class="task-body">
-            <div class="tdesc">El logo actual existe pero no convence. Hay que revisarlo en Canva antes de publicar nada. Bloqueo hard: sin logo definitivo no se abre Instagram.</div>
-            <div class="notes-lbl">Notas</div>
-            <div class="note"><div class="nmeta">Sep 2026</div><div class="ntxt">Prioridad 2. Depende de esta decisión para arrancar toda la identidad visual de redes. No lanzar Instagram hasta resolver esto.</div></div>
-          </div>
-        </div>
-        <div class="task" data-urg="Urgente" data-area="Marketing" data-estado="Pendiente" onclick="toggle(this)">
-          <div class="task-head">
-            <div class="dot" style="background:#8B3A3A;"></div>
-            <div class="tname">Preparar 9 posts antes de lanzar Instagram</div>
-            <div class="badges"><span class="badge b-mkt">Marketing</span><span class="badge b-urg">Urgente</span></div>
-            <i class="ti ti-chevron-down chev" aria-hidden="true"></i>
-          </div>
-          <div class="task-body">
-            <div class="tdesc">Nunca lanzar una cuenta vacía. Tener el feed con contenido listo antes de la primera publicación. Contenido enfocado en veterinarios profesionales.</div>
-            <div class="notes-lbl">Notas</div>
-            <div class="note"><div class="nmeta">Sep 2026</div><div class="ntxt">Prioridad 3. Depende del logo resuelto. Ya existe un documento de estrategia con fases e ideas de contenido.</div></div>
-          </div>
-        </div>
-        <div class="task" data-urg="Urgente" data-area="Producto" data-estado="Pendiente" onclick="toggle(this)">
-          <div class="task-head">
-            <div class="dot" style="background:#8B3A3A;"></div>
-            <div class="tname">Autenticar dominio portalveterinario.ar en Brevo (DNS)</div>
-            <div class="badges"><span class="badge b-prod">Producto</span><span class="badge b-urg">Urgente</span></div>
-            <i class="ti ti-chevron-down chev" aria-hidden="true"></i>
-          </div>
-          <div class="task-body">
-            <div class="tdesc">Necesario para enviar el email de bienvenida desde portalveterinario.ar con buena reputación. DNS en Vercel o NIC.ar — confirmar cuál.</div>
-            <div class="notes-lbl">Notas</div>
-            <div class="note"><div class="nmeta">Sep 2026</div><div class="ntxt">El template HTML del email está casi listo: Montserrat, header petróleo, badge naranja beta, tarjeta Socio Vitalicio dorada. Solo falta la autenticación DNS.</div></div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div id="sec-sem-wrap">
-      <div class="sec-label"><span>Esta semana</span><span id="cnt-sem"></span></div>
-      <div class="tasks" id="sec-sem">
-        <div class="task" data-urg="Esta semana" data-area="SEO" data-estado="Pendiente" onclick="toggle(this)">
-          <div class="task-head">
-            <div class="dot" style="background:#B8924A;"></div>
-            <div class="tname">Configurar Google Search Console</div>
-            <div class="badges"><span class="badge b-seo">SEO</span><span class="badge b-sem">Esta semana</span></div>
-            <i class="ti ti-chevron-down chev" aria-hidden="true"></i>
-          </div>
-          <div class="task-body">
-            <div class="tdesc">Indexar portalveterinario.ar en Google Search Console para medir visibilidad orgánica desde el día 1 del lanzamiento.</div>
-            <div class="notes-lbl">Notas</div>
-            <div class="note"><div class="nmeta">Sep 2026</div><div class="ntxt">Prioridad 4. Se puede hacer en paralelo mientras se trabaja el logo y los posts.</div></div>
-          </div>
-        </div>
-        <div class="task" data-urg="Esta semana" data-area="Producto" data-estado="Pendiente" onclick="toggle(this)">
-          <div class="task-head">
-            <div class="dot" style="background:#B8924A;"></div>
-            <div class="tname">Integrar email de bienvenida con Brevo API</div>
-            <div class="badges"><span class="badge b-prod">Producto</span><span class="badge b-sem">Esta semana</span></div>
-            <i class="ti ti-chevron-down chev" aria-hidden="true"></i>
-          </div>
-          <div class="task-body">
-            <div class="tdesc">Conectar el envío automático desde handleRegistroDrawer usando la API de Brevo. Depende de que el DNS esté autenticado primero.</div>
-            <div class="notes-lbl">Notas</div>
-            <div class="note"><div class="nmeta">Sep 2026</div><div class="ntxt">El template está casi listo. Este paso va después de la autenticación DNS.</div></div>
-          </div>
-        </div>
-        <div class="task" data-urg="Esta semana" data-area="Producto" data-estado="Pendiente" onclick="toggle(this)">
-          <div class="task-head">
-            <div class="dot" style="background:#B8924A;"></div>
-            <div class="tname">Implementar reglas de seguridad Firestore</div>
-            <div class="badges"><span class="badge b-prod">Producto</span><span class="badge b-sem">Esta semana</span></div>
-            <i class="ti ti-chevron-down chev" aria-hidden="true"></i>
-          </div>
-          <div class="task-body">
-            <div class="tdesc">Definir y aplicar reglas de seguridad en Firestore antes del lanzamiento público para proteger los datos de los usuarios.</div>
-            <div class="notes-lbl">Notas</div>
-            <div class="note"><div class="nmeta">Sep 2026</div><div class="ntxt">Pendiente técnico crítico. No puede quedar para después del lanzamiento.</div></div>
-          </div>
-        </div>
-        <div class="task" data-urg="Esta semana" data-area="Marketing" data-estado="Pendiente" onclick="toggle(this)">
-          <div class="task-head">
-            <div class="dot" style="background:#B8924A;"></div>
-            <div class="tname">Configurar Meta Ads (cuando haya 4–5 perfiles completos)</div>
-            <div class="badges"><span class="badge b-mkt">Marketing</span><span class="badge b-sem">Esta semana</span></div>
-            <i class="ti ti-chevron-down chev" aria-hidden="true"></i>
-          </div>
-          <div class="task-body">
-            <div class="tdesc">Activar campañas pagas en Meta una vez que haya suficiente contenido en la plataforma para justificar la inversión.</div>
-            <div class="notes-lbl">Notas</div>
-            <div class="note"><div class="nmeta">Sep 2026</div><div class="ntxt">Prioridad 5, el último paso del orden acordado. Depende de tener 4–5 perfiles completos.</div></div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div id="sec-mes-wrap">
-      <div class="sec-label"><span>Este mes</span><span id="cnt-mes"></span></div>
-      <div class="tasks" id="sec-mes">
-        <div class="task" data-urg="Este mes" data-area="Producto" data-estado="Pendiente" onclick="toggle(this)">
-          <div class="task-head">
-            <div class="dot" style="background:#6B8C7A;"></div>
-            <div class="tname">Portabilidad editor-clinica.jsx y editor-proveedores.jsx</div>
-            <div class="badges"><span class="badge b-prod">Producto</span><span class="badge b-mes">Este mes</span></div>
-            <i class="ti ti-chevron-down chev" aria-hidden="true"></i>
-          </div>
-          <div class="task-body">
-            <div class="tdesc">Portar las mejoras del editor-profesional (dual-collection, cropper, galería, WhatsApp, Instagram) a los editores de clínica y proveedores.</div>
-            <div class="notes-lbl">Notas</div>
-            <div class="note"><div class="nmeta">Sep 2026</div><div class="ntxt">editor-profesional.jsx ya tiene todas las funciones. Hay que replicarlas en los otros dos editores.</div></div>
-          </div>
-        </div>
-        <div class="task" data-urg="Este mes" data-area="Producto" data-estado="Pendiente" onclick="toggle(this)">
-          <div class="task-head">
-            <div class="dot" style="background:#6B8C7A;"></div>
-            <div class="tname">Completar setup Firebase Cloud Functions</div>
-            <div class="badges"><span class="badge b-prod">Producto</span><span class="badge b-mes">Este mes</span></div>
-            <i class="ti ti-chevron-down chev" aria-hidden="true"></i>
-          </div>
-          <div class="task-body">
-            <div class="tdesc">Habilitar eliminación completa de usuarios (Auth + Firestore simultáneo). Requiere Firebase Cloud Functions.</div>
-            <div class="notes-lbl">Notas</div>
-            <div class="note"><div class="nmeta">Sep 2026</div><div class="ntxt">Stalled en error de red durante npm install -g firebase-tools. Instalación pendiente de retomar.</div></div>
-          </div>
-        </div>
-        <div class="task" data-urg="Este mes" data-area="Producto" data-estado="Pendiente" onclick="toggle(this)">
-          <div class="task-head">
-            <div class="dot" style="background:#6B8C7A;"></div>
-            <div class="tname">Refactorizar componentes reutilizables del editor</div>
-            <div class="badges"><span class="badge b-prod">Producto</span><span class="badge b-mes">Este mes</span></div>
-            <i class="ti ti-chevron-down chev" aria-hidden="true"></i>
-          </div>
-          <div class="task-body">
-            <div class="tdesc">Extraer Tooltip, InputGroup, SelectGroup, Accordion, ToggleSwitch, SimpleCropper a EditorComponents.jsx para evitar duplicación.</div>
-            <div class="notes-lbl">Notas</div>
-            <div class="note"><div class="nmeta">Sep 2026</div><div class="ntxt">Mejora de código planificada. Hacerlo antes de seguir agregando features a los editores.</div></div>
-          </div>
-        </div>
-        <div class="task" data-urg="Este mes" data-area="SEO" data-estado="Pendiente" onclick="toggle(this)">
-          <div class="task-head">
-            <div class="dot" style="background:#6B8C7A;"></div>
-            <div class="tname">Optimizar SEO on-page de perfiles públicos</div>
-            <div class="badges"><span class="badge b-seo">SEO</span><span class="badge b-mes">Este mes</span></div>
-            <i class="ti ti-chevron-down chev" aria-hidden="true"></i>
-          </div>
-          <div class="task-body">
-            <div class="tdesc">Meta tags, Open Graph, títulos dinámicos por perfil para mejorar la indexación de cada veterinario en Google.</div>
-            <div class="notes-lbl">Notas</div>
-            <div class="note"><div class="nmeta">Sep 2026</div><div class="ntxt">Crítico para que cada perfil aparezca en búsquedas de "veterinario en [ciudad]".</div></div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div id="sec-fut-wrap">
-      <div class="sec-label"><span>A futuro</span><span id="cnt-fut"></span></div>
-      <div class="tasks" id="sec-fut">
-        <div class="task" data-urg="A futuro" data-area="Producto" data-estado="Pendiente" onclick="toggle(this)">
-          <div class="task-head">
-            <div class="dot" style="background:#A89880;"></div>
-            <div class="tname">QR descargable en editor-profesional.jsx</div>
-            <div class="badges"><span class="badge b-prod">Producto</span><span class="badge b-fut">A futuro</span></div>
-            <i class="ti ti-chevron-down chev" aria-hidden="true"></i>
-          </div>
-          <div class="task-body">
-            <div class="tdesc">Código QR por perfil usando qrcode.react. Mostrar como deshabilitado con tooltip hasta que el dominio esté live.</div>
-            <div class="notes-lbl">Notas</div>
-            <div class="note"><div class="nmeta">Sep 2026</div><div class="ntxt">Bloque 3 — SVG descargable en editor-profesional.jsx. Post-lanzamiento.</div></div>
-          </div>
-        </div>
-        <div class="task" data-urg="A futuro" data-area="Producto" data-estado="Pendiente" onclick="toggle(this)">
-          <div class="task-head">
-            <div class="dot" style="background:#A89880;"></div>
-            <div class="tname">Integrar MercadoPago — modelo de suscripción</div>
-            <div class="badges"><span class="badge b-prod">Producto</span><span class="badge b-fut">A futuro</span></div>
-            <i class="ti ti-chevron-down chev" aria-hidden="true"></i>
-          </div>
-          <div class="task-body">
-            <div class="tdesc">Monetización via suscripción mensual. Requiere backend y definición del modelo de negocio.</div>
-            <div class="notes-lbl">Notas</div>
-            <div class="note"><div class="nmeta">Sep 2026</div><div class="ntxt">Bloque 3 — requiere backend. Post-lanzamiento.</div></div>
-          </div>
-        </div>
-        <div class="task" data-urg="A futuro" data-area="Marketing" data-estado="Pendiente" onclick="toggle(this)">
-          <div class="task-head">
-            <div class="dot" style="background:#A89880;"></div>
-            <div class="tname">Canal de WhatsApp para usuarios registrados</div>
-            <div class="badges"><span class="badge b-mkt">Marketing</span><span class="badge b-fut">A futuro</span></div>
-            <i class="ti ti-chevron-down chev" aria-hidden="true"></i>
-          </div>
-          <div class="task-body">
-            <div class="tdesc">Canal de comunicación directa con la comunidad. Alta apertura de mensajes, bajo costo.</div>
-            <div class="notes-lbl">Notas</div>
-            <div class="note"><div class="nmeta">Sep 2026</div><div class="ntxt">Fase 2 — una vez que la base de usuarios crezca.</div></div>
-          </div>
-        </div>
-        <div class="task" data-urg="A futuro" data-area="SEO" data-estado="Pendiente" onclick="toggle(this)">
-          <div class="task-head">
-            <div class="dot" style="background:#A89880;"></div>
-            <div class="tname">Sitemap.xml dinámico con URLs de perfiles</div>
-            <div class="badges"><span class="badge b-seo">SEO</span><span class="badge b-fut">A futuro</span></div>
-            <i class="ti ti-chevron-down chev" aria-hidden="true"></i>
-          </div>
-          <div class="task-body">
-            <div class="tdesc">Generar sitemap dinámico con todas las URLs de perfiles para enviar a Google Search Console.</div>
-            <div class="notes-lbl">Notas</div>
-            <div class="note"><div class="nmeta">Sep 2026</div><div class="ntxt">Fase 3 SEO — después del lanzamiento cuando haya suficientes perfiles.</div></div>
-          </div>
-        </div>
-        <div class="task" data-urg="A futuro" data-area="Producto" data-estado="Pendiente" onclick="toggle(this)">
-          <div class="task-head">
-            <div class="dot" style="background:#A89880;"></div>
-            <div class="tname">Login con Google</div>
-            <div class="badges"><span class="badge b-prod">Producto</span><span class="badge b-fut">A futuro</span></div>
-            <i class="ti ti-chevron-down chev" aria-hidden="true"></i>
-          </div>
-          <div class="task-body">
-            <div class="tdesc">Agregar autenticación con Google para simplificar el registro y login de usuarios.</div>
-            <div class="notes-lbl">Notas</div>
-            <div class="note"><div class="nmeta">Sep 2026</div><div class="ntxt">Bloque 3 — post-lanzamiento.</div></div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="empty" id="empty">No hay tareas con ese filtro.</div>
+  <div class="filters">
+    <button class="f on" onclick="setFiltro('todo',this)">Todas</button>
+    <button class="f" onclick="setFiltro('Urgente',this)">Urgente</button>
+    <button class="f" onclick="setFiltro('Esta semana',this)">Esta semana</button>
+    <button class="f" onclick="setFiltro('Este mes',this)">Este mes</button>
+    <button class="f" onclick="setFiltro('A futuro',this)">A futuro</button>
+    <button class="f" onclick="setArea('Producto',this)">Producto</button>
+    <button class="f" onclick="setArea('Marketing',this)">Marketing</button>
+    <button class="f" onclick="setArea('SEO',this)">SEO</button>
+    <button class="f" onclick="setArea('Comunidad',this)">Comunidad</button>
   </div>
+
+  <div id="sec-urg-wrap">
+    <div class="sec-label"><span>Urgentes</span><span id="cnt-urg">4 tareas</span></div>
+    <div class="tasks" id="sec-urg">
+      <div class="task" data-urg="Urgente" data-area="Comunidad" onclick="toggle(this)">
+        <div class="task-head">
+          <div class="dot" style="background:#8B3A3A;"></div>
+          <div class="tname">Contactar usuarios beta para completar perfil (WhatsApp o Zoom grupal)</div>
+          <div class="badges"><span class="badge b-com">Comunidad</span><span class="badge b-urg">Urgente</span></div>
+          <i class="ti ti-chevron-down chev" aria-hidden="true"></i>
+        </div>
+        <div class="task-body">
+          <div class="tdesc">Meta principal: lograr que 4–5 veterinarios tengan su perfil completo antes de activar Meta Ads. Canal sugerido: WhatsApp individual o Zoom grupal corto.</div>
+          <div class="notes-lbl">Notas</div>
+          <div class="note"><div class="nmeta">Sep 2026</div><div class="ntxt">Hay 9 usuarios registrados pero solo 1 tiene perfil completo. Es la prioridad número 1 antes de cualquier acción de marketing.</div></div>
+        </div>
+      </div>
+      <div class="task" data-urg="Urgente" data-area="Marketing" onclick="toggle(this)">
+        <div class="task-head">
+          <div class="dot" style="background:#8B3A3A;"></div>
+          <div class="tname">Revisar y mejorar logo para Instagram (Canva)</div>
+          <div class="badges"><span class="badge b-mkt">Marketing</span><span class="badge b-urg">Urgente</span></div>
+          <i class="ti ti-chevron-down chev" aria-hidden="true"></i>
+        </div>
+        <div class="task-body">
+          <div class="tdesc">El logo actual existe pero no convence. Hay que revisarlo en Canva antes de publicar nada. Bloqueo hard: sin logo definitivo no se abre Instagram.</div>
+          <div class="notes-lbl">Notas</div>
+          <div class="note"><div class="nmeta">Sep 2026</div><div class="ntxt">Prioridad 2. Depende de esta decisión para arrancar toda la identidad visual de redes. No lanzar Instagram hasta resolver esto.</div></div>
+        </div>
+      </div>
+      <div class="task" data-urg="Urgente" data-area="Marketing" onclick="toggle(this)">
+        <div class="task-head">
+          <div class="dot" style="background:#8B3A3A;"></div>
+          <div class="tname">Preparar 9 posts antes de lanzar Instagram</div>
+          <div class="badges"><span class="badge b-mkt">Marketing</span><span class="badge b-urg">Urgente</span></div>
+          <i class="ti ti-chevron-down chev" aria-hidden="true"></i>
+        </div>
+        <div class="task-body">
+          <div class="tdesc">Nunca lanzar una cuenta vacía. Tener el feed con contenido listo antes de la primera publicación. Contenido enfocado en veterinarios profesionales.</div>
+          <div class="notes-lbl">Notas</div>
+          <div class="note"><div class="nmeta">Sep 2026</div><div class="ntxt">Prioridad 3. Depende del logo resuelto. Ya existe un documento de estrategia con fases e ideas de contenido.</div></div>
+        </div>
+      </div>
+      <div class="task" data-urg="Urgente" data-area="Producto" onclick="toggle(this)">
+        <div class="task-head">
+          <div class="dot" style="background:#8B3A3A;"></div>
+          <div class="tname">Autenticar dominio portalveterinario.ar en Brevo (DNS)</div>
+          <div class="badges"><span class="badge b-prod">Producto</span><span class="badge b-urg">Urgente</span></div>
+          <i class="ti ti-chevron-down chev" aria-hidden="true"></i>
+        </div>
+        <div class="task-body">
+          <div class="tdesc">Necesario para enviar el email de bienvenida desde portalveterinario.ar con buena reputación. DNS en Vercel o NIC.ar — confirmar cuál.</div>
+          <div class="notes-lbl">Notas</div>
+          <div class="note"><div class="nmeta">Sep 2026</div><div class="ntxt">El template HTML del email está casi listo: Montserrat, header petróleo, badge naranja beta, tarjeta Socio Vitalicio dorada. Solo falta la autenticación DNS.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="sec-sem-wrap">
+    <div class="sec-label"><span>Esta semana</span><span id="cnt-sem">4 tareas</span></div>
+    <div class="tasks" id="sec-sem">
+      <div class="task" data-urg="Esta semana" data-area="SEO" onclick="toggle(this)">
+        <div class="task-head">
+          <div class="dot" style="background:#B8924A;"></div>
+          <div class="tname">Configurar Google Search Console</div>
+          <div class="badges"><span class="badge b-seo">SEO</span><span class="badge b-sem">Esta semana</span></div>
+          <i class="ti ti-chevron-down chev" aria-hidden="true"></i>
+        </div>
+        <div class="task-body">
+          <div class="tdesc">Indexar portalveterinario.ar en Google Search Console para medir visibilidad orgánica desde el día 1 del lanzamiento.</div>
+          <div class="notes-lbl">Notas</div>
+          <div class="note"><div class="nmeta">Sep 2026</div><div class="ntxt">Prioridad 4. Se puede hacer en paralelo mientras se trabaja el logo y los posts.</div></div>
+        </div>
+      </div>
+      <div class="task" data-urg="Esta semana" data-area="Producto" onclick="toggle(this)">
+        <div class="task-head">
+          <div class="dot" style="background:#B8924A;"></div>
+          <div class="tname">Integrar email de bienvenida con Brevo API</div>
+          <div class="badges"><span class="badge b-prod">Producto</span><span class="badge b-sem">Esta semana</span></div>
+          <i class="ti ti-chevron-down chev" aria-hidden="true"></i>
+        </div>
+        <div class="task-body">
+          <div class="tdesc">Conectar el envío automático desde handleRegistroDrawer usando la API de Brevo. Depende de que el DNS esté autenticado primero.</div>
+          <div class="notes-lbl">Notas</div>
+          <div class="note"><div class="nmeta">Sep 2026</div><div class="ntxt">El template está casi listo. Este paso va después de la autenticación DNS.</div></div>
+        </div>
+      </div>
+      <div class="task" data-urg="Esta semana" data-area="Producto" onclick="toggle(this)">
+        <div class="task-head">
+          <div class="dot" style="background:#B8924A;"></div>
+          <div class="tname">Implementar reglas de seguridad Firestore</div>
+          <div class="badges"><span class="badge b-prod">Producto</span><span class="badge b-sem">Esta semana</span></div>
+          <i class="ti ti-chevron-down chev" aria-hidden="true"></i>
+        </div>
+        <div class="task-body">
+          <div class="tdesc">Definir y aplicar reglas de seguridad en Firestore antes del lanzamiento público para proteger los datos de los usuarios.</div>
+          <div class="notes-lbl">Notas</div>
+          <div class="note"><div class="nmeta">Sep 2026</div><div class="ntxt">Pendiente técnico crítico. No puede quedar para después del lanzamiento.</div></div>
+        </div>
+      </div>
+      <div class="task" data-urg="Esta semana" data-area="Marketing" onclick="toggle(this)">
+        <div class="task-head">
+          <div class="dot" style="background:#B8924A;"></div>
+          <div class="tname">Configurar Meta Ads (cuando haya 4–5 perfiles completos)</div>
+          <div class="badges"><span class="badge b-mkt">Marketing</span><span class="badge b-sem">Esta semana</span></div>
+          <i class="ti ti-chevron-down chev" aria-hidden="true"></i>
+        </div>
+        <div class="task-body">
+          <div class="tdesc">Activar campañas pagas en Meta una vez que haya suficiente contenido en la plataforma para justificar la inversión.</div>
+          <div class="notes-lbl">Notas</div>
+          <div class="note"><div class="nmeta">Sep 2026</div><div class="ntxt">Prioridad 5, el último paso del orden acordado. Depende de tener 4–5 perfiles completos.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="sec-mes-wrap">
+    <div class="sec-label"><span>Este mes</span><span id="cnt-mes">4 tareas</span></div>
+    <div class="tasks" id="sec-mes">
+      <div class="task" data-urg="Este mes" data-area="Producto" onclick="toggle(this)">
+        <div class="task-head">
+          <div class="dot" style="background:#6B8C7A;"></div>
+          <div class="tname">Portabilidad editor-clinica.jsx y editor-proveedores.jsx</div>
+          <div class="badges"><span class="badge b-prod">Producto</span><span class="badge b-mes">Este mes</span></div>
+          <i class="ti ti-chevron-down chev" aria-hidden="true"></i>
+        </div>
+        <div class="task-body">
+          <div class="tdesc">Portar las mejoras del editor-profesional (dual-collection, cropper, galería, WhatsApp, Instagram) a los editores de clínica y proveedores.</div>
+          <div class="notes-lbl">Notas</div>
+          <div class="note"><div class="nmeta">Sep 2026</div><div class="ntxt">editor-profesional.jsx ya tiene todas las funciones. Hay que replicarlas en los otros dos editores.</div></div>
+        </div>
+      </div>
+      <div class="task" data-urg="Este mes" data-area="Producto" onclick="toggle(this)">
+        <div class="task-head">
+          <div class="dot" style="background:#6B8C7A;"></div>
+          <div class="tname">Completar setup Firebase Cloud Functions</div>
+          <div class="badges"><span class="badge b-prod">Producto</span><span class="badge b-mes">Este mes</span></div>
+          <i class="ti ti-chevron-down chev" aria-hidden="true"></i>
+        </div>
+        <div class="task-body">
+          <div class="tdesc">Habilitar eliminación completa de usuarios (Auth + Firestore simultáneo). Requiere Firebase Cloud Functions.</div>
+          <div class="notes-lbl">Notas</div>
+          <div class="note"><div class="nmeta">Sep 2026</div><div class="ntxt">Stalled en error de red durante npm install -g firebase-tools. Instalación pendiente de retomar.</div></div>
+        </div>
+      </div>
+      <div class="task" data-urg="Este mes" data-area="Producto" onclick="toggle(this)">
+        <div class="task-head">
+          <div class="dot" style="background:#6B8C7A;"></div>
+          <div class="tname">Refactorizar componentes reutilizables del editor</div>
+          <div class="badges"><span class="badge b-prod">Producto</span><span class="badge b-mes">Este mes</span></div>
+          <i class="ti ti-chevron-down chev" aria-hidden="true"></i>
+        </div>
+        <div class="task-body">
+          <div class="tdesc">Extraer Tooltip, InputGroup, SelectGroup, Accordion, ToggleSwitch, SimpleCropper a EditorComponents.jsx para evitar duplicación.</div>
+          <div class="notes-lbl">Notas</div>
+          <div class="note"><div class="nmeta">Sep 2026</div><div class="ntxt">Mejora de código planificada. Hacerlo antes de seguir agregando features a los editores.</div></div>
+        </div>
+      </div>
+      <div class="task" data-urg="Este mes" data-area="SEO" onclick="toggle(this)">
+        <div class="task-head">
+          <div class="dot" style="background:#6B8C7A;"></div>
+          <div class="tname">Optimizar SEO on-page de perfiles públicos</div>
+          <div class="badges"><span class="badge b-seo">SEO</span><span class="badge b-mes">Este mes</span></div>
+          <i class="ti ti-chevron-down chev" aria-hidden="true"></i>
+        </div>
+        <div class="task-body">
+          <div class="tdesc">Meta tags, Open Graph, títulos dinámicos por perfil para mejorar la indexación de cada veterinario en Google.</div>
+          <div class="notes-lbl">Notas</div>
+          <div class="note"><div class="nmeta">Sep 2026</div><div class="ntxt">Crítico para que cada perfil aparezca en búsquedas de "veterinario en [ciudad]".</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="sec-fut-wrap">
+    <div class="sec-label"><span>A futuro</span><span id="cnt-fut">5 tareas</span></div>
+    <div class="tasks" id="sec-fut">
+      <div class="task" data-urg="A futuro" data-area="Producto" onclick="toggle(this)">
+        <div class="task-head">
+          <div class="dot" style="background:#A89880;"></div>
+          <div class="tname">QR descargable en editor-profesional.jsx</div>
+          <div class="badges"><span class="badge b-prod">Producto</span><span class="badge b-fut">A futuro</span></div>
+          <i class="ti ti-chevron-down chev" aria-hidden="true"></i>
+        </div>
+        <div class="task-body">
+          <div class="tdesc">Código QR por perfil usando qrcode.react. Mostrar como deshabilitado con tooltip hasta que el dominio esté live.</div>
+          <div class="notes-lbl">Notas</div>
+          <div class="note"><div class="nmeta">Sep 2026</div><div class="ntxt">Bloque 3 — SVG descargable. Post-lanzamiento.</div></div>
+        </div>
+      </div>
+      <div class="task" data-urg="A futuro" data-area="Producto" onclick="toggle(this)">
+        <div class="task-head">
+          <div class="dot" style="background:#A89880;"></div>
+          <div class="tname">Integrar MercadoPago — modelo de suscripción</div>
+          <div class="badges"><span class="badge b-prod">Producto</span><span class="badge b-fut">A futuro</span></div>
+          <i class="ti ti-chevron-down chev" aria-hidden="true"></i>
+        </div>
+        <div class="task-body">
+          <div class="tdesc">Monetización via suscripción mensual. Requiere backend y definición del modelo de negocio.</div>
+          <div class="notes-lbl">Notas</div>
+          <div class="note"><div class="nmeta">Sep 2026</div><div class="ntxt">Bloque 3 — requiere backend. Post-lanzamiento.</div></div>
+        </div>
+      </div>
+      <div class="task" data-urg="A futuro" data-area="Marketing" onclick="toggle(this)">
+        <div class="task-head">
+          <div class="dot" style="background:#A89880;"></div>
+          <div class="tname">Canal de WhatsApp para usuarios registrados</div>
+          <div class="badges"><span class="badge b-mkt">Marketing</span><span class="badge b-fut">A futuro</span></div>
+          <i class="ti ti-chevron-down chev" aria-hidden="true"></i>
+        </div>
+        <div class="task-body">
+          <div class="tdesc">Canal de comunicación directa con la comunidad. Alta apertura de mensajes, bajo costo.</div>
+          <div class="notes-lbl">Notas</div>
+          <div class="note"><div class="nmeta">Sep 2026</div><div class="ntxt">Fase 2 — una vez que la base de usuarios crezca.</div></div>
+        </div>
+      </div>
+      <div class="task" data-urg="A futuro" data-area="SEO" onclick="toggle(this)">
+        <div class="task-head">
+          <div class="dot" style="background:#A89880;"></div>
+          <div class="tname">Sitemap.xml dinámico con URLs de perfiles</div>
+          <div class="badges"><span class="badge b-seo">SEO</span><span class="badge b-fut">A futuro</span></div>
+          <i class="ti ti-chevron-down chev" aria-hidden="true"></i>
+        </div>
+        <div class="task-body">
+          <div class="tdesc">Generar sitemap dinámico con todas las URLs de perfiles para enviar a Google Search Console.</div>
+          <div class="notes-lbl">Notas</div>
+          <div class="note"><div class="nmeta">Sep 2026</div><div class="ntxt">Fase 3 SEO — después del lanzamiento cuando haya suficientes perfiles.</div></div>
+        </div>
+      </div>
+      <div class="task" data-urg="A futuro" data-area="Producto" onclick="toggle(this)">
+        <div class="task-head">
+          <div class="dot" style="background:#A89880;"></div>
+          <div class="tname">Login con Google</div>
+          <div class="badges"><span class="badge b-prod">Producto</span><span class="badge b-fut">A futuro</span></div>
+          <i class="ti ti-chevron-down chev" aria-hidden="true"></i>
+        </div>
+        <div class="task-body">
+          <div class="tdesc">Agregar autenticación con Google para simplificar el registro y login de usuarios.</div>
+          <div class="notes-lbl">Notas</div>
+          <div class="note"><div class="nmeta">Sep 2026</div><div class="ntxt">Bloque 3 — post-lanzamiento.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="empty" id="empty">No hay tareas con ese filtro.</div>
   <div class="footer">Actualizado: septiembre 2026 · El Portal Veterinario</div>
 </div>
 
 <script>
-let filtroUrg=null, filtroArea=null;
-
+let filtroUrg=null,filtroArea=null;
 function toggle(el){el.classList.toggle('open');}
-
 function setFiltro(val,btn){
   document.querySelectorAll('.f').forEach(b=>{
-    const t=b.textContent.trim();
-    if(['Todas','Urgente','Esta semana','Este mes','A futuro'].includes(t))b.classList.remove('on');
+    if(['Todas','Urgente','Esta semana','Este mes','A futuro'].includes(b.textContent.trim()))b.classList.remove('on');
   });
   btn.classList.add('on');
   filtroUrg=val==='todo'?null:val;
   aplicar();
 }
-
 function setArea(val,btn){
   document.querySelectorAll('.f').forEach(b=>{
     if(['Producto','Marketing','SEO','Comunidad'].includes(b.textContent.trim()))b.classList.remove('on');
   });
-  if(filtroArea===val){filtroArea=null;}
-  else{btn.classList.add('on');filtroArea=val;}
+  filtroArea=filtroArea===val?null:val;
+  if(filtroArea)btn.classList.add('on');
   aplicar();
 }
-
 function aplicar(){
   const secs={urg:'Urgente',sem:'Esta semana',mes:'Este mes',fut:'A futuro'};
-  let totalVisible=0;
+  let total=0;
   Object.entries(secs).forEach(([key,urgVal])=>{
-    const wrap=document.getElementById('sec-'+key+'-wrap');
     const tasks=document.querySelectorAll('#sec-'+key+' .task');
     let vis=0;
     tasks.forEach(t=>{
-      const okUrg=!filtroUrg||t.dataset.urg===filtroUrg;
-      const okArea=!filtroArea||t.dataset.area===filtroArea;
-      t.style.display=(okUrg&&okArea)?'':'none';
-      if(okUrg&&okArea)vis++;
+      const ok=(!filtroUrg||t.dataset.urg===filtroUrg)&&(!filtroArea||t.dataset.area===filtroArea);
+      t.style.display=ok?'':'none';
+      if(ok)vis++;
     });
-    totalVisible+=vis;
-    wrap.style.display=vis>0?'':'none';
-    const cnt=document.getElementById('cnt-'+key);
-    if(cnt)cnt.textContent=vis+' '+(vis===1?'tarea':'tareas');
+    total+=vis;
+    document.getElementById('sec-'+key+'-wrap').style.display=vis?'':'none';
+    const el=document.getElementById('cnt-'+key);
+    if(el)el.textContent=vis+(vis===1?' tarea':' tareas');
   });
-  document.getElementById('empty').style.display=totalVisible===0?'block':'none';
+  document.getElementById('empty').style.display=total?'none':'block';
 }
-
 aplicar();
 </script>
 </body>
