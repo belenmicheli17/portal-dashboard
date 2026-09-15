@@ -103,10 +103,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
 /* SECTION LABELS — más grandes y con color */
 .sec-label{font-size:15px;font-weight:500;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;padding:0 42px;}
 .sec-label .cnt{font-size:12px;font-weight:500;color:var(--txt3);}
+.sec-label.lbl-cur{color:#3D5A4F;}
 .sec-label.lbl-urg{color:var(--burg);}
 .sec-label.lbl-sem{color:var(--trigo);}
 .sec-label.lbl-mes{color:var(--salvia);}
 .sec-label.lbl-fut{color:var(--txt3);}
+#wrap-cur .task-card{box-shadow:0 0 0 2.5px #3D5A4F,0 2px 8px rgba(61,90,79,0.15);}
+#wrap-cur .task-card:hover{box-shadow:0 0 0 2.5px #3D5A4F,0 6px 18px rgba(61,90,79,0.2);}
+#wrap-cur .sec-label::before{content:'🔄 ';}
 
 /* GRID HORIZONTAL con scroll */
 .grid-wrap{position:relative;margin-bottom:28px;padding:0 42px;}
@@ -344,6 +348,16 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
     <button class="f" onclick="setArea('SEO',this)">SEO</button>
     <button class="f" onclick="setArea('Comunidad',this)">Comunidad</button>
   </div>
+  </div>
+
+  <!-- EN CURSO -->
+  <div id="wrap-cur" style="display:none">
+    <div class="sec-label lbl-cur"><span>En curso</span><span class="cnt" id="cnt-cur">0 tareas</span></div>
+    <div class="grid-wrap">
+      <div class="scroll-btn scroll-left" onclick="scrollSec('cur',-1)"><i class="ti ti-chevron-left"></i></div>
+      <div class="grid-scroll" id="sec-cur"></div>
+      <div class="scroll-btn scroll-right" onclick="scrollSec('cur',1)"><i class="ti ti-chevron-right"></i></div>
+    </div>
   </div>
 
   <!-- URGENTES -->
@@ -1046,6 +1060,16 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
     </div>
   </div>
 
+  <!-- EN CURSO TÉCNICAS -->
+  <div id="wrap2-cur" style="display:none">
+    <div class="sec-label lbl-cur"><span>En curso</span><span class="cnt" id="cnt2-cur">0 tareas</span></div>
+    <div class="grid-wrap">
+      <div class="scroll-btn scroll-left" onclick="scrollSec2('cur',-1)"><i class="ti ti-chevron-left"></i></div>
+      <div class="grid-scroll" id="sec2-cur"></div>
+      <div class="scroll-btn scroll-right" onclick="scrollSec2('cur',1)"><i class="ti ti-chevron-right"></i></div>
+    </div>
+  </div>
+
   <!-- URGENTES TÉCNICAS -->
   <div id="wrap2-urg">
     <div class="sec-label lbl-urg"><span>Urgentes</span><span class="cnt" id="cnt2-urg">2 tareas</span></div>
@@ -1357,6 +1381,7 @@ function scrollSec(sec,dir){
 }
 
 function setEstado(id,estado,btn){
+  const prevEstado=estados[id]||'Pendiente';
   estados[id]=estado;
   // Actualizar botones
   const row=btn.closest('.estado-row');
@@ -1372,10 +1397,44 @@ function setEstado(id,estado,btn){
   // Actualizar card
   const card=btn.closest('.task-card');
   card.classList.remove('started','done');
-  if(estado==='En curso')card.classList.add('started');
   if(estado==='Lista')card.classList.add('done');
+  // Detectar si es pestaña 1 o 2
+  const esTab2=id.startsWith('tec')||card.closest('#panel-2')!==null;
+  const curId=esTab2?'sec2-cur':'sec-cur';
+  const secCur=document.getElementById(curId);
+  if(estado==='En curso'&&prevEstado!=='En curso'){
+    card.dataset.origSec=card.parentElement.id;
+    if(secCur)secCur.appendChild(card);
+  } else if(estado!=='En curso'&&prevEstado==='En curso'){
+    const origId=card.dataset.origSec||(esTab2?'sec2-urg':'sec-urg');
+    const orig=document.getElementById(origId);
+    if(orig)orig.appendChild(card);
+    delete card.dataset.origSec;
+  }
+  actualizarEnCurso();
   // Actualizar KPIs
   actualizarKPIs();
+}
+
+function actualizarEnCurso(){
+  // Pestaña 1
+  const secCur=document.getElementById('sec-cur');
+  const wrapCur=document.getElementById('wrap-cur');
+  if(secCur&&wrapCur){
+    const n=secCur.querySelectorAll('.task-card').length;
+    wrapCur.style.display=n?'':'none';
+    const cnt=document.getElementById('cnt-cur');
+    if(cnt)cnt.textContent=n+(n===1?' tarea':' tareas');
+  }
+  // Pestaña 2
+  const secCur2=document.getElementById('sec2-cur');
+  const wrapCur2=document.getElementById('wrap2-cur');
+  if(secCur2&&wrapCur2){
+    const n2=secCur2.querySelectorAll('.task-card').length;
+    wrapCur2.style.display=n2?'':'none';
+    const cnt2=document.getElementById('cnt2-cur');
+    if(cnt2)cnt2.textContent=n2+(n2===1?' tarea':' tareas');
+  }
 }
 
 function addNote(id){
@@ -1438,6 +1497,19 @@ function aplicar(){
     const cnt=document.getElementById('cnt-'+key);
     if(cnt)cnt.textContent=vis+(vis===1?' tarea':' tareas');
   });
+  // En curso: filtrar por área pero siempre mostrar si hay cards
+  const curCards=document.querySelectorAll('#sec-cur .task-card');
+  let visCur=0;
+  curCards.forEach(c=>{
+    const ok=!filtroArea||c.dataset.area===filtroArea;
+    c.style.display=ok?'':'none';
+    if(ok)visCur++;
+  });
+  const wrapCur=document.getElementById('wrap-cur');
+  if(wrapCur)wrapCur.style.display=visCur?'':'none';
+  const cntCur=document.getElementById('cnt-cur');
+  if(cntCur)cntCur.textContent=visCur+(visCur===1?' tarea':' tareas');
+  total+=visCur;
   document.getElementById('empty').style.display=total?'none':'block';
 }
 
@@ -1579,6 +1651,18 @@ function aplicar2(){
     const cnt=document.getElementById('cnt2-'+key);
     if(cnt)cnt.textContent=vis+(vis===1?' tarea':' tareas');
   });
+  // En curso tab2
+  const curCards=document.querySelectorAll('#sec2-cur .task-card');
+  let visCur=0;
+  curCards.forEach(c=>{
+    const ok=!filtroArea2||c.dataset.area===filtroArea2;
+    c.style.display=ok?'':'none';
+    if(ok)visCur++;
+  });
+  const wrapCur2=document.getElementById('wrap2-cur');
+  if(wrapCur2)wrapCur2.style.display=visCur?'':'none';
+  const cntCur2=document.getElementById('cnt2-cur');
+  if(cntCur2)cntCur2.textContent=visCur+(visCur===1?' tarea':' tareas');
 }
 function toggleQaExtra2(){
   const extra=document.getElementById('qa2-extra');
