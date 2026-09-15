@@ -64,6 +64,15 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
 .qa-error.show{display:block;}
 
 
+
+/* PESTAÑAS */
+.tabs-bar{display:flex;gap:0;background:var(--bosque);padding:0 48px;}
+.tab-btn{padding:12px 24px;font-size:13px;font-weight:500;color:rgba(255,255,255,0.5);border:none;background:none;cursor:pointer;font-family:inherit;border-bottom:2px solid transparent;transition:all 0.15s;letter-spacing:0.2px;}
+.tab-btn:hover{color:rgba(255,255,255,0.8);}
+.tab-btn.active{color:#fff;border-bottom-color:#A8C9BC;}
+.tab-content{display:none;}
+.tab-content.active{display:block;}
+
 /* HISTORIAL */
 .historial-wrap{padding:0 48px 32px;}
 .historial-card{background:var(--card);border-radius:12px;border:1.5px solid var(--border-c);overflow:hidden;}
@@ -223,7 +232,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
     <span class="fase-chip">Fase 0 — Cimientos</span>
   </div>
 </nav>
+<div class="tabs-bar">
+  <button class="tab-btn active" onclick="setTab('marketing',this)">Marketing & Ops</button>
+  <button class="tab-btn" onclick="setTab('codigo',this)">Producto & Código</button>
+</div>
 
+<div id="tab-marketing" class="tab-content active">
 <div class="wrap">
 
   <div class="top-row">
@@ -948,7 +962,338 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
   </div>
 
   <div class="footer">Actualizado: septiembre 2026 · El Portal Veterinario</div>
-</div>
+</div><!-- /wrap -->
+</div><!-- /tab-marketing -->
+
+<!-- TAB PRODUCTO & CÓDIGO -->
+<div id="tab-codigo" class="tab-content">
+<div class="wrap">
+
+  <div class="top-row">
+    <div class="top-card">
+      <div class="top-card-title">Estado técnico</div>
+      <div class="areas-list">
+        <div class="area-row"><div class="area-dot" style="background:#4A6A9E;"></div><div class="area-name">Editores</div><div class="area-count" id="cnt-tec-editores">2 tareas</div></div>
+        <div class="area-row"><div class="area-dot" style="background:#5C8C70;"></div><div class="area-name">Firebase</div><div class="area-count" id="cnt-tec-firebase">2 tareas</div></div>
+        <div class="area-row"><div class="area-dot" style="background:#9E8A3A;"></div><div class="area-name">Auth & Seguridad</div><div class="area-count" id="cnt-tec-auth">2 tareas</div></div>
+        <div class="area-row"><div class="area-dot" style="background:#A0674A;"></div><div class="area-name">Features</div><div class="area-count" id="cnt-tec-features">3 tareas</div></div>
+      </div>
+    </div>
+    <div class="top-card">
+      <div class="top-card-title">Agregar tarea técnica</div>
+      <div class="quick-add">
+        <div class="qa-main">
+          <input class="qa-input" id="qa2-titulo" type="text" placeholder="Título de la tarea *">
+          <div class="qa-row">
+            <select class="qa-input" id="qa2-area">
+              <option value="">Área *</option>
+              <option>Editores</option>
+              <option>Firebase</option>
+              <option>Auth & Seguridad</option>
+              <option>Features</option>
+              <option>Otro</option>
+            </select>
+            <select class="qa-input" id="qa2-urg">
+              <option value="">Urgencia *</option>
+              <option>Urgente</option>
+              <option>Esta semana</option>
+              <option>Este mes</option>
+              <option>A futuro</option>
+            </select>
+          </div>
+        </div>
+        <div class="qa-extra" id="qa2-extra">
+          <textarea class="qa-textarea" id="qa2-desc" rows="2" placeholder="Descripción (opcional)"></textarea>
+          <textarea class="qa-textarea" id="qa2-nota" rows="2" placeholder="Nota o contexto técnico..."></textarea>
+        </div>
+        <div class="qa-footer">
+          <button class="qa-toggle" id="qa2-toggle-btn" onclick="toggleQaExtra2()">
+            <i class="ti ti-chevron-down" id="qa2-toggle-icon"></i> Más detalles
+          </button>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <div class="qa-error" id="qa2-error">Completá título, área y urgencia.</div>
+            <button class="qa-btn" onclick="quickAdd2()">+ Agregar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="top-card">
+      <div class="top-card-title">Filtros</div>
+      <div class="filter-card">
+        <div class="filter-group">
+          <div class="filter-group-label">Tiempo</div>
+          <div class="pill-group" id="pill2-tiempo">
+            <button class="pill" onclick="setPillFiltro2('Urgente',this)">Urgente</button>
+            <button class="pill" onclick="setPillFiltro2('Esta semana',this)">Esta semana</button>
+            <button class="pill" onclick="setPillFiltro2('Este mes',this)">Este mes</button>
+            <button class="pill" onclick="setPillFiltro2('A futuro',this)">A futuro</button>
+          </div>
+        </div>
+        <div class="filter-group">
+          <div class="filter-group-label">Área</div>
+          <div class="pill-group" id="pill2-area">
+            <button class="pill" onclick="setPillArea2('Editores',this)">Editores</button>
+            <button class="pill" onclick="setPillArea2('Firebase',this)">Firebase</button>
+            <button class="pill" onclick="setPillArea2('Auth & Seguridad',this)">Auth</button>
+            <button class="pill" onclick="setPillArea2('Features',this)">Features</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- URGENTES TÉCNICAS -->
+  <div id="wrap2-urg">
+    <div class="sec-label lbl-urg"><span>Urgentes</span><span class="cnt" id="cnt2-urg">2 tareas</span></div>
+    <div class="grid-wrap">
+      <div class="scroll-btn scroll-left" onclick="scrollSec2('urg',-1)"><i class="ti ti-chevron-left"></i></div>
+      <div class="grid-scroll" id="sec2-urg">
+
+        <div class="task-card" data-urg="Urgente" data-area="Auth & Seguridad" data-id="tec1">
+          <div class="card-header-bar"></div>
+          <button class="card-delete" onclick="eliminarCard(this)" title="Eliminar">×</button>
+          <div class="card-top" onclick="toggleCard(this.closest('.task-card'))">
+            <div class="card-dot-row"><div class="dot"></div><div class="card-status">Pendiente</div></div>
+            <div class="card-area-label">Auth & Seguridad</div>
+            <div class="card-name">Implementar reglas de seguridad Firestore</div>
+            <div class="card-badges"><span class="badge b-prod">Auth</span></div>
+          </div>
+          <button class="card-expand-btn" onclick="toggleCard(this.closest('.task-card'))"><span>Ver detalle</span><i class="ti ti-chevron-down"></i></button>
+          <div class="card-body"><div class="card-body-inner">
+            <div class="cb-label">Descripción</div><div class="cb-desc">Definir y aplicar reglas de seguridad en Firestore antes del lanzamiento público para proteger los datos de los usuarios.</div>
+            <div class="cb-label">Estado</div>
+            <div class="estado-row">
+              <button class="estado-btn sel-pend" onclick="setEstado('tec1','Pendiente',this)">⏳ Pendiente</button>
+              <button class="estado-btn" onclick="setEstado('tec1','En curso',this)">🔄 En curso</button>
+              <button class="estado-btn" onclick="setEstado('tec1','Lista',this)">✅ Lista</button>
+            </div>
+            <div class="cb-label">Notas</div>
+            <div class="notes-list" id="notes-tec1"><div class="note-item"><div class="note-meta">Sep 2026</div><div class="note-txt">Crítico antes del lanzamiento. No puede quedar para después.</div></div></div>
+            <div class="add-note-area"><textarea id="ta-tec1" rows="2" placeholder="Agregar nota..."></textarea><button class="add-note-btn" onclick="addNote('tec1')">+ Agregar nota</button></div>
+          </div></div>
+        </div>
+
+        <div class="task-card" data-urg="Urgente" data-area="Firebase" data-id="tec2">
+          <div class="card-header-bar"></div>
+          <button class="card-delete" onclick="eliminarCard(this)" title="Eliminar">×</button>
+          <div class="card-top" onclick="toggleCard(this.closest('.task-card'))">
+            <div class="card-dot-row"><div class="dot"></div><div class="card-status">Pendiente</div></div>
+            <div class="card-area-label">Firebase</div>
+            <div class="card-name">Autenticar dominio portalveterinario.ar en Brevo (DNS)</div>
+            <div class="card-badges"><span class="badge b-prod">Firebase</span></div>
+          </div>
+          <button class="card-expand-btn" onclick="toggleCard(this.closest('.task-card'))"><span>Ver detalle</span><i class="ti ti-chevron-down"></i></button>
+          <div class="card-body"><div class="card-body-inner">
+            <div class="cb-label">Descripción</div><div class="cb-desc">Configurar registros DNS en Vercel o NIC.ar para autenticar portalveterinario.ar en Brevo. Bloquea el envío del email de bienvenida.</div>
+            <div class="cb-label">Estado</div>
+            <div class="estado-row">
+              <button class="estado-btn sel-pend" onclick="setEstado('tec2','Pendiente',this)">⏳ Pendiente</button>
+              <button class="estado-btn" onclick="setEstado('tec2','En curso',this)">🔄 En curso</button>
+              <button class="estado-btn" onclick="setEstado('tec2','Lista',this)">✅ Lista</button>
+            </div>
+            <div class="cb-label">Notas</div>
+            <div class="notes-list" id="notes-tec2"><div class="note-item"><div class="note-meta">Sep 2026</div><div class="note-txt">Template del email casi listo: Montserrat, header petróleo, badge naranja beta, tarjeta Socio Vitalicio dorada.</div></div></div>
+            <div class="add-note-area"><textarea id="ta-tec2" rows="2" placeholder="Agregar nota..."></textarea><button class="add-note-btn" onclick="addNote('tec2')">+ Agregar nota</button></div>
+          </div></div>
+        </div>
+
+      </div>
+      <div class="scroll-btn scroll-right" onclick="scrollSec2('urg',1)"><i class="ti ti-chevron-right"></i></div>
+    </div>
+  </div>
+
+  <!-- ESTE MES TÉCNICAS -->
+  <div id="wrap2-mes">
+    <div class="sec-label lbl-mes"><span>Este mes</span><span class="cnt" id="cnt2-mes">4 tareas</span></div>
+    <div class="grid-wrap">
+      <div class="scroll-btn scroll-left" onclick="scrollSec2('mes',-1)"><i class="ti ti-chevron-left"></i></div>
+      <div class="grid-scroll" id="sec2-mes">
+
+        <div class="task-card" data-urg="Este mes" data-area="Editores" data-id="tec3">
+          <div class="card-header-bar"></div>
+          <button class="card-delete" onclick="eliminarCard(this)" title="Eliminar">×</button>
+          <div class="card-top" onclick="toggleCard(this.closest('.task-card'))">
+            <div class="card-dot-row"><div class="dot"></div><div class="card-status">Pendiente</div></div>
+            <div class="card-area-label">Editores</div>
+            <div class="card-name">Portar mejoras de editor-profesional a editor-clinica y editor-proveedores</div>
+            <div class="card-badges"><span class="badge b-prod">Editores</span></div>
+          </div>
+          <button class="card-expand-btn" onclick="toggleCard(this.closest('.task-card'))"><span>Ver detalle</span><i class="ti ti-chevron-down"></i></button>
+          <div class="card-body"><div class="card-body-inner">
+            <div class="cb-label">Descripción</div><div class="cb-desc">Replicar dual-collection, cropper, galería, WhatsApp e Instagram desde editor-profesional.jsx a los otros dos editores.</div>
+            <div class="cb-label">Estado</div>
+            <div class="estado-row">
+              <button class="estado-btn sel-pend" onclick="setEstado('tec3','Pendiente',this)">⏳ Pendiente</button>
+              <button class="estado-btn" onclick="setEstado('tec3','En curso',this)">🔄 En curso</button>
+              <button class="estado-btn" onclick="setEstado('tec3','Lista',this)">✅ Lista</button>
+            </div>
+            <div class="cb-label">Notas</div>
+            <div class="notes-list" id="notes-tec3"><div class="note-item"><div class="note-meta">Sep 2026</div><div class="note-txt">editor-profesional.jsx ya tiene todas las funciones. Empezar por editor-clinica.jsx.</div></div></div>
+            <div class="add-note-area"><textarea id="ta-tec3" rows="2" placeholder="Agregar nota..."></textarea><button class="add-note-btn" onclick="addNote('tec3')">+ Agregar nota</button></div>
+          </div></div>
+        </div>
+
+        <div class="task-card" data-urg="Este mes" data-area="Firebase" data-id="tec4">
+          <div class="card-header-bar"></div>
+          <button class="card-delete" onclick="eliminarCard(this)" title="Eliminar">×</button>
+          <div class="card-top" onclick="toggleCard(this.closest('.task-card'))">
+            <div class="card-dot-row"><div class="dot"></div><div class="card-status">Pendiente</div></div>
+            <div class="card-area-label">Firebase</div>
+            <div class="card-name">Completar setup Firebase Cloud Functions (eliminación de usuarios)</div>
+            <div class="card-badges"><span class="badge b-prod">Firebase</span></div>
+          </div>
+          <button class="card-expand-btn" onclick="toggleCard(this.closest('.task-card'))"><span>Ver detalle</span><i class="ti ti-chevron-down"></i></button>
+          <div class="card-body"><div class="card-body-inner">
+            <div class="cb-label">Descripción</div><div class="cb-desc">Habilitar eliminación simultánea Auth + Firestore. Requiere Firebase Cloud Functions instalado.</div>
+            <div class="cb-label">Estado</div>
+            <div class="estado-row">
+              <button class="estado-btn sel-pend" onclick="setEstado('tec4','Pendiente',this)">⏳ Pendiente</button>
+              <button class="estado-btn" onclick="setEstado('tec4','En curso',this)">🔄 En curso</button>
+              <button class="estado-btn" onclick="setEstado('tec4','Lista',this)">✅ Lista</button>
+            </div>
+            <div class="cb-label">Notas</div>
+            <div class="notes-list" id="notes-tec4"><div class="note-item"><div class="note-meta">Sep 2026</div><div class="note-txt">Stalled en error de red durante npm install -g firebase-tools. Reintentar con la compu nueva.</div></div></div>
+            <div class="add-note-area"><textarea id="ta-tec4" rows="2" placeholder="Agregar nota..."></textarea><button class="add-note-btn" onclick="addNote('tec4')">+ Agregar nota</button></div>
+          </div></div>
+        </div>
+
+        <div class="task-card" data-urg="Este mes" data-area="Editores" data-id="tec5">
+          <div class="card-header-bar"></div>
+          <button class="card-delete" onclick="eliminarCard(this)" title="Eliminar">×</button>
+          <div class="card-top" onclick="toggleCard(this.closest('.task-card'))">
+            <div class="card-dot-row"><div class="dot"></div><div class="card-status">Pendiente</div></div>
+            <div class="card-area-label">Editores</div>
+            <div class="card-name">Refactorizar componentes reutilizables a EditorComponents.jsx</div>
+            <div class="card-badges"><span class="badge b-prod">Editores</span></div>
+          </div>
+          <button class="card-expand-btn" onclick="toggleCard(this.closest('.task-card'))"><span>Ver detalle</span><i class="ti ti-chevron-down"></i></button>
+          <div class="card-body"><div class="card-body-inner">
+            <div class="cb-label">Descripción</div><div class="cb-desc">Extraer Tooltip, InputGroup, SelectGroup, Accordion, ToggleSwitch, SimpleCropper a un archivo compartido.</div>
+            <div class="cb-label">Estado</div>
+            <div class="estado-row">
+              <button class="estado-btn sel-pend" onclick="setEstado('tec5','Pendiente',this)">⏳ Pendiente</button>
+              <button class="estado-btn" onclick="setEstado('tec5','En curso',this)">🔄 En curso</button>
+              <button class="estado-btn" onclick="setEstado('tec5','Lista',this)">✅ Lista</button>
+            </div>
+            <div class="cb-label">Notas</div>
+            <div class="notes-list" id="notes-tec5"><div class="note-item"><div class="note-meta">Sep 2026</div><div class="note-txt">Hacerlo antes de seguir agregando features para evitar duplicación de código.</div></div></div>
+            <div class="add-note-area"><textarea id="ta-tec5" rows="2" placeholder="Agregar nota..."></textarea><button class="add-note-btn" onclick="addNote('tec5')">+ Agregar nota</button></div>
+          </div></div>
+        </div>
+
+        <div class="task-card" data-urg="Este mes" data-area="Auth & Seguridad" data-id="tec6">
+          <div class="card-header-bar"></div>
+          <button class="card-delete" onclick="eliminarCard(this)" title="Eliminar">×</button>
+          <div class="card-top" onclick="toggleCard(this.closest('.task-card'))">
+            <div class="card-dot-row"><div class="dot"></div><div class="card-status">Pendiente</div></div>
+            <div class="card-area-label">Auth & Seguridad</div>
+            <div class="card-name">Integrar email de bienvenida con Brevo API en handleRegistroDrawer</div>
+            <div class="card-badges"><span class="badge b-prod">Auth</span></div>
+          </div>
+          <button class="card-expand-btn" onclick="toggleCard(this.closest('.task-card'))"><span>Ver detalle</span><i class="ti ti-chevron-down"></i></button>
+          <div class="card-body"><div class="card-body-inner">
+            <div class="cb-label">Descripción</div><div class="cb-desc">Conectar el envío automático del email de bienvenida via Brevo API al completar el registro. Depende del DNS autenticado.</div>
+            <div class="cb-label">Estado</div>
+            <div class="estado-row">
+              <button class="estado-btn sel-pend" onclick="setEstado('tec6','Pendiente',this)">⏳ Pendiente</button>
+              <button class="estado-btn" onclick="setEstado('tec6','En curso',this)">🔄 En curso</button>
+              <button class="estado-btn" onclick="setEstado('tec6','Lista',this)">✅ Lista</button>
+            </div>
+            <div class="cb-label">Notas</div>
+            <div class="notes-list" id="notes-tec6"><div class="note-item"><div class="note-meta">Sep 2026</div><div class="note-txt">Depende del DNS. Una vez autenticado, este paso es rápido.</div></div></div>
+            <div class="add-note-area"><textarea id="ta-tec6" rows="2" placeholder="Agregar nota..."></textarea><button class="add-note-btn" onclick="addNote('tec6')">+ Agregar nota</button></div>
+          </div></div>
+        </div>
+
+      </div>
+      <div class="scroll-btn scroll-right" onclick="scrollSec2('mes',1)"><i class="ti ti-chevron-right"></i></div>
+    </div>
+  </div>
+
+  <!-- A FUTURO TÉCNICAS -->
+  <div id="wrap2-fut">
+    <div class="sec-label lbl-fut"><span>A futuro</span><span class="cnt" id="cnt2-fut">3 tareas</span></div>
+    <div class="grid-wrap">
+      <div class="scroll-btn scroll-left" onclick="scrollSec2('fut',-1)"><i class="ti ti-chevron-left"></i></div>
+      <div class="grid-scroll" id="sec2-fut">
+
+        <div class="task-card" data-urg="A futuro" data-area="Features" data-id="tec7">
+          <div class="card-header-bar"></div>
+          <button class="card-delete" onclick="eliminarCard(this)" title="Eliminar">×</button>
+          <div class="card-top" onclick="toggleCard(this.closest('.task-card'))">
+            <div class="card-dot-row"><div class="dot"></div><div class="card-status">Pendiente</div></div>
+            <div class="card-area-label">Features</div>
+            <div class="card-name">QR descargable por perfil (qrcode.react)</div>
+            <div class="card-badges"><span class="badge b-fut">A futuro</span></div>
+          </div>
+          <button class="card-expand-btn" onclick="toggleCard(this.closest('.task-card'))"><span>Ver detalle</span><i class="ti ti-chevron-down"></i></button>
+          <div class="card-body"><div class="card-body-inner">
+            <div class="cb-label">Descripción</div><div class="cb-desc">Código QR por perfil. Mostrar como deshabilitado con tooltip hasta que el dominio esté live.</div>
+            <div class="cb-label">Estado</div>
+            <div class="estado-row">
+              <button class="estado-btn sel-pend" onclick="setEstado('tec7','Pendiente',this)">⏳ Pendiente</button>
+              <button class="estado-btn" onclick="setEstado('tec7','En curso',this)">🔄 En curso</button>
+              <button class="estado-btn" onclick="setEstado('tec7','Lista',this)">✅ Lista</button>
+            </div>
+            <div class="notes-list" id="notes-tec7"></div>
+            <div class="add-note-area"><textarea id="ta-tec7" rows="2" placeholder="Agregar nota..."></textarea><button class="add-note-btn" onclick="addNote('tec7')">+ Agregar nota</button></div>
+          </div></div>
+        </div>
+
+        <div class="task-card" data-urg="A futuro" data-area="Features" data-id="tec8">
+          <div class="card-header-bar"></div>
+          <button class="card-delete" onclick="eliminarCard(this)" title="Eliminar">×</button>
+          <div class="card-top" onclick="toggleCard(this.closest('.task-card'))">
+            <div class="card-dot-row"><div class="dot"></div><div class="card-status">Pendiente</div></div>
+            <div class="card-area-label">Features</div>
+            <div class="card-name">Integrar MercadoPago — modelo de suscripción mensual</div>
+            <div class="card-badges"><span class="badge b-fut">A futuro</span></div>
+          </div>
+          <button class="card-expand-btn" onclick="toggleCard(this.closest('.task-card'))"><span>Ver detalle</span><i class="ti ti-chevron-down"></i></button>
+          <div class="card-body"><div class="card-body-inner">
+            <div class="cb-label">Descripción</div><div class="cb-desc">Monetización via suscripción. Requiere backend y definición del modelo de negocio final.</div>
+            <div class="cb-label">Estado</div>
+            <div class="estado-row">
+              <button class="estado-btn sel-pend" onclick="setEstado('tec8','Pendiente',this)">⏳ Pendiente</button>
+              <button class="estado-btn" onclick="setEstado('tec8','En curso',this)">🔄 En curso</button>
+              <button class="estado-btn" onclick="setEstado('tec8','Lista',this)">✅ Lista</button>
+            </div>
+            <div class="notes-list" id="notes-tec8"></div>
+            <div class="add-note-area"><textarea id="ta-tec8" rows="2" placeholder="Agregar nota..."></textarea><button class="add-note-btn" onclick="addNote('tec8')">+ Agregar nota</button></div>
+          </div></div>
+        </div>
+
+        <div class="task-card" data-urg="A futuro" data-area="Features" data-id="tec9">
+          <div class="card-header-bar"></div>
+          <button class="card-delete" onclick="eliminarCard(this)" title="Eliminar">×</button>
+          <div class="card-top" onclick="toggleCard(this.closest('.task-card'))">
+            <div class="card-dot-row"><div class="dot"></div><div class="card-status">Pendiente</div></div>
+            <div class="card-area-label">Features</div>
+            <div class="card-name">Login con Google</div>
+            <div class="card-badges"><span class="badge b-fut">A futuro</span></div>
+          </div>
+          <button class="card-expand-btn" onclick="toggleCard(this.closest('.task-card'))"><span>Ver detalle</span><i class="ti ti-chevron-down"></i></button>
+          <div class="card-body"><div class="card-body-inner">
+            <div class="cb-label">Descripción</div><div class="cb-desc">Autenticación con Google para simplificar el registro y login.</div>
+            <div class="cb-label">Estado</div>
+            <div class="estado-row">
+              <button class="estado-btn sel-pend" onclick="setEstado('tec9','Pendiente',this)">⏳ Pendiente</button>
+              <button class="estado-btn" onclick="setEstado('tec9','En curso',this)">🔄 En curso</button>
+              <button class="estado-btn" onclick="setEstado('tec9','Lista',this)">✅ Lista</button>
+            </div>
+            <div class="notes-list" id="notes-tec9"></div>
+            <div class="add-note-area"><textarea id="ta-tec9" rows="2" placeholder="Agregar nota..."></textarea><button class="add-note-btn" onclick="addNote('tec9')">+ Agregar nota</button></div>
+          </div></div>
+        </div>
+
+      </div>
+      <div class="scroll-btn scroll-right" onclick="scrollSec2('fut',1)"><i class="ti ti-chevron-right"></i></div>
+    </div>
+  </div>
+
+  <div class="footer">Actualizado: septiembre 2026 · El Portal Veterinario</div>
+</div><!-- /wrap -->
+</div><!-- /tab-codigo -->
 
 <script>
 let filtroUrg=null,filtroArea=null;
@@ -1191,6 +1536,116 @@ function crearTareaDirecta(titulo,area,urg,desc,nota){
   cerrarModalBtn();
   sec.lastElementChild.scrollIntoView({behavior:'smooth',block:'nearest'});
 }
+
+function setTab(tab,btn){
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('tab-'+tab).classList.add('active');
+}
+function scrollSec2(sec,dir){
+  const el=document.getElementById('sec2-'+sec);
+  if(el)el.scrollBy({left:dir*300,behavior:'smooth'});
+}
+let filtroUrg2=null,filtroArea2=null;
+function setPillFiltro2(val,btn){
+  const isOn=btn.classList.contains('on');
+  document.querySelectorAll('#pill2-tiempo .pill').forEach(b=>b.classList.remove('on'));
+  if(!isOn){btn.classList.add('on');filtroUrg2=val;}else{filtroUrg2=null;}
+  aplicar2();
+}
+function setPillArea2(val,btn){
+  const isOn=btn.classList.contains('on');
+  document.querySelectorAll('#pill2-area .pill').forEach(b=>b.classList.remove('on'));
+  if(!isOn){btn.classList.add('on');filtroArea2=val;}else{filtroArea2=null;}
+  aplicar2();
+}
+function aplicar2(){
+  ['urg','mes','fut'].forEach(key=>{
+    const wrap=document.getElementById('wrap2-'+key);
+    if(!wrap)return;
+    const cards=wrap.querySelectorAll('.task-card');
+    let vis=0;
+    cards.forEach(c=>{
+      const ok=(!filtroUrg2||c.dataset.urg===filtroUrg2)&&(!filtroArea2||c.dataset.area===filtroArea2);
+      c.style.display=ok?'':'none';
+      if(ok)vis++;
+    });
+    wrap.style.display=vis?'':'none';
+    const cnt=document.getElementById('cnt2-'+key);
+    if(cnt)cnt.textContent=vis+(vis===1?' tarea':' tareas');
+  });
+}
+function toggleQaExtra2(){
+  const extra=document.getElementById('qa2-extra');
+  const icon=document.getElementById('qa2-toggle-icon');
+  const btn=document.getElementById('qa2-toggle-btn');
+  extra.classList.toggle('open');
+  btn.classList.toggle('open');
+  icon.className=extra.classList.contains('open')?'ti ti-chevron-up':'ti ti-chevron-down';
+}
+function quickAdd2(){
+  const titulo=document.getElementById('qa2-titulo').value.trim();
+  const area=document.getElementById('qa2-area').value;
+  const urg=document.getElementById('qa2-urg').value;
+  const desc=document.getElementById('qa2-desc')?document.getElementById('qa2-desc').value.trim():'';
+  const nota=document.getElementById('qa2-nota')?document.getElementById('qa2-nota').value.trim():'';
+  if(!titulo||!area||!urg){document.getElementById('qa2-error').classList.add('show');return;}
+  document.getElementById('qa2-error').classList.remove('show');
+  crearTareaDirecta2(titulo,area,urg,desc,nota);
+  ['qa2-titulo','qa2-desc','qa2-nota'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  document.getElementById('qa2-area').value='';
+  document.getElementById('qa2-urg').value='';
+}
+function crearTareaDirecta2(titulo,area,urg,desc,nota){
+  const id='tec'+Date.now();
+  const secMap={'Urgente':'urg','Esta semana':'sem','Este mes':'mes','A futuro':'fut'};
+  const hoy=new Date().toLocaleDateString('es-AR',{month:'short',year:'numeric'});
+  const notaHTML=nota?`<div class="note-item"><div class="note-meta">${hoy}</div><div class="note-txt">${nota}</div></div>`:'';
+  const html=`<div class="task-card" data-urg="${urg}" data-area="${area}" data-id="${id}">
+    <div class="card-header-bar"></div>
+    <button class="card-delete" onclick="eliminarCard(this)" title="Eliminar">×</button>
+    <div class="card-top" onclick="toggleCard(this.closest('.task-card'))">
+      <div class="card-dot-row"><div class="dot"></div><div class="card-status">Pendiente</div></div>
+      <div class="card-area-label">${area}</div>
+      <div class="card-name">${titulo}</div>
+      <div class="card-badges"></div>
+    </div>
+    <button class="card-expand-btn" onclick="toggleCard(this.closest('.task-card'))"><span>Ver detalle</span><i class="ti ti-chevron-down"></i></button>
+    <div class="card-body"><div class="card-body-inner">
+      <div class="cb-label">Descripción</div><div class="cb-desc">${desc||'Sin descripción.'}</div>
+      <div class="cb-label">Estado</div>
+      <div class="estado-row">
+        <button class="estado-btn sel-pend" onclick="setEstado('${id}','Pendiente',this)">⏳ Pendiente</button>
+        <button class="estado-btn" onclick="setEstado('${id}','En curso',this)">🔄 En curso</button>
+        <button class="estado-btn" onclick="setEstado('${id}','Lista',this)">✅ Lista</button>
+      </div>
+      <div class="notes-list" id="notes-${id}">${notaHTML}</div>
+      <div class="add-note-area"><textarea id="ta-${id}" rows="2" placeholder="Agregar nota..."></textarea><button class="add-note-btn" onclick="addNote('${id}')">+ Agregar nota</button></div>
+    </div></div>
+  </div>`;
+  const secKey=secMap[urg];
+  let sec=document.getElementById('sec2-'+secKey);
+  if(!sec){
+    // Crear sección si no existe (ej: Esta semana que no está en técnicas)
+    const wrap=document.createElement('div');
+    wrap.id='wrap2-'+secKey;
+    const label=document.createElement('div');
+    label.className='sec-label';
+    label.innerHTML=`<span>${urg}</span><span class="cnt" id="cnt2-${secKey}">0 tareas</span>`;
+    const gw=document.createElement('div');gw.className='grid-wrap';
+    const gs=document.createElement('div');gs.className='grid-scroll';gs.id='sec2-'+secKey;
+    gw.appendChild(gs);wrap.appendChild(label);wrap.appendChild(gw);
+    document.querySelector('#tab-codigo .wrap').insertBefore(wrap,document.querySelector('#tab-codigo .footer'));
+    sec=gs;
+  }
+  sec.insertAdjacentHTML('beforeend',html);
+  const wrap=document.getElementById('wrap2-'+secMap[urg]);
+  if(wrap)wrap.style.display='';
+  const cnt=document.getElementById('cnt2-'+secMap[urg]);
+  if(cnt){const n=sec.querySelectorAll('.task-card').length;cnt.textContent=n+(n===1?' tarea':' tareas');}
+}
+
 </script>
 </body>
 </html>
