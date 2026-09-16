@@ -1387,36 +1387,50 @@ function scrollSec(sec,dir){
 function setEstado(id,estado,btn){
   const prevEstado=estados[id]||'Pendiente';
   estados[id]=estado;
-  // Actualizar botones
+
+  // Actualizar todos los botones del mismo grupo
   const row=btn.closest('.estado-row');
   row.querySelectorAll('.estado-btn').forEach(b=>{
     b.classList.remove('sel-pend','sel-start','sel-done');
   });
-  if(estado==='Pendiente')btn.classList.add('sel-pend');
-  else if(estado==='En curso')btn.classList.add('sel-start');
+  if(estado==='Pendiente') btn.classList.add('sel-pend');
+  else if(estado==='En curso') btn.classList.add('sel-start');
   else btn.classList.add('sel-done');
-  // Actualizar label
+
+  // Actualizar label de estado
   const lbl=document.getElementById('lbl-'+id);
-  if(lbl)lbl.textContent=estado;
-  // Actualizar card
+  if(lbl) lbl.textContent=estado;
+
+  // Actualizar clase visual de la card original
   const card=btn.closest('.task-card');
   card.classList.remove('started','done');
-  if(estado==='Lista')card.classList.add('done');
-  // Detectar si es pestaña 1 o 2
-  const esTab2=id.startsWith('tec')||card.closest('#panel-2')!==null;
-  const curId=esTab2?'sec2-cur':'sec-cur';
-  const secCur=document.getElementById(curId);
-  if(estado==='En curso'&&prevEstado!=='En curso'){
-    card.dataset.origSec=card.parentElement.id;
-    if(secCur)secCur.appendChild(card);
-  } else if(estado!=='En curso'&&prevEstado==='En curso'){
-    const origId=card.dataset.origSec||(esTab2?'sec2-urg':'sec-urg');
-    const orig=document.getElementById(origId);
-    if(orig)orig.appendChild(card);
-    delete card.dataset.origSec;
+  if(estado==='Lista') card.classList.add('done');
+
+  // Detectar pestaña
+  const esTab2=id.startsWith('tec');
+  const secCurId=esTab2?'sec2-cur':'sec-cur';
+  const secCur=document.getElementById(secCurId);
+
+  // Eliminar clon previo si existe
+  const clon_previo=document.getElementById('clon-'+id);
+  if(clon_previo) clon_previo.remove();
+
+  if(estado==='En curso'){
+    // Crear clon y agregarlo a sec-cur
+    const clon=card.cloneNode(true);
+    clon.id='clon-'+id;
+    clon.dataset.clonOf=id;
+    // Marcar visualmente
+    clon.style.opacity='1';
+    if(secCur) secCur.appendChild(clon);
+    // Ocultar original con opacidad reducida
+    card.style.opacity='0.35';
+  } else {
+    // Restaurar original
+    card.style.opacity='1';
   }
+
   actualizarEnCurso();
-  // Actualizar KPIs
   actualizarKPIs();
 }
 
