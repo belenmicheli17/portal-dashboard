@@ -336,7 +336,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
     </div>
   </div>
 
-  <div class="filters-bar">
+  <!-- KPI ocultos para el JS -->
+<span id="n-total" style="display:none">17</span>
+<span id="n-prog" style="display:none">0</span>
+<span id="n-done" style="display:none">0</span>
+
+<div class="filters-bar">
   <div class="filters">
     <button class="f on" onclick="setFiltro('todo',this)">Todas</button>
     <button class="f" onclick="setFiltro('Urgente',this)">Urgente</button>
