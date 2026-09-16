@@ -1359,7 +1359,65 @@ function toggleQaExtra(){
   icon.className=extra.classList.contains('open')?'ti ti-chevron-up':'ti ti-chevron-down';
 }
 
+const SCRIPT_URL='https://script.google.com/macros/s/AKfycbz0xidCkp2zhH6Smz4MCLZM5yTBB3goEIchXhk8alcMzdZcUaG8ktyHFHOxHobiDNPbXA/exec';
 const estados={};
+
+async function cargarEstadoSheets(){
+  try{
+    const resp=await fetch(SCRIPT_URL);
+    const data=await resp.json();
+    Object.keys(data).forEach(id=>{
+      const {estado,notas}=data[id];
+      estados[id]=estado;
+      const lbl=document.getElementById('lbl-'+id);
+      if(lbl)lbl.textContent=estado;
+      const card=document.querySelector('[data-id="'+id+'"]');
+      if(card){
+        card.classList.remove('started','done');
+        if(estado==='Lista')card.classList.add('done');
+        const btns=card.querySelectorAll('.estado-btn');
+        btns.forEach(b=>b.classList.remove('sel-pend','sel-start','sel-done'));
+        btns.forEach(b=>{
+          if(b.textContent.includes('Pendiente')&&estado==='Pendiente')b.classList.add('sel-pend');
+          if(b.textContent.includes('En curso')&&estado==='En curso')b.classList.add('sel-start');
+          if(b.textContent.includes('Lista')&&estado==='Lista')b.classList.add('sel-done');
+        });
+        if(estado==='En curso'){
+          const esTab2=id.startsWith('tec');
+          const secCur=document.getElementById(esTab2?'sec2-cur':'sec-cur');
+          if(secCur&&!document.getElementById('clon-'+id)){
+            const clon=card.cloneNode(true);
+            clon.id='clon-'+id;
+            secCur.appendChild(clon);
+            card.style.opacity='0.35';
+          }
+        }
+      }
+      if(notas){
+        const lista=document.getElementById('notes-'+id);
+        if(lista)notas.split('||').forEach(n=>{
+          if(!n.trim())return;
+          const div=document.createElement('div');
+          div.className='note-item';
+          div.innerHTML='<div class="note-meta">Guardado</div><div class="note-txt">'+n.trim()+'</div>';
+          lista.appendChild(div);
+        });
+      }
+    });
+    actualizarEnCurso();
+    actualizarKPIs();
+  }catch(e){console.log('Modo offline');}
+}
+
+async function guardarEnSheets(id,estado,notas){
+  try{
+    await fetch(SCRIPT_URL,{
+      method:'POST',mode:'no-cors',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({id,estado,notas:notas||''})
+    });
+  }catch(e){console.log('Error guardando');}
+}
 
 function eliminarCard(btn){
   const card=btn.closest('.task-card');
@@ -1437,6 +1495,9 @@ function setEstado(id,estado,btn){
 
   actualizarEnCurso();
   actualizarKPIs();
+  // Guardar en Sheets
+  const notasTxt=Array.from(document.querySelectorAll('#notes-'+id+' .note-txt')).map(n=>n.textContent).join('||');
+  guardarEnSheets(id,estado,notasTxt);
 }
 
 function actualizarEnCurso(){
@@ -1472,6 +1533,10 @@ function addNote(id){
   nota.innerHTML='<div class="note-meta">'+fecha+'</div><div class="note-txt">'+txt+'</div>';
   lista.appendChild(nota);
   ta.value='';
+  // Sincronizar notas con Sheets
+  const estado=estados[id]||'Pendiente';
+  const notasTxt=Array.from(document.querySelectorAll('#notes-'+id+' .note-txt')).map(n=>n.textContent).join('||');
+  guardarEnSheets(id,estado,notasTxt);
 }
 
 function actualizarKPIs(){
@@ -1635,6 +1700,9 @@ function crearTareaDirecta(titulo,area,urg,desc,nota){
   cerrarModalBtn();
   sec.lastElementChild.scrollIntoView({behavior:'smooth',block:'nearest'});
 }
+
+// Inicializar: cargar estado desde Sheets
+document.addEventListener('DOMContentLoaded', cargarEstadoSheets);
 
 function setTab(tab,btn){
   document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
