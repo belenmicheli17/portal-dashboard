@@ -965,6 +965,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
       <div class="historial-title">Historial de trabajo</div>
       <div class="historial-list" id="historial-list-top">
         <div class="historial-row">
+          <div class="historial-txt">Barra de filtros de la Cartilla rediseñada: buscador y provincia con ancho propio, panel de filtros unificado visualmente, botones de Modalidad con ícono e indicador de guardia 24hs, "Atención por Especie" conectada a datos reales del editor. Provincias unificadas en un solo archivo fuente.</div>
+          <div class="historial-fecha">26 sep 2026</div>
+        </div>
+        <div class="historial-row">
           <div class="historial-txt">Email bienvenida diseñado y conectado a Brevo (Template ID 1). Dominio autenticado en Brevo via Vercel DNS. Múltiples fixes en editor-profesional, perfil público, cartilla y filtros dinámicos.</div>
           <div class="historial-fecha">24 sep 2026</div>
         </div>
@@ -1009,7 +1013,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
         <div class="area-row"><div class="area-dot" style="background:#4A6A9E;"></div><div class="area-name">Editores</div><div class="area-count" id="cnt-tec-editores">2 tareas</div></div>
         <div class="area-row"><div class="area-dot" style="background:#5C8C70;"></div><div class="area-name">Firebase</div><div class="area-count" id="cnt-tec-firebase">2 tareas</div></div>
         <div class="area-row"><div class="area-dot" style="background:#9E8A3A;"></div><div class="area-name">Auth & Seguridad</div><div class="area-count" id="cnt-tec-auth">2 tareas</div></div>
-        <div class="area-row"><div class="area-dot" style="background:#A0674A;"></div><div class="area-name">Features</div><div class="area-count" id="cnt-tec-features">3 tareas</div></div>
+        <div class="area-row"><div class="area-dot" style="background:#A0674A;"></div><div class="area-name">Features</div><div class="area-count" id="cnt-tec-features">4 tareas</div></div>
       </div>
     </div>
     <div class="top-card">
@@ -1147,7 +1151,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
 
   <!-- ESTE MES TÉCNICAS -->
   <div id="wrap2-mes">
-    <div class="sec-label lbl-mes"><span>Este mes</span><span class="cnt" id="cnt2-mes">4 tareas</span></div>
+    <div class="sec-label lbl-mes"><span>Este mes</span><span class="cnt" id="cnt2-mes">5 tareas</span></div>
     <div class="grid-wrap">
       <div class="scroll-btn scroll-left" onclick="scrollSec2('mes',-1)"><i class="ti ti-chevron-left"></i></div>
       <div class="grid-scroll" id="sec2-mes">
@@ -1245,6 +1249,30 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
             <div class="cb-label">Notas</div>
             <div class="notes-list" id="notes-tec6"><div class="note-item"><div class="note-meta">Sep 2026</div><div class="note-txt">Depende del DNS. Una vez autenticado, este paso es rápido.</div></div></div>
             <div class="add-note-area"><textarea id="ta-tec6" rows="2" placeholder="Agregar nota..."></textarea><button class="add-note-btn" onclick="addNote('tec6')">+ Agregar nota</button></div>
+          </div></div>
+        </div>
+
+        <div class="task-card" data-urg="Este mes" data-area="Features" data-id="tec10">
+          <div class="card-header-bar"></div>
+          <button class="card-delete" onclick="eliminarCard(this)" title="Eliminar">×</button>
+          <div class="card-top" onclick="toggleCard(this.closest('.task-card'))">
+            <div class="card-dot-row"><div class="dot"></div><div class="card-status">Pendiente</div></div>
+            <div class="card-area-label">Features</div>
+            <div class="card-name">Seguir mejorando la Cartilla (grilla de resultados, tarjetas)</div>
+            <div class="card-badges"><span class="badge b-prod">Features</span></div>
+          </div>
+          <button class="card-expand-btn" onclick="toggleCard(this.closest('.task-card'))"><span>Ver detalle</span><i class="ti ti-chevron-down"></i></button>
+          <div class="card-body"><div class="card-body-inner">
+            <div class="cb-label">Descripción</div><div class="cb-desc">BarraFiltros.jsx quedó reordenado: buscador angosto, provincia conectada a data/provincias.js (única fuente, orden por relevancia), panel de filtros pegado y sin blur, botones de Modalidad rediseñados, "Atención por Especie" conectada a datos reales del editor (ya no a mascotas sueltas), tamaños de letra agrandados. Sigue: resto de Cartilla.jsx (grilla de resultados, tarjetas).</div>
+            <div class="cb-label">Estado</div>
+            <div class="estado-row">
+              <button class="estado-btn sel-pend" onclick="setEstado('tec10','Pendiente',this)">⏳ Pendiente</button>
+              <button class="estado-btn" onclick="setEstado('tec10','En curso',this)">🔄 En curso</button>
+              <button class="estado-btn" onclick="setEstado('tec10','Lista',this)">✅ Lista</button>
+            </div>
+            <div class="cb-label">Notas</div>
+            <div class="notes-list" id="notes-tec10"><div class="note-item"><div class="note-meta">Sep 2026</div><div class="note-txt">"Caninos y Felinos" se sacó de especialidades.json (redundante, todos atienden). Falta portar mejoras a editor-clinica y editor-proveedores si aplica.</div></div></div>
+            <div class="add-note-area"><textarea id="ta-tec10" rows="2" placeholder="Agregar nota..."></textarea><button class="add-note-btn" onclick="addNote('tec10')">+ Agregar nota</button></div>
           </div></div>
         </div>
 
